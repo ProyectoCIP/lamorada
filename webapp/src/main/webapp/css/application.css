@@ -17,19 +17,33 @@
  *  under the License.
  */
 
-/*
-uncomment to add a logo (in an ../images directory relative to this file)
+
+/*uncomment to add a logo (in an ../images directory relative to this file)
 
 #header {
     height: 48px;
     background-image: url("../images/logo.png");
 	background-repeat: no-repeat;
+	
+	
+	
 }
 
 #header h1 {
 	display: none;
+}*/
+
+.headerContainer {
+	background: #eab92d; /* Old browsers */
+background: -moz-linear-gradient(top,  #eab92d 0%, #c79810 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eab92d), color-stop(100%,#c79810)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #eab92d 0%,#c79810 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #eab92d 0%,#c79810 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #eab92d 0%,#c79810 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #eab92d 0%,#c79810 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eab92d', endColorstr='#c79810',GradientType=0 ); /* IE6-9 */
 }
-*/
+
 
 
 .okButton {
