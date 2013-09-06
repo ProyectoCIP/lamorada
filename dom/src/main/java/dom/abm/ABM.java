@@ -1,12 +1,21 @@
 package dom.abm;
 
+import java.util.List;
+
 import org.apache.isis.applib.AbstractFactoryAndRepository;
+import org.apache.isis.applib.annotation.ActionSemantics;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.annotation.RegEx;
+import org.apache.isis.applib.annotation.ActionSemantics.Of;
+import org.apache.isis.applib.filter.Filter;
+
+import com.google.common.base.Objects;
 
 import dom.abm.Habitacion.TipoHabitacion;
-import dom.todo.ToDoItem;
+import dom.abm.Empresa;
+import dom.enumeradores.FormaPago;
 
 @Named("ABM")
 public class ABM extends AbstractFactoryAndRepository{
@@ -22,19 +31,20 @@ public class ABM extends AbstractFactoryAndRepository{
     }
     // }}
     
+    @Named("Huesped")
 	@MemberOrder(sequence = "1")
-	public Huesped NuevoHuesped(			
+	public Huesped nuevoHuesped(			
 			@Named("Nombre") String nombre,
 			@Named("Apellido") String apellido,
 			@Named("Edad") int edad,
 			@Named("Dni") String dni,
 			@Named("Estado") boolean estado,
 			@Named("Direccion") String direccion	) {
-		return nuevoHuesped(nombre, apellido, edad, dni,estado, direccion);
+		return nHuesped(nombre, apellido, edad, dni,estado, direccion);
 	}
 	
 	@Hidden
-	public Huesped nuevoHuesped(
+	public Huesped nHuesped(
 			final String nombre,						
 			final String apellido,
 			final int edad,
@@ -54,8 +64,9 @@ public class ABM extends AbstractFactoryAndRepository{
 		return huesped;
 	}
 		
+	@Named("Habitacion")
 	@MemberOrder(sequence = "2")
-	public Habitacion NuevaHabitacion(			
+	public Habitacion nuevaHabitacion(			
 			@Named("Nombre") String nombre,
 			@Named("Capacidad") int capacidad,
 			@Named("Tipo de Habitación") TipoHabitacion tipoHabitacion) {
@@ -76,4 +87,70 @@ public class ABM extends AbstractFactoryAndRepository{
 		
 		return habitacion;
 	}
+	
+    @Named("Empresa")
+    @MemberOrder(sequence = "3")
+    public Empresa nuevaEmpresa(
+            @RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*") // words, spaces and selected punctuation
+            @Named("CUIT") String cuit, 
+            @RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*") // words, spaces and selected punctuation
+            @Named("Razón Social") String razonSocial,
+            @Named("Tarifa") float tarifa,
+            @Named("Forma de Pago") FormaPago fPago
+            ) {
+        final String creadoPor = usuarioActual();
+        return nEmpresa(cuit, razonSocial, tarifa, fPago,creadoPor);
+    }
+    
+    @Hidden
+    public Empresa nEmpresa(
+            final String cuit, 
+            final String razonSocial, 
+            final float tarifa,
+            final FormaPago fPago, 
+            final String usuario) {
+        final Empresa empresa = newTransientInstance(Empresa.class);
+        empresa.setCuit(cuit);
+        empresa.setRazonSocial(razonSocial);
+        empresa.setTarifa(tarifa);
+        empresa.setEstado(true);
+        empresa.setFormaPago(fPago);
+        empresa.setUsuario(usuario);
+        
+        persist(empresa);
+        
+        return empresa;
+    }
+    
+    @Named("Listar")
+    @ActionSemantics(Of.SAFE)
+    @MemberOrder(sequence = "4")
+    public List<Empresa> ListaEmpresas() {
+        final String usuario = usuarioActual();
+        final List<Empresa> listaEmpresas = allMatches(Empresa.class, Empresa.creadoPor(usuario));
+        return listaEmpresas;
+    }    
+
+    /*
+     * Método para llenar el DropDownList de empresas, con la posibilidad de que te autocompleta las coincidencias al ir tipeando
+     */
+    @Hidden
+    public List<Empresa> autoComplete(final String nombre) {
+        return allMatches(Empresa.class, new Filter<Empresa>() {
+        	@Override
+            public boolean accept(final Empresa e) {
+                return creadoPorActualUsuario(e) && e.getRazonSocial().contains(nombre);
+            }
+        });
+    }
+    
+    protected boolean creadoPorActualUsuario(final Empresa e) {
+        return Objects.equal(e.getUsuario(), usuarioActual());
+    }
+    protected String usuarioActual() {
+        return getContainer().getUser().getName();
+    }
+
+	
+	
 }
