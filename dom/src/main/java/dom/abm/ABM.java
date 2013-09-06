@@ -7,6 +7,7 @@ import org.apache.isis.applib.annotation.ActionSemantics;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.annotation.RegEx;
 import org.apache.isis.applib.annotation.ActionSemantics.Of;
 import org.apache.isis.applib.filter.Filter;
@@ -39,8 +40,10 @@ public class ABM extends AbstractFactoryAndRepository{
 			@Named("Edad") int edad,
 			@Named("Dni") String dni,
 			@Named("Estado") boolean estado,
-			@Named("Direccion") String direccion	) {
-		return nHuesped(nombre, apellido, edad, dni,estado, direccion);
+			@Named("Direccion") String direccion,
+			@Optional
+			@Named("Empresa") Empresa empresa ) {
+		return nHuesped(nombre, apellido, edad, dni,estado, direccion, empresa);
 	}
 	
 	@Hidden
@@ -50,7 +53,8 @@ public class ABM extends AbstractFactoryAndRepository{
 			final int edad,
 			final String dni,
 			final boolean estado,
-			final String direccion) {
+			final String direccion,
+			final Empresa empresa) {
 		final Huesped huesped = newTransientInstance(Huesped.class);		
 		huesped.setNombre(nombre);
 		huesped.setApellido(apellido);
@@ -58,6 +62,11 @@ public class ABM extends AbstractFactoryAndRepository{
 		huesped.setDni(dni);
 		huesped.setEstado(estado);
 		huesped.setDireccion(direccion);
+		
+		if(empresa != null) {
+			huesped.setEmpresa(empresa);
+			empresa.addToHuesped(huesped);
+		}
 		
 		persist(huesped);
 		

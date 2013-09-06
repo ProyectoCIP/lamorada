@@ -1,10 +1,12 @@
 package dom.abm;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
+import javax.jdo.annotations.Persistent;
 
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Audited;
@@ -38,6 +40,7 @@ import dom.enumeradores.FormaPago;
 })
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
 @ObjectType("EMPRESA")
+@AutoComplete(repository=ABM.class, action="autoComplete")
 @Audited
 public class Empresa {
 	
@@ -201,6 +204,20 @@ public class Empresa {
 
     public void injectDomainObjectContainer(final DomainObjectContainer container) {
         this.container = container;
+    }
+    
+    @Persistent(mappedBy="empresa")
+    private List<Huesped> huespedes = new ArrayList<Huesped>();
+    
+    public List<Huesped> getHuespedes() { return huespedes; }
+    
+    @Hidden
+    public void addToHuesped(Huesped huesped) {
+    	if(huesped == null || huespedes.contains(huesped)) {
+    		return;
+    	}
+    	huesped.setEmpresa(this);
+    	huespedes.add(huesped);
     }
     
 }

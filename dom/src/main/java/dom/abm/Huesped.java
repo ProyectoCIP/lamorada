@@ -5,6 +5,7 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Optional;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
@@ -90,6 +91,20 @@ public class Huesped {
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
+	//}}
+	
+	//{{Empresa
+		private Empresa empresa;
+		
+		@Optional
+		@MemberOrder(sequence = "7")		
+		public Empresa getEmpresa() {
+			return empresa;
+		}
+		
+		public void setEmpresa(Empresa empresa) {
+			this.empresa = empresa;
+		}
 	//}}
 
 }
