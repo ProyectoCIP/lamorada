@@ -32,6 +32,7 @@ import java.util.jar.Manifest;
 
 import javax.servlet.ServletContext;
 
+import org.apache.isis.viewer.wicket.ui.pages.*;
 import org.apache.commons.collections.EnumerationUtils;
 import org.apache.isis.viewer.wicket.ui.app.registry.ComponentFactoryRegistrar;
 import org.apache.isis.viewer.wicket.viewer.IsisWicketApplication;
@@ -82,7 +83,7 @@ public class QuickStartApplication extends IsisWicketApplication {
                 bind(String.class).annotatedWith(Names.named("applicationFooter")).toInstance("Capo");
                 bind(String.class).annotatedWith(Names.named("applicationCss")).toInstance("css/application.css");
                 bind(String.class).annotatedWith(Names.named("applicationJs")).toInstance("scripts/application.js");
-                bind(String.class).annotatedWith(Names.named("welcomeMessage")).toInstance(readLines("welcome.html"));               
+                bind(String.class).annotatedWith(Names.named("welcomeMessage")).toInstance(readLines("welcome.html"));                
                 bind(String.class).annotatedWith(Names.named("aboutMessage")).toInstance("QuickStart");
                 bind(InputStream.class).annotatedWith(Names.named("metaInfManifest")).toProvider(Providers.of(getServletContext().getResourceAsStream("/META-INF/MANIFEST.MF")));
             }
@@ -99,6 +100,10 @@ public class QuickStartApplication extends IsisWicketApplication {
         } catch (IOException e) {
             return "This is Quick Start";
         }
+    }
+    
+    private void addUserName() {
+    	
     }
 
 }

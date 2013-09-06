@@ -365,7 +365,7 @@
     <module>dom</module>
     <module>fixture</module>
     <module>objstore-jdo</module>
-    <module>integtests</module>
+   <!-- <module>integtests</module>-->
     <module>webapp</module>
   </modules>
 </project>

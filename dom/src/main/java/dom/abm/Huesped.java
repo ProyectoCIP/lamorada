@@ -3,12 +3,25 @@ package dom.abm;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
+import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
 public class Huesped {
+	
+	//{{idHuesped
+	private int idHuesped;
+				
+	@Hidden
+	public int getIdHuesped() {
+		return idHuesped;
+	}
+	public void setIdHuesped(int idHuesped) {
+		this.idHuesped = idHuesped;
+	}
+	//}}
 	
 	//{{Nombre
 	private String nombre;
@@ -46,9 +59,31 @@ public class Huesped {
 	}
 	//}}
 	
+	//{{dni
+		private String dni;
+		@MemberOrder(sequence = "4")
+		public String getDni() {
+			return dni;
+		}
+		public void setDni(String dni) {
+			this.dni = dni;
+		}
+		//}}
+	
+	//{{Estado
+		private boolean estado;
+		@MemberOrder(sequence = "5")
+		public boolean getEstado() {
+			return estado;
+		}
+		public void setEstado(boolean estado) {
+			this.estado = estado;
+		}
+		//}}
+	
 	//{{Dirección
 	private String direccion;
-	@MemberOrder(sequence = "4")
+	@MemberOrder(sequence = "6")
 	public String getDireccion() {
 		return direccion;
 	}
