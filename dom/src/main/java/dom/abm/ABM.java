@@ -8,7 +8,7 @@ import org.apache.isis.applib.annotation.Named;
 import dom.todo.ToDoItem;
 
 @Named("ABM")
-public class Huespedes extends AbstractFactoryAndRepository{
+public class ABM extends AbstractFactoryAndRepository{
 
 	// {{ Id, iconName
     @Override
@@ -17,7 +17,7 @@ public class Huespedes extends AbstractFactoryAndRepository{
     }
 
     public String iconName() {
-        return "Huesped";
+        return "ABM";
     }
     // }}
     
@@ -53,5 +53,23 @@ public class Huespedes extends AbstractFactoryAndRepository{
 		return huesped;
 	}
 		
+	@MemberOrder(sequence = "2")
+	public Habitacion NuevaHabitacion(			
+			@Named("Nombre") String nombre,
+			@Named("Capacidad") int capacidad) {
+		return nuevoHabitacion(nombre, capacidad);
+	}
 	
+	@Hidden
+	public Habitacion nuevoHabitacion(
+			final String nombre,						
+			final int capacidad) {
+		final Habitacion habitacion = newTransientInstance(Habitacion.class);		
+		habitacion.setNombre(nombre);
+		habitacion.setCapacidad(capacidad);
+		
+		persist(habitacion);
+		
+		return habitacion;
+	}
 }
