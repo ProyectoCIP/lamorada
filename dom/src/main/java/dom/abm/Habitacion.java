@@ -12,7 +12,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 
 public class Habitacion {
 		
-	public static enum Category {
+	public static enum TipoHabitacion {
         Simple, Matrimonial, Triple;
     }
 	
@@ -41,15 +41,27 @@ public class Habitacion {
 	//}}
 	
 	//{{Capacidad
-		private int capacidad;
+	private int capacidad;
 		
-		@MemberOrder(sequence = "2")
-		public int getCapacidad() {
-			return capacidad;
-		}
-		public void setCapacidad(int capacidad) {
-			this.capacidad = capacidad;
-		}
-		//}}
+	@MemberOrder(sequence = "2")
+	public int getCapacidad() {
+		return capacidad;
+	}
+	public void setCapacidad(int capacidad) {
+		this.capacidad = capacidad;
+	}
+	//}}
+	
+	//{{Tipo de Habitacion
+	private TipoHabitacion tipoHabitacion;
+		
+	@MemberOrder(sequence = "3")
+	public TipoHabitacion getTipoHabitacion() {
+		return tipoHabitacion;
+	}
+	public void setTipoHabitacion(TipoHabitacion capacidad) {
+		this.tipoHabitacion = tipoHabitacion;
+	}
+	//}}
 		
 }

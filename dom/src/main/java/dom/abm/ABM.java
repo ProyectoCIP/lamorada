@@ -5,6 +5,7 @@ import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 
+import dom.abm.Habitacion.TipoHabitacion;
 import dom.todo.ToDoItem;
 
 @Named("ABM")
@@ -56,17 +57,20 @@ public class ABM extends AbstractFactoryAndRepository{
 	@MemberOrder(sequence = "2")
 	public Habitacion NuevaHabitacion(			
 			@Named("Nombre") String nombre,
-			@Named("Capacidad") int capacidad) {
-		return nuevoHabitacion(nombre, capacidad);
+			@Named("Capacidad") int capacidad,
+			@Named("Tipo de Habitación") TipoHabitacion tipoHabitacion) {
+		return nuevoHabitacion(nombre, capacidad, tipoHabitacion);
 	}
 	
 	@Hidden
 	public Habitacion nuevoHabitacion(
 			final String nombre,						
-			final int capacidad) {
+			final int capacidad,
+			final TipoHabitacion tipoHabitacion) {
 		final Habitacion habitacion = newTransientInstance(Habitacion.class);		
 		habitacion.setNombre(nombre);
 		habitacion.setCapacidad(capacidad);
+		habitacion.setTipoHabitacion(tipoHabitacion);
 		
 		persist(habitacion);
 		
