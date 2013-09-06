@@ -68,7 +68,7 @@ public class ABM extends AbstractFactoryAndRepository{
 			empresa.addToHuesped(huesped);
 		}
 		
-		persist(huesped);
+		persistIfNotAlready(huesped);
 		
 		return huesped;
 	}
