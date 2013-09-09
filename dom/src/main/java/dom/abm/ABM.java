@@ -16,6 +16,7 @@ import com.google.common.base.Objects;
 
 import dom.abm.Habitacion.TipoHabitacion;
 import dom.abm.Empresa;
+import dom.contacto.Contacto;
 import dom.enumeradores.FormaPago;
 
 @Named("ABM")
@@ -105,10 +106,11 @@ public class ABM extends AbstractFactoryAndRepository{
             @RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*") // words, spaces and selected punctuation
             @Named("Razón Social") String razonSocial,
             @Named("Tarifa") float tarifa,
-            @Named("Forma de Pago") FormaPago fPago
+            @Named("Forma de Pago") FormaPago fPago,
+            @Named("Contacto") Contacto contacto
             ) {
         final String creadoPor = usuarioActual();
-        return nEmpresa(cuit, razonSocial, tarifa, fPago,creadoPor);
+        return nEmpresa(cuit, razonSocial, tarifa, fPago, contacto, creadoPor);
     }
     
     @Hidden
@@ -117,6 +119,7 @@ public class ABM extends AbstractFactoryAndRepository{
             final String razonSocial, 
             final float tarifa,
             final FormaPago fPago, 
+            final Contacto contacto,
             final String usuario) {
         final Empresa empresa = newTransientInstance(Empresa.class);
         empresa.setCuit(cuit);
@@ -124,6 +127,7 @@ public class ABM extends AbstractFactoryAndRepository{
         empresa.setTarifa(tarifa);
         empresa.setEstado(true);
         empresa.setFormaPago(fPago);
+        empresa.setContacto(contacto);
         empresa.setUsuario(usuario);
         
         persist(empresa);

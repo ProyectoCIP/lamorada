@@ -26,6 +26,7 @@ import org.apache.isis.applib.filter.Filter;
 
 import com.google.common.base.Objects;
 
+import dom.contacto.Contacto;
 import dom.enumeradores.FormaPago;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
@@ -131,22 +132,7 @@ public class Empresa {
 	public void setFormaPago(FormaPago formaPago) {
 		this.formaPago = formaPago;
 	}
-	
-	/*
-	 * Listado de huéspedes que tiene esta empresa
-	
-	private List<Huesped> listaHuespedes;
-	
-	public List<Huesped> getListaHuespedes() {
-		return listaHuespedes;
-	}
-	
-	public void setListaHuespedes() {
-		this.listaHuespedes = listaHuespedes;
-	}
-	
-	*/
-	
+		
 	/*
 	 * Estado : false (baja) - true (activo)
 	 */
@@ -172,6 +158,17 @@ public class Empresa {
             }
         };
     }   
+    
+    private Contacto contacto;
+
+    @Named("Dirección, Télefono, Correo, etc...")
+	public Contacto getContacto() {
+		return contacto;
+	}
+
+	public void setContacto(Contacto contacto) {
+		this.contacto = contacto;
+	}
     
     @Named("Borrar")
     //@PublishedAction
@@ -219,5 +216,4 @@ public class Empresa {
     	huesped.setEmpresa(this);
     	huespedes.add(huesped);
     }
-    
 }
