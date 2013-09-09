@@ -26,6 +26,7 @@ import org.apache.isis.applib.filter.Filter;
 
 import com.google.common.base.Objects;
 
+import dom.contacto.Contacto;
 import dom.enumeradores.FormaPago;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
@@ -40,26 +41,10 @@ import dom.enumeradores.FormaPago;
 })
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
 @ObjectType("EMPRESA")
-@AutoComplete(repository=ABM.class, action="autoComplete")
+@AutoComplete(repository=ABM.class, action="completaEmpresas")
 @Audited
 public class Empresa {
-	
-	//ID de la habitacion
-	private long id;
-	
-	@Hidden
-	public long getId() {
-		return id;
-	}
-	
-	public void setId(long id) {
-		this.id = id;
-	}
-	
-	public String iconName() {
-		return "Empresa";
-	}
-	
+		
 	/*
 	 * Razon Social de la empresa
 	 */
@@ -131,22 +116,7 @@ public class Empresa {
 	public void setFormaPago(FormaPago formaPago) {
 		this.formaPago = formaPago;
 	}
-	
-	/*
-	 * Listado de huéspedes que tiene esta empresa
-	
-	private List<Huesped> listaHuespedes;
-	
-	public List<Huesped> getListaHuespedes() {
-		return listaHuespedes;
-	}
-	
-	public void setListaHuespedes() {
-		this.listaHuespedes = listaHuespedes;
-	}
-	
-	*/
-	
+		
 	/*
 	 * Estado : false (baja) - true (activo)
 	 */
@@ -172,6 +142,17 @@ public class Empresa {
             }
         };
     }   
+    
+    private Contacto contacto;
+    
+    @javax.jdo.annotations.Persistent(serialized="true")
+	public Contacto getContacto() {
+		return contacto;
+	}
+
+	public void setContacto(Contacto contacto) {
+		this.contacto = contacto;
+	}
     
     @Named("Borrar")
     //@PublishedAction
@@ -206,9 +187,14 @@ public class Empresa {
         this.container = container;
     }
     
+    /*
+     * 
+     * Relacion bidireccional entre la empresa y los huespedes
+     */
     @Persistent(mappedBy="empresa")
     private List<Huesped> huespedes = new ArrayList<Huesped>();
     
+    @Named("Listado de huéspedes")
     public List<Huesped> getHuespedes() { return huespedes; }
     
     @Hidden
@@ -219,5 +205,4 @@ public class Empresa {
     	huesped.setEmpresa(this);
     	huespedes.add(huesped);
     }
-    
 }

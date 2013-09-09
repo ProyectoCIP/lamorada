@@ -16,6 +16,7 @@ import com.google.common.base.Objects;
 
 import dom.abm.Habitacion.TipoHabitacion;
 import dom.abm.Empresa;
+import dom.contacto.Contacto;
 import dom.enumeradores.FormaPago;
 
 @Named("ABM")
@@ -105,10 +106,16 @@ public class ABM extends AbstractFactoryAndRepository{
             @RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*") // words, spaces and selected punctuation
             @Named("Razón Social") String razonSocial,
             @Named("Tarifa") float tarifa,
-            @Named("Forma de Pago") FormaPago fPago
+            @Named("Forma de Pago") FormaPago fPago,
+            @Optional
+            @Named("Dirección") String direccion,
+            @Optional
+            @Named("Télefono") String telefono,
+            @Optional
+            @Named("Email") String correo
             ) {
         final String creadoPor = usuarioActual();
-        return nEmpresa(cuit, razonSocial, tarifa, fPago,creadoPor);
+        return nEmpresa(cuit, razonSocial, tarifa, fPago, direccion, telefono, correo, creadoPor);
     }
     
     @Hidden
@@ -117,6 +124,9 @@ public class ABM extends AbstractFactoryAndRepository{
             final String razonSocial, 
             final float tarifa,
             final FormaPago fPago, 
+            final String direccion,
+            final String telefono,
+            final String correo,
             final String usuario) {
         final Empresa empresa = newTransientInstance(Empresa.class);
         empresa.setCuit(cuit);
@@ -126,7 +136,11 @@ public class ABM extends AbstractFactoryAndRepository{
         empresa.setFormaPago(fPago);
         empresa.setUsuario(usuario);
         
-        persist(empresa);
+        final Contacto contacto = new Contacto(direccion,telefono,correo);
+        
+        empresa.setContacto(contacto);       
+        
+        persistIfNotAlready(empresa);
         
         return empresa;
     }
@@ -144,7 +158,7 @@ public class ABM extends AbstractFactoryAndRepository{
      * Método para llenar el DropDownList de empresas, con la posibilidad de que te autocompleta las coincidencias al ir tipeando
      */
     @Hidden
-    public List<Empresa> autoComplete(final String nombre) {
+    public List<Empresa> completaEmpresas(final String nombre) {
         return allMatches(Empresa.class, new Filter<Empresa>() {
         	@Override
             public boolean accept(final Empresa e) {

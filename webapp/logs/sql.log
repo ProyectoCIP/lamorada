@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 -----> 2013-09-08 03:24:07.017  org.datanucleus.store.rdbms.datasource.dbcp.DelegatingStatement.execute(DelegatingStatement.java:264)
 1. CREATE TABLE DELETEME1378621447009 ( UNUSED INTEGER NOT NULL ) 
 
@@ -59,3 +60,5 @@ REFERENCES TODOITEM (TODOITEM_ID)
 -----> 2013-09-08 03:24:07.249  org.datanucleus.store.rdbms.datasource.dbcp.DelegatingStatement.execute(DelegatingStatement.java:264)
 1. CREATE INDEX TODO_DEPENDENCIES_N50 ON TODO_DEPENDENCIES (DEPENDING_TODO_ID) 
 
+=======
+>>>>>>> d2878ee337b208e16987103f079cc26278cb7dde

@@ -51,6 +51,12 @@
             <artifactId>isis-objectstore-jdo-datanucleus</artifactId>
         </dependency>
 
+	<dependency> 
+	    <groupId>postgresql</groupId> 
+	    <artifactId>postgresql</artifactId> 
+	    <version>9.0-801.jdbc3</version> 
+	</dependency> 
+
 	</dependencies>
 
 </project>
