@@ -1,7 +1,14 @@
 package dom.contacto;
 
-public class Contacto {
-	
+import java.io.Serializable;
+
+public class Contacto implements Serializable {
+			
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 981967545177159614L;
+
 	public Contacto(String domicilio, String telefono, String email) {
 		
 		this.domicilio = domicilio;

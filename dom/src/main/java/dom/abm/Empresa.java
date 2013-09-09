@@ -41,26 +41,10 @@ import dom.enumeradores.FormaPago;
 })
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
 @ObjectType("EMPRESA")
-@AutoComplete(repository=ABM.class, action="autoComplete")
+@AutoComplete(repository=ABM.class, action="completaEmpresas")
 @Audited
 public class Empresa {
-	
-	//ID de la habitacion
-	private long id;
-	
-	@Hidden
-	public long getId() {
-		return id;
-	}
-	
-	public void setId(long id) {
-		this.id = id;
-	}
-	
-	public String iconName() {
-		return "Empresa";
-	}
-	
+		
 	/*
 	 * Razon Social de la empresa
 	 */
@@ -160,8 +144,8 @@ public class Empresa {
     }   
     
     private Contacto contacto;
-
-    @Named("Dirección, Télefono, Correo, etc...")
+    
+    @javax.jdo.annotations.Persistent(serialized="true")
 	public Contacto getContacto() {
 		return contacto;
 	}
@@ -203,9 +187,14 @@ public class Empresa {
         this.container = container;
     }
     
+    /*
+     * 
+     * Relacion bidireccional entre la empresa y los huespedes
+     */
     @Persistent(mappedBy="empresa")
     private List<Huesped> huespedes = new ArrayList<Huesped>();
     
+    @Named("Listado de huéspedes")
     public List<Huesped> getHuespedes() { return huespedes; }
     
     @Hidden
