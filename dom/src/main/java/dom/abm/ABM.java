@@ -11,6 +11,7 @@ import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.annotation.RegEx;
 import org.apache.isis.applib.annotation.ActionSemantics.Of;
 import org.apache.isis.applib.filter.Filter;
+import org.apache.isis.applib.value.Blob;
 
 import com.google.common.base.Objects;
 
@@ -40,11 +41,11 @@ public class ABM extends AbstractFactoryAndRepository{
 			@Named("Apellido") String apellido,
 			@Named("Edad") int edad,
 			@Named("Dni") String dni,
-			@Named("Estado") boolean estado,
+			//@Named("Estado") boolean estado,
 			@Named("Direccion") String direccion,
 			@Optional
 			@Named("Empresa") Empresa empresa ) {
-		return nHuesped(nombre, apellido, edad, dni,estado, direccion, empresa);
+		return nHuesped(nombre, apellido, edad, dni,direccion, empresa);
 	}
 	
 	@Hidden
@@ -53,7 +54,7 @@ public class ABM extends AbstractFactoryAndRepository{
 			final String apellido,
 			final int edad,
 			final String dni,
-			final boolean estado,
+			//final boolean estado,
 			final String direccion,
 			final Empresa empresa) {
 		final Huesped huesped = newTransientInstance(Huesped.class);		
@@ -61,7 +62,7 @@ public class ABM extends AbstractFactoryAndRepository{
 		huesped.setApellido(apellido);
 		huesped.setEdad(edad);
 		huesped.setDni(dni);
-		huesped.setEstado(estado);
+		huesped.setEstado(true);
 		huesped.setDireccion(direccion);
 		
 		if(empresa != null) {
@@ -114,8 +115,13 @@ public class ABM extends AbstractFactoryAndRepository{
             @Optional
             @Named("Email") String correo
             ) {
-        final String creadoPor = usuarioActual();
-        return nEmpresa(cuit, razonSocial, tarifa, fPago, direccion, telefono, correo, creadoPor);
+    	final Contacto contacto = newTransientInstance(Contacto.class);
+    	contacto.setDomicilio(direccion);
+        contacto.setEmail(correo);
+        contacto.setTelefono(telefono);   
+        persistIfNotAlready(contacto);
+    	final String creadoPor = usuarioActual();
+        return nEmpresa(cuit, razonSocial, tarifa, fPago, contacto, creadoPor);
     }
     
     @Hidden
@@ -124,9 +130,7 @@ public class ABM extends AbstractFactoryAndRepository{
             final String razonSocial, 
             final float tarifa,
             final FormaPago fPago, 
-            final String direccion,
-            final String telefono,
-            final String correo,
+            final Contacto contacto,
             final String usuario) {
         final Empresa empresa = newTransientInstance(Empresa.class);
         empresa.setCuit(cuit);
@@ -135,11 +139,7 @@ public class ABM extends AbstractFactoryAndRepository{
         empresa.setEstado(true);
         empresa.setFormaPago(fPago);
         empresa.setUsuario(usuario);
-        
-        final Contacto contacto = new Contacto(direccion,telefono,correo);
-        
-        empresa.setContacto(contacto);       
-        
+        empresa.setContacto(contacto);
         persistIfNotAlready(empresa);
         
         return empresa;

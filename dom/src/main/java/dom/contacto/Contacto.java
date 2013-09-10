@@ -1,22 +1,19 @@
 package dom.contacto;
 
-import java.io.Serializable;
+import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.VersionStrategy;
 
-public class Contacto implements Serializable {
+import org.apache.isis.applib.annotation.ObjectType;
+@javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
+@javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
+@javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
+@ObjectType("CONTACTO")
+public class Contacto {
 			
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 981967545177159614L;
-
-	public Contacto(String domicilio, String telefono, String email) {
-		
-		this.domicilio = domicilio;
-		this.telefono = telefono;
-		this.email = email;
-		
-	}
-
+	
 	private String domicilio;
 
 	public String getDomicilio() {

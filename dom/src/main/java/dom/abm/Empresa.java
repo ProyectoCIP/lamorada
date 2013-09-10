@@ -23,6 +23,7 @@ import org.apache.isis.applib.annotation.PublishedAction;
 import org.apache.isis.applib.annotation.PublishedObject;
 import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.filter.Filter;
+import org.apache.isis.applib.value.Blob;
 
 import com.google.common.base.Objects;
 
@@ -91,7 +92,6 @@ public class Empresa {
 	 * Contacto -> Value Object
 	 */
 	
-	/*
 	private Contacto contacto;
 	
 	public Contacto getContacto() {
@@ -101,7 +101,6 @@ public class Empresa {
 	public void setContacto(Contacto contacto) {
 		this.contacto = contacto;
 	}
-	*/
 	
 	/*
 	 * Forma en que la empresa le paga al hotel
@@ -143,35 +142,20 @@ public class Empresa {
         };
     }   
     
-    private Contacto contacto;
-    
-    @javax.jdo.annotations.Persistent(serialized="true")
-	public Contacto getContacto() {
-		return contacto;
-	}
-
-	public void setContacto(Contacto contacto) {
-		this.contacto = contacto;
-	}
-    
     @Named("Borrar")
-    //@PublishedAction
     @Bulk
     @MemberOrder(name="accionesEmpresa", sequence = "1")
     public Empresa baja() {
     	this.estado = false;
     	return this;
     }
-    // disable action dependent on state of object
-    //public String disableCompleted() {
-    //    return complete ? "Already completed" : null;
-    //}
 
-    // {{ OwnedBy (property)
+    /*
+     * Usuario actual logeado
+     */
     private String usuario;
 
     @Hidden
-    // not shown in the UI
     public String getUsuario() {
         return usuario;
     }
