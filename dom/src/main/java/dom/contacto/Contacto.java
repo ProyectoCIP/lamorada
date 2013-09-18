@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import org.apache.isis.applib.annotation.Value;
 
-@Value(semanticsProviderName = "ContactValueSemanticsProvider.class")
+@Value(semanticsProviderName = "ContactValueSemanticsProvider")
 public final class Contacto implements Serializable {
 	/**
 	 * 

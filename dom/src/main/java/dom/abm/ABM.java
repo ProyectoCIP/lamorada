@@ -115,11 +115,7 @@ public class ABM extends AbstractFactoryAndRepository{
             @Optional
             @Named("Email") String correo
             ) {
-    	final Contacto contacto = newTransientInstance(Contacto.class);
-    	contacto.setDomicilio(direccion);
-        contacto.setEmail(correo);
-        contacto.setTelefono(telefono);   
-        persistIfNotAlready(contacto);
+    	final Contacto contacto = new Contacto(direccion,telefono,correo);
     	final String creadoPor = usuarioActual();
         return nEmpresa(cuit, razonSocial, tarifa, fPago, contacto, creadoPor);
     }

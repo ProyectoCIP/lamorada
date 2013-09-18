@@ -107,6 +107,13 @@
             <artifactId>datanucleus-api-jdo</artifactId>
         </dependency>
         
+        <!-- Java Mail API -->
+    	<dependency>
+	 		<groupId>javax.mail</groupId>
+	 		<artifactId>mail</artifactId>
+	 		<version>1.4.3</version>
+    	</dependency>
+        
         <!--
         GMAP3: uncomment to use https://github.com/danhaywood/isis-wicket-gmap3 
         <dependency>
