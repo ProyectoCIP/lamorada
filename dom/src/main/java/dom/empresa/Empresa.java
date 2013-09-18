@@ -13,17 +13,11 @@ import org.apache.isis.applib.annotation.Audited;
 import org.apache.isis.applib.annotation.AutoComplete;
 import org.apache.isis.applib.annotation.Bulk;
 import org.apache.isis.applib.annotation.Hidden;
-import org.apache.isis.applib.annotation.MemberGroups;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
-import org.apache.isis.applib.annotation.NotPersisted;
 import org.apache.isis.applib.annotation.ObjectType;
-import org.apache.isis.applib.annotation.Optional;
-import org.apache.isis.applib.annotation.PublishedAction;
-import org.apache.isis.applib.annotation.PublishedObject;
 import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.filter.Filter;
-import org.apache.isis.applib.value.Blob;
 
 import com.google.common.base.Objects;
 
@@ -33,14 +27,6 @@ import dom.enumeradores.FormaPago;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
-@javax.jdo.annotations.Queries({
-	@javax.jdo.annotations.Query(
-        name="empresa_todas", language="JDOQL",
-        value="SELECT FROM dom.empresa.Empresa WHERE ownedBy == :ownedBy"),
-	@javax.jdo.annotations.Query(
-            name="habitacion_id", language="JDOQL",
-            value="SELECT FROM dom.habitacion.Habitacion WHERE id == :id")
-})
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
 @ObjectType("EMPRESA")
 @AutoComplete(repository=EmpresaServicio.class, action="completaEmpresas")
@@ -169,8 +155,16 @@ public class Empresa {
     private DomainObjectContainer container;
 
     public void injectDomainObjectContainer(final DomainObjectContainer container) {
-        this.container = container;
+        this.setContainer(container);
     }
+
+	public DomainObjectContainer getContainer() {
+		return container;
+	}
+
+	public void setContainer(DomainObjectContainer container) {
+		this.container = container;
+	}
     
     /*
      * 

@@ -3,22 +3,15 @@ package dom.huesped;
 import java.util.List;
 
 import org.apache.isis.applib.AbstractFactoryAndRepository;
-import org.apache.isis.applib.annotation.ActionSemantics;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Optional;
-import org.apache.isis.applib.annotation.RegEx;
-import org.apache.isis.applib.annotation.ActionSemantics.Of;
 import org.apache.isis.applib.filter.Filter;
-import org.apache.isis.applib.value.Blob;
 
 import com.google.common.base.Objects;
 
-import dom.abm.Habitacion.TipoHabitacion;
 import dom.empresa.Empresa;
-import dom.contacto.Contacto;
-import dom.enumeradores.FormaPago;
 
 @Named("huesped")
 public class HuespedServicio extends AbstractFactoryAndRepository{
@@ -71,7 +64,7 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
 	}
 		
     /*
-     * Método para llenar el DropDownList de empresas, con la posibilidad de que te autocompleta las coincidencias al ir tipeando
+     * Método para llenar el DropDownList de huespedes, con la posibilidad de que te autocompleta las coincidencias al ir tipeando
      */
     @Hidden
     public List<Huesped> completaHuesped(final String nombre) {

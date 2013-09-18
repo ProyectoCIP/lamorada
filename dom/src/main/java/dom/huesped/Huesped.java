@@ -119,8 +119,15 @@ public class Huesped {
 	private DomainObjectContainer container;
 	
 	public void injectDomainObjectContainer(final DomainObjectContainer container) {
-	    this.container = container;
+	    this.setContainer(container);
 	}
+
+	public DomainObjectContainer getContainer() {
+		return container;
+	}
+	public void setContainer(DomainObjectContainer container) {
+		this.container = container;
+	}   
 
 	//{{Usuario actual
 	private String usuario;
@@ -141,6 +148,6 @@ public class Huesped {
                 return Objects.equal(huesped.getUsuario(), usuarioActual);
             }
         };
-    }   
+    }
 
 }
