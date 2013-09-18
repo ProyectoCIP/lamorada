@@ -1,38 +1,46 @@
 package dom.contacto;
 
-import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.VersionStrategy;
+import java.io.Serializable;
 
-import org.apache.isis.applib.annotation.ObjectType;
-@javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
-@javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
-@javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
-@ObjectType("CONTACTO")
-public class Contacto {
-			
+import org.apache.isis.applib.annotation.Value;
+
+@Value(semanticsProviderName = "ContactValueSemanticsProvider.class")
+public final class Contacto implements Serializable {
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = 981967545177159614L;
+
+	public Contacto(String direccion, String telefono, String correo) {
+		this.domicilio = direccion;
+		this.email = correo;
+		this.telefono = telefono;
+	}
 	
 	private String domicilio;
+
 
 	public String getDomicilio() {
 		return domicilio;
 	}
 
-	public void setDomicilio(String domicilio) {
+	/*
+	 * public void setDomicilio(String domicilio) {
+	 *
 		this.domicilio = domicilio;
-	}	
+	}
+	*/	
 
 	private String telefono;
 	
 	public String getTelefono() {
 		return telefono;
 	}
-
+	
+	/*
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
-	}
+	}*/
 	
 	private String email;
 
@@ -40,8 +48,13 @@ public class Contacto {
 		return email;
 	}
 
+	public String toString() {
+		return getDomicilio()+"-"+getEmail()+"-"+getTelefono();
+	}
+	
+	/*
 	public void setEmail(String email) {
 		this.email = email;
-	}
+	}*/
 	
 }
