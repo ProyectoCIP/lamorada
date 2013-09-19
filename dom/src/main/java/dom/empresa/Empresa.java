@@ -174,6 +174,7 @@ public class Empresa {
     private List<Huesped> huespedes = new ArrayList<Huesped>();
     
     @Named("Listado de huéspedes")
+    @Render(Type.EAGERLY)
     public List<Huesped> getHuespedes() { return huespedes; }
     
     @Hidden
