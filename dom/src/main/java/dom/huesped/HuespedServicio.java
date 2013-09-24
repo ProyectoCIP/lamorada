@@ -11,6 +11,7 @@ import org.apache.isis.applib.filter.Filter;
 
 import com.google.common.base.Objects;
 
+import dom.correo.Mensaje;
 import dom.empresa.Empresa;
 
 @Named("huesped")
@@ -27,7 +28,7 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
     }
     // }}
     
-    @Named("Huesped")
+    @Named("Crear")
 	@MemberOrder(sequence = "1")
 	public Huesped nuevoHuesped(			
 			@Named("Nombre") String nombre,
@@ -62,6 +63,26 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
 		
 		return huesped;
 	}
+	
+	/*
+	 * Repositorio: trae los huespedes cargados en el sistema que estan habilitados
+	 */
+	
+	@Named("Listar")
+	@MemberOrder(sequence="2")
+	public List<Huesped> listaHuespedes() {
+	    
+	    return allMatches(Huesped.class, 
+		         
+	       	new Filter<Huesped>() {
+	       			@Override
+	           		public boolean accept(final Huesped h) {
+	           			return Objects.equal(h.getEstado(), true);
+	           		}
+	           }
+	    	);    
+    }
+	
 		
     /*
      * Método para llenar el DropDownList de huespedes, con la posibilidad de que te autocompleta las coincidencias al ir tipeando
