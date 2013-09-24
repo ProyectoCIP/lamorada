@@ -23,7 +23,7 @@
     <artifactId>hosteria</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>Quickstart Wicket/Restful/JDO App</name>
+    <name>La Morada - Wicket/Restful/JDO App</name>
 
     <packaging>pom</packaging>
 
@@ -48,7 +48,15 @@
               </releases>
               <snapshots>
               </snapshots>
-          </repository>
+        </repository>
+        
+    	<!--Repositorio para las dependencias de JavaMail -->
+    
+        <repository>
+  		    <id>Java.Net</id>
+  			<url>http://download.java.net/maven/2/</url>
+    	</repository>
+    	
     </repositories>
 
     <build>
@@ -242,7 +250,7 @@
             </plugin>
         </plugins>
     </build>
-	
+    
     <dependencyManagement>
         <dependencies>
 
@@ -285,8 +293,7 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-
-
+			
             <!-- this project's own modules -->
             <dependency>
                 <groupId>${project.groupId}</groupId>

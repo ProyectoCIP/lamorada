@@ -26,7 +26,7 @@
     </parent>
 
     <artifactId>hosteria-webapp</artifactId>
-    <name>Quickstart Wicket/Restful/JDO Webapp</name>
+    <name>La Morada - Wicket/Restful/JDO Webapp</name>
 
     <description>This module runs both the Wicket viewer and the Restfulobjects viewer in a single webapp configured to run using the datanucleus object store.</description>
 
@@ -92,7 +92,7 @@
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
-                    <warName>quickstart</warName>
+                    <warName>hosteria</warName>
                     <archive>
                         <manifest>
                             <addClasspath>false</addClasspath>

@@ -26,7 +26,7 @@
 	</parent>
 
 	<artifactId>hosteria-dom</artifactId>
-	<name>Quickstart Wicket/Restful/JDO DOM</name>
+	<name>La Morada - Wicket/Restful/JDO DOM</name>
 
 	<build>
 		<plugins>
@@ -113,7 +113,23 @@
 	 		<artifactId>mail</artifactId>
 	 		<version>1.4.3</version>
     	</dependency>
-        
+    	
+    	<!-- Quartz-Scheduler 
+    		 Para automatizar la bandeja de entrada de los correos
+    	-->
+    	
+    	<dependency>
+    		<groupId>org.quartz-scheduler</groupId>
+    		<artifactId>quartz</artifactId>
+    		<version>2.2.0</version>
+	</dependency>
+
+	<dependency>
+    		<groupId>org.quartz-scheduler</groupId>
+    		<artifactId>quartz-jobs</artifactId>
+    		<version>2.2.0</version>
+	</dependency>
+
         <!--
         GMAP3: uncomment to use https://github.com/danhaywood/isis-wicket-gmap3 
         <dependency>

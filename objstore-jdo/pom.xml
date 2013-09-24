@@ -26,7 +26,7 @@
     </parent>
 
 	<artifactId>hosteria-objstore-jdo</artifactId>
-	<name>Quickstart Wicket/Restful/JDO Repositories (for JDO)</name>
+	<name>La Morada - Wicket/Restful/JDO Repositories (for JDO)</name>
 
 	<dependencyManagement>
 		<dependencies>

@@ -26,7 +26,7 @@
     </parent>
 
 	<artifactId>hosteria-fixture</artifactId>
-	<name>Quickstart Wicket/Restful/JDO Fixtures</name>
+	<name>La Morada - Wicket/Restful/JDO Fixtures</name>
 
 	<dependencies>
 		<dependency>
