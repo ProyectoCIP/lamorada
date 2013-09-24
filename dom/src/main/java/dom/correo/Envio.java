@@ -1,5 +1,6 @@
 package dom.correo;
 
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.*;
@@ -42,7 +43,7 @@ public class Envio implements ICorreo {
 		propiedades.setProperty("mail.smtp.port","587");
 
 		// Nombre del usuario
-		propiedades.setProperty("mail.smtp.user", "usuario@gmail.com");
+		propiedades.setProperty("mail.smtp.user", "proyectocipifes@gmail.com");
 
 		// Si requiere o no usuario y password para conectarse.
 		propiedades.setProperty("mail.smtp.auth", "true");
@@ -55,20 +56,24 @@ public class Envio implements ICorreo {
 		return propiedades;
 	}
 	
-	public void accion() {
+	public void enviar() {
 		
 		MimeMessage message = new MimeMessage(getSession());
+		
 		try {
-			message.setFrom(new InternetAddress("usuario@gmail.com"));
+			message.setFrom(new InternetAddress("proyectocipifes@gmail.com"));
 			// A quien va dirigido
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress("eceliz@neuquen.gov.ar"));
-			message.setSubject("Hola");
-			message.setText("Mensajito con Java Mail" +
-			"de los buenos." +
-			"poque si");
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress("proyectocipifes@gmail.com"));
+			message.setSubject("RESERVA-PROYECTOCIP");
+			message.setText("Ezequiel," +
+					"Celiz," +
+					"155716726," +
+					"elceliz@speedy.com.ar," +
+					"17/11/2013," +
+					"20/11/2013");
 			
 			Transport t = session.getTransport("smtp");
-			t.connect("elceliz@gmail.com","---");
+			t.connect("proyectocipifes@gmail.com","qwertyuio123456");
 			t.sendMessage(message,message.getAllRecipients());
 			t.close();
 		} catch (AddressException e) {
@@ -78,5 +83,34 @@ public class Envio implements ICorreo {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void accion() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public List<Mensaje> getListaMensajes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setListaMensajes(List<Mensaje> listaMensajes) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getCantidadMails() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setCantidadMails(int cantidadMails) {
+		// TODO Auto-generated method stub
+		
 	}
 }

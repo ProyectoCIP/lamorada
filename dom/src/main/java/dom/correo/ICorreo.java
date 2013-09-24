@@ -1,5 +1,6 @@
 package dom.correo;
 
+import java.util.List;
 import java.util.Properties;
 import javax.mail.Session;
 
@@ -17,6 +18,16 @@ public interface ICorreo {
 	void setProperties();
 	
 	Properties getProperties();
+	
+	List<Mensaje> getListaMensajes();
+	
+	public int getCantidadMails();
+
+	public void setCantidadMails(int cantidadMails);
+	
+	void setListaMensajes(List<Mensaje> listaMensajes);
+	
+	void enviar();
 	
 	void accion();
 
