@@ -20,8 +20,6 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import dom.abm.ABM;
-
 public class Recepcion implements ICorreo,Job {
 
 	private Session session;

@@ -27,7 +27,6 @@ import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Title;
 
-import dom.abm.ABM;
 import dom.todo.ToDoItems;
 
 //import dom.abm.Habitacion;
@@ -107,7 +106,7 @@ public class Mensaje {
 		container.removeIfNotAlready(this);
 
 		//Vuelvo a la bandeja de entrada
-		return abm.listaMensajesPersistidos();
+		return bde.listaMensajesPersistidos();
 	}
 		
 	
@@ -148,10 +147,10 @@ public class Mensaje {
     }
     //}}
     
-    private ABM abm;
+    private ServicioBandejaDeEntrada bde;
 
-    public void injectABM(final ABM abm) {
-        this.abm = abm;
+    public void injectABM(final ServicioBandejaDeEntrada bde) {
+        this.bde = bde;
     }
     
 }
