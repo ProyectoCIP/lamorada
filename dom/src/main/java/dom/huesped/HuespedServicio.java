@@ -11,7 +11,6 @@ import org.apache.isis.applib.filter.Filter;
 
 import com.google.common.base.Objects;
 
-import dom.correo.Mensaje;
 import dom.empresa.Empresa;
 
 @Named("huesped")
@@ -92,7 +91,7 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
         return allMatches(Huesped.class, new Filter<Huesped>() {
         	@Override
             public boolean accept(final Huesped h) {
-                return creadoPorActualUsuario(h) && h.getNombre().contains(nombre);
+                return h.getNombre().contains(nombre);
             }
         });
     }

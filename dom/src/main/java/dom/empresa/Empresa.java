@@ -16,14 +16,18 @@ import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.ObjectType;
+import org.apache.isis.applib.annotation.PublishedAction;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
 import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.filter.Filter;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 
 import dom.huesped.Huesped;
+import dom.huesped.HuespedServicio;
+import dom.todo.ToDoItem;
 import dom.contacto.ContactoVO;
 import dom.correo.ServicioBandejaDeEntrada;
 import dom.enumeradores.FormaPago;
@@ -75,7 +79,7 @@ public class Empresa {
 	public void setTarifa(float tarifa) {
 		this.tarifa = tarifa;
 	}
-	
+		
 	/*
 	 * Datos de las distintas maneras
 	 * de contactarnos con la empresa.
@@ -188,7 +192,27 @@ public class Empresa {
     
     @Named("Listado de huéspedes")
     @Render(Type.EAGERLY)
-    public List<Huesped> getHuespedes() { return huespedes; }
+    public List<Huesped> getHuespedes() { return huespedes; } 
+    
+    @Named("Agregar Huesped")
+    @PublishedAction
+    @MemberOrder(name="huespedes",sequence="1")
+    public Huesped add(final Huesped huesped) {
+    	getHuespedes().add(huesped);
+    	return huesped;
+    }
+    
+    @Named("Borrar Huesped")
+    @MemberOrder(name="huespedes",sequence="2")
+    public Empresa remove(final Huesped huesped) {
+    	getHuespedes().remove(huesped);
+    	return this;
+    }
+    
+    // provide a drop-down
+    public List<Huesped> choices0Remove() {
+        return Lists.newArrayList(getHuespedes());
+    }
     
     @Hidden
     public void addToHuesped(Huesped huesped) {
@@ -198,4 +222,5 @@ public class Empresa {
     	huesped.setEmpresa(this);
     	huespedes.add(huesped);
     }
+	
 }

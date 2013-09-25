@@ -26,6 +26,7 @@ import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Title;
+import org.joda.time.LocalDate;
 
 import dom.todo.ToDoItems;
 
@@ -43,6 +44,7 @@ public class Mensaje {
 	private String apellido;
 	private String telefono;
 	private String correo;
+	private LocalDate fechaActual;
 	//private List<Habitacion> listaHabitaciones;
 	
 	
@@ -108,23 +110,14 @@ public class Mensaje {
 		//Vuelvo a la bandeja de entrada
 		return bde.listaMensajesPersistidos();
 	}
-		
-	
-	/*
-	 * Estado del mensaje se usa para saber si es necesario borrarlo de la BD
-	 
-	private boolean estado;
-	
-	@Hidden
-	public boolean getEstado() {
-		return estado;
-	}
-	
-	public void setEstado(boolean estado) {
-		this.estado = estado;
-	}
-	
 
+	public LocalDate getFechaActual() {
+		return fechaActual;
+	}
+
+	public void setFechaActual(LocalDate fechaActual) {
+		this.fechaActual = fechaActual;
+	}
     /*
      * Usuario actual logeado
      */

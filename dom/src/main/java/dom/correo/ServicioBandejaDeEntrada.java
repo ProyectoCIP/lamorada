@@ -7,6 +7,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.filter.Filter;
+import org.joda.time.LocalDate;
 
 import com.google.common.base.Objects;
 
@@ -39,6 +40,7 @@ public class ServicioBandejaDeEntrada extends AbstractFactoryAndRepository {
 	    		mensajeTransient.setCorreo(mensaje.getCorreo());
 	    		mensajeTransient.setTelefono(mensaje.getTelefono());
 	    		mensajeTransient.setUsuario(usuarioActual());
+	    		mensajeTransient.setFechaActual(LocalDate.now());
 	    		persistIfNotAlready(mensajeTransient);
 	    		
 	    	}

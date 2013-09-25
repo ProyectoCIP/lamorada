@@ -28,6 +28,7 @@ public class EmpresaServicio extends AbstractFactoryAndRepository{
             @Named("CUIT") String cuit, 
             @RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*") // words, spaces and selected punctuation
             @Named("Razón Social") String razonSocial,
+            @RegEx(validation = "[0-9]")
             @Named("Tarifa") float tarifa,
             @Named("Forma de Pago") FormaPago fPago,
             @Optional
@@ -67,6 +68,10 @@ public class EmpresaServicio extends AbstractFactoryAndRepository{
     @ActionSemantics(Of.SAFE)
     @MemberOrder(sequence = "2")
     public List<Empresa> listaEmpresas() {
+    	
+    	/*
+    	 * Repositorio: se listan las empresas creadas por el usuario logeado y las que estan dadas de alta
+    	 */
     	
         final List<Empresa> listaEmpresas = allMatches(Empresa.class, 
         	new Filter<Empresa>() {
