@@ -10,6 +10,7 @@ import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Optional;
+import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.filter.Filter;
 
 import com.google.common.base.Objects;
@@ -40,6 +41,7 @@ public class Huesped {
 	//{{Nombre
 	private String nombre;
 	
+	@Title(sequence="1.0")
 	@MemberOrder(sequence = "1")
 	public String getNombre() {
 		return nombre;
@@ -52,6 +54,7 @@ public class Huesped {
 	//{{Apellido
 	private String apellido;
 	
+	@Title(sequence="1.1")
 	@MemberOrder(sequence = "2")
 	public String getApellido() {
 		return apellido;
