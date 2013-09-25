@@ -14,7 +14,8 @@ import org.apache.isis.applib.filter.Filter;
 
 import com.google.common.base.Objects;
 
-import dom.contacto.Contacto;
+import dom.contacto.ContactoVO;
+import dom.correo.Mensaje;
 import dom.enumeradores.FormaPago;
 
 @Named("Empresas")
@@ -36,7 +37,7 @@ public class EmpresaServicio extends AbstractFactoryAndRepository{
             @Optional
             @Named("Email") String correo
             ) {
-    	final Contacto contacto = new Contacto(direccion,telefono,correo);
+    	final ContactoVO contacto = new ContactoVO(direccion,telefono,correo);
     	final String creadoPor = usuarioActual();
         return nEmpresa(cuit, razonSocial, tarifa, fPago, contacto, creadoPor);
     }
@@ -47,7 +48,7 @@ public class EmpresaServicio extends AbstractFactoryAndRepository{
             final String razonSocial, 
             final float tarifa,
             final FormaPago fPago, 
-            final Contacto contacto,
+            final ContactoVO contacto,
             final String usuario) {
         final Empresa empresa = newTransientInstance(Empresa.class);
         empresa.setCuit(cuit);
@@ -65,9 +66,16 @@ public class EmpresaServicio extends AbstractFactoryAndRepository{
     @Named("Listar")
     @ActionSemantics(Of.SAFE)
     @MemberOrder(sequence = "2")
-    public List<Empresa> ListaEmpresas() {
-        final String usuario = usuarioActual();
-        final List<Empresa> listaEmpresas = allMatches(Empresa.class, Empresa.creadoPor(usuario));
+    public List<Empresa> listaEmpresas() {
+    	
+        final List<Empresa> listaEmpresas = allMatches(Empresa.class, 
+        	new Filter<Empresa>() {
+   			@Override
+       			public boolean accept(final Empresa empresa) {
+       				return Objects.equal(empresa.getUsuario(), usuarioActual())&&Objects.equal(empresa.isEstado(), true);
+       			}
+        	}
+        );   
         return listaEmpresas;
     }    
 

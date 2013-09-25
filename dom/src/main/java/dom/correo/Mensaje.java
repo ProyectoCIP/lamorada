@@ -149,7 +149,7 @@ public class Mensaje {
     
     private ServicioBandejaDeEntrada bde;
 
-    public void injectABM(final ServicioBandejaDeEntrada bde) {
+    public void injectServicioBandejaDeEntrada(final ServicioBandejaDeEntrada bde) {
         this.bde = bde;
     }
     

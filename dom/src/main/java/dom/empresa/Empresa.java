@@ -24,7 +24,8 @@ import org.apache.isis.applib.filter.Filter;
 import com.google.common.base.Objects;
 
 import dom.huesped.Huesped;
-import dom.contacto.Contacto;
+import dom.contacto.ContactoVO;
+import dom.correo.ServicioBandejaDeEntrada;
 import dom.enumeradores.FormaPago;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
@@ -81,13 +82,13 @@ public class Empresa {
 	 * Contacto -> Value Object
 	 */
 	
-	private Contacto contacto;
+	private ContactoVO contacto;
 	
-	public Contacto getContacto() {
+	public ContactoVO getContacto() {
 		return contacto;
 	}
 	
-	public void setContacto(Contacto contacto) {
+	public void setContacto(ContactoVO contacto) {
 		this.contacto = contacto;
 	}
 	
@@ -134,9 +135,9 @@ public class Empresa {
     @Named("Borrar")
     @Bulk
     @MemberOrder(name="accionesEmpresa", sequence = "1")
-    public Empresa baja() {
-    	this.estado = false;
-    	return this;
+    public List<Empresa> baja() {
+    	setEstado(false);
+    	return empresaServicio.listaEmpresas();
     }
 
     /*
@@ -167,6 +168,16 @@ public class Empresa {
 	public void setContainer(DomainObjectContainer container) {
 		this.container = container;
 	}
+	
+	/*
+	 * Inyección del servicio
+	 */
+	
+	private EmpresaServicio empresaServicio;
+	
+	public void injectEmpresaServicio(final EmpresaServicio serviceEnterprise) {
+        this.empresaServicio = serviceEnterprise;
+    }
     
     /*
      * 
