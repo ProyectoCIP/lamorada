@@ -197,9 +197,9 @@ public class Empresa {
     @Named("Agregar Huesped")
     @PublishedAction
     @MemberOrder(name="huespedes",sequence="1")
-    public Huesped add(final Huesped huesped) {
+    public Empresa add(final Huesped huesped) {
     	getHuespedes().add(huesped);
-    	return huesped;
+    	return this;
     }
     
     @Named("Borrar Huesped")
