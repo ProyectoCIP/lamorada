@@ -1,34 +1,21 @@
 package dom.correo;
 
 import java.io.IOException;
-import java.util.Timer;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
-import javax.mail.Flags;
-import javax.mail.Folder;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Store;
-
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Audited;
-import org.apache.isis.applib.annotation.AutoComplete;
-import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.Hidden;
+import org.apache.isis.applib.annotation.Immutable;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Bulk;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Optional;
-import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Title;
 import org.joda.time.LocalDate;
-
-import dom.todo.ToDoItems;
 
 //import dom.abm.Habitacion;
 
@@ -38,6 +25,7 @@ import dom.todo.ToDoItems;
 
 @ObjectType("MENSAJE")
 @Audited
+@Immutable
 public class Mensaje {
 	
 	private String nombre;
@@ -52,7 +40,6 @@ public class Mensaje {
 	public Mensaje () {}
 	
 	@Title
-	@Disabled
 	@Optional
 	public String getNombre() {
 		return nombre;
@@ -61,7 +48,6 @@ public class Mensaje {
 		this.nombre = nombre;
 	}
 
-	@Disabled
 	@Optional
 	public String getApellido() {
 		return apellido;
@@ -70,7 +56,6 @@ public class Mensaje {
 		this.apellido = apellido;
 	}
 	
-	@Disabled
 	@Optional
 	public String getTelefono() {
 		return telefono;
@@ -79,7 +64,6 @@ public class Mensaje {
 		this.telefono = telefono;
 	}
 
-	@Disabled
 	@Optional
 	public String getCorreo() {
 		return correo;

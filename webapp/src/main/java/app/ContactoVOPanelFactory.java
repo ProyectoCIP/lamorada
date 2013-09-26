@@ -14,7 +14,7 @@ public class ContactoVOPanelFactory extends ComponentFactoryAbstract {
 	private static final long serialVersionUID = -795959377032401308L;
 
 	public ContactoVOPanelFactory() {
-        super(ComponentType.ABOUT);
+        super(ComponentType.ENTITY_LINK);
     }
 
     @Override

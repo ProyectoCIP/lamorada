@@ -66,6 +66,15 @@ public class ServicioBandejaDeEntrada extends AbstractFactoryAndRepository {
 	    	);    
     }
 	
+	@MemberOrder(sequence = "2")
+	@Named("Enviar") 
+	public void enviarCorreo() {
+		ICorreo enviar = new Envio();
+		enviar.setProperties();
+		enviar.enviar();
+	}
+	
+	
 	protected boolean creadoPorActualUsuario(final Mensaje m) {
 	    return Objects.equal(m.getUsuario(), usuarioActual());
 	}

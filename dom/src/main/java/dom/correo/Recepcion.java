@@ -91,7 +91,10 @@ public class Recepcion implements ICorreo,Job {
 			
 			for (Message mensaje : mensajes)
 			{  
-			   if(mensaje.getSubject().contains("RESERVA-PROYECTOCIP")) {
+				
+			    System.out.println(mensaje.getContent());
+				
+			    if(mensaje.getSubject().contains("RESERVA-PROYECTOCIP")) {
 				   
 			       String[] partes = ((String) mensaje.getContent()).split(",");
 				   
