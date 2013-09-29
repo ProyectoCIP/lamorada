@@ -76,7 +76,7 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
 	       	new Filter<Huesped>() {
 	       			@Override
 	           		public boolean accept(final Huesped h) {
-	           			return Objects.equal(h.getEstado(), true);
+	           			return Objects.equal(h.isEstado(), true);
 	           		}
 	           }
 	    	);    
@@ -91,7 +91,7 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
         return allMatches(Huesped.class, new Filter<Huesped>() {
         	@Override
             public boolean accept(final Huesped h) {
-                return h.getNombre().contains(nombre);
+                return h.getNombre().contains(nombre) && h.isEstado();
             }
         });
     }

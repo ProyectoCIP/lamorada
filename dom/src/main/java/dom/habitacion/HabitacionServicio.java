@@ -70,7 +70,7 @@ public class HabitacionServicio extends AbstractFactoryAndRepository{
         return allMatches(Habitacion.class, new Filter<Habitacion>() {
         	@Override
             public boolean accept(final Habitacion h) {
-                return creadoPorActualUsuario(h) && h.getNombre().contains(nombre);
+                return creadoPorActualUsuario(h) && h.getNombre().contains(nombre) && h.isEstado();
             }
         });
     }

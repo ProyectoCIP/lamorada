@@ -91,7 +91,7 @@ public class EmpresaServicio extends AbstractFactoryAndRepository{
         return allMatches(Empresa.class, new Filter<Empresa>() {
         	@Override
             public boolean accept(final Empresa e) {
-                return creadoPorActualUsuario(e) && e.getRazonSocial().contains(nombre);
+                return creadoPorActualUsuario(e) && e.getRazonSocial().contains(nombre) && e.isEstado();
             }
         });
     }

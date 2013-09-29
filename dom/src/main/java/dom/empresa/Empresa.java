@@ -187,6 +187,7 @@ public class Empresa {
     @Persistent(mappedBy="empresa")
     private List<Huesped> huespedes = new ArrayList<Huesped>();
     
+    //Eagerly para desplegar la lista
     @Named("Listado de huéspedes")
     @Render(Type.EAGERLY)
     public List<Huesped> getHuespedes() { return huespedes; } 

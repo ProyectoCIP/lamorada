@@ -25,18 +25,6 @@ import dom.empresa.Empresa;
 @Audited
 public class Huesped {
 	
-	//{{idHuesped
-	private int idHuesped;
-				
-	@Hidden
-	public int getIdHuesped() {
-		return idHuesped;
-	}
-	public void setIdHuesped(final int idHuesped) {
-		this.idHuesped = idHuesped;
-	}
-	//}}
-	
 	//{{Nombre
 	private String nombre;
 	
@@ -91,25 +79,13 @@ public class Huesped {
 	private boolean estado;
 
 	@Hidden
-	public boolean getEstado() {
+	public boolean isEstado() {
 		return estado;
 	}
 	public void setEstado(final boolean estado) {
 		this.estado = estado;
 	}
-	//}}
-	
-	//{{Dirección
-	private String direccion;
-	
-	@MemberOrder(sequence = "5")
-	public String getDireccion() {
-		return direccion;
-	}
-	public void setDireccion(final String direccion) {
-		this.direccion = direccion;
-	}
-	//}}
+	//}}	
 	
 	//{{Empresa
 	private Empresa empresa;
