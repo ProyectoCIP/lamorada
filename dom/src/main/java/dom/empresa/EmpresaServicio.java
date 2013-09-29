@@ -15,7 +15,6 @@ import org.apache.isis.applib.filter.Filter;
 import com.google.common.base.Objects;
 
 import dom.contacto.ContactoVO;
-import dom.correo.Mensaje;
 import dom.enumeradores.FormaPago;
 
 @Named("Empresas")

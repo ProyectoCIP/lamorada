@@ -1,7 +1,5 @@
 package dom.correo;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.annotations.IdentityType;
@@ -22,7 +20,6 @@ import org.joda.time.LocalDate;
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
-
 @ObjectType("MENSAJE")
 @Audited
 @Immutable

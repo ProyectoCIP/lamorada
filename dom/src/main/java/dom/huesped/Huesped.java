@@ -16,7 +16,6 @@ import org.apache.isis.applib.filter.Filter;
 import com.google.common.base.Objects;
 
 import dom.empresa.Empresa;
-import dom.empresa.EmpresaServicio;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)

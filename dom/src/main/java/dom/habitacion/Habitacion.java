@@ -4,31 +4,30 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.DomainObjectContainer;
+import org.apache.isis.applib.annotation.Audited;
+import org.apache.isis.applib.annotation.AutoComplete;
+import org.apache.isis.applib.annotation.Bulk;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Title;
+import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.filter.Filter;
+import org.joda.time.LocalDate;
 
 import com.google.common.base.Objects;
 
+import dom.enumeradores.EstadoHabitacion;
 import dom.enumeradores.TipoHabitacion;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
+@ObjectType("HABITACION")
+@AutoComplete(repository=HabitacionServicio.class,action="completaHabitaciones")
+@Audited
 public class Habitacion {
-	
-	//{{idHabitacion
-	private int idHabitacion;
-				
-	@Hidden
-	public int getIdHabitacion() {
-		return idHabitacion;
-	}
-	public void setIdHabitacion(final int idHabitacion) {
-		this.idHabitacion = idHabitacion;
-	}
-	//}}
 		
 	//{{Nombre
 	private String nombre;
@@ -67,6 +66,41 @@ public class Habitacion {
 	}
 	//}}
 	
+	//{{Estado del objeto
+	private boolean estado;
+	
+	public boolean isEstado() {
+		return estado;
+	}
+	public void setEstado(boolean estado) {
+		this.estado = estado;
+	}	
+	//}}
+	
+	//{{Estado : Disponible / Bloqueada
+	private EstadoHabitacion estadoHabitacion;
+	
+	@Hidden(where=Where.ALL_TABLES)
+	public EstadoHabitacion getEstado() {
+		return estadoHabitacion;
+	}
+	public void setEstado(EstadoHabitacion estadoHabitacion) {
+		this.estadoHabitacion = estadoHabitacion;
+	}
+	//}}	
+	
+	//{{Fecha
+	private LocalDate fecha;
+
+	@Hidden
+	public LocalDate getFecha() {
+		return fecha;
+	}
+	public void setFecha(LocalDate fecha) {
+		this.fecha = fecha;
+	}
+	//}}
+	
 	//{{Usuario actual
 	private String usuario;
 
@@ -88,6 +122,14 @@ public class Habitacion {
         };
     }
 	
+	@Named("Borrar Habitación")
+	@Bulk
+	public void borrar() {		
+		if(isEstado()) {
+			setEstado(false);
+		}
+	}
+	
 	private DomainObjectContainer container;
 	
 	public void injectDomainObjectContainer(final DomainObjectContainer container) {
@@ -99,5 +141,6 @@ public class Habitacion {
 	}
 	public void setContainer(DomainObjectContainer container) {
 		this.container = container;
-	}	
+	}
+		
 }

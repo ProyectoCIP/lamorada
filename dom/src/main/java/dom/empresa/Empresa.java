@@ -26,10 +26,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
 import dom.huesped.Huesped;
-import dom.huesped.HuespedServicio;
-import dom.todo.ToDoItem;
 import dom.contacto.ContactoVO;
-import dom.correo.ServicioBandejaDeEntrada;
 import dom.enumeradores.FormaPago;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)

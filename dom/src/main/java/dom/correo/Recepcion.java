@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import javax.mail.Flags;
+//import javax.mail.Flags;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -14,11 +14,8 @@ import javax.mail.Session;
 import javax.mail.Store;
 import javax.swing.JOptionPane;
 
-import org.apache.isis.applib.AbstractFactoryAndRepository;
-import org.apache.isis.applib.DomainObjectContainer;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 
 public class Recepcion implements ICorreo,Job {
 

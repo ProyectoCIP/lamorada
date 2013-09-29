@@ -8,6 +8,7 @@ import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.ActionSemantics.Of;
+import org.apache.isis.applib.filter.Filter;
 
 import com.google.common.base.Objects;
 
@@ -59,7 +60,20 @@ public class HabitacionServicio extends AbstractFactoryAndRepository{
         final String usuario = usuarioActual();
         final List<Habitacion> listaHabitacion = allMatches(Habitacion.class, Habitacion.creadoPor(usuario));
         return listaHabitacion;
-    }    
+    }
+	
+	/*
+     * Método para llenar el DropDownList de habitacion, con la posibilidad de que te autocompleta las coincidencias al ir tipeando
+     */
+    @Hidden
+    public List<Habitacion> completaHabitaciones(final String nombre) {
+        return allMatches(Habitacion.class, new Filter<Habitacion>() {
+        	@Override
+            public boolean accept(final Habitacion h) {
+                return creadoPorActualUsuario(h) && h.getNombre().contains(nombre);
+            }
+        });
+    }
 
 	
     protected boolean creadoPorActualUsuario(final Habitacion h) {
