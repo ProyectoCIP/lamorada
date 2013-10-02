@@ -21,7 +21,7 @@ public class Consumo {
 	private String descripcion; 
 	private int cantidad;
 	private float precio; 
-	private float precioTotal;	
+	//private float precioTotal;	
 	
 	@Title 
 	public String getDescripcion() {
@@ -48,9 +48,9 @@ public class Consumo {
 	public float getPrecioTotal() {
 		return getCantidad()*getPrecio(); 
 	}
-	public void setPrecioTotal(float precioTotal) {
+	/*public void setPrecioTotal(float precioTotal) {
 		this.precioTotal = precioTotal;
-	} 
+	} */
 	
 	
 

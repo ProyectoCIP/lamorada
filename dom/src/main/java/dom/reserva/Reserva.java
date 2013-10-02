@@ -1,5 +1,7 @@
 package dom.reserva;
 
+import java.util.List;
+
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
@@ -14,9 +16,14 @@ import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.NotPersisted;
 import org.apache.isis.applib.annotation.ObjectType;
+import org.apache.isis.applib.annotation.PublishedAction;
+import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.annotation.Render.Type;
 import org.joda.time.LocalDate;
 
+import dom.consumo.Consumo;
+import dom.empresa.Empresa;
 import dom.huesped.Huesped;
 
 
@@ -68,7 +75,42 @@ public class Reserva {
 	}
 	//}}
 	
-	//{{Consumicion
+	//{{Consumos
+	@Persistent(mappedBy="reserva")
+	private List<Consumo> consumos;
+	
+	@Named("Consumición en esta reserva")
+	@Render(Type.EAGERLY)
+	public List<Consumo> getConsumos() {
+		return consumos;
+	}
+	
+	public void setConsumos(List<Consumo> consumos) {
+		this.consumos = consumos;
+	}
+
+	//{{Agregar consumo
+	@Named("Agregar Consumo")
+	@MemberOrder(name="consumos",sequence="1")
+    public Reserva add(
+    		@Named("Descripcion") String descripcion,
+    		@Named("Cantidad") int cantidad,
+    		@Named("Precio") float precio) {
+		/*
+		 * Se envian los datos del formulario consumo al servicio y nos lo retorna ya persistido
+		 */
+		getConsumos().add(reservaServicio.agregarConsumo(descripcion, cantidad, precio));
+		return this;
+	}
+	//}}
+	
+	//{{Borrar consumo
+	@Named("Borrar Consumo")
+    @MemberOrder(name="consumos",sequence="2")
+    public Reserva remove(final Consumo consumo) {
+    	getConsumos().remove(consumos);
+    	return this;
+    }
 	//}}
 
 	//{{Comentarios - No se muestran cuando se lista la reserva
@@ -120,6 +162,14 @@ public class Reserva {
 	public void setContainer(DomainObjectContainer container) {
 		this.container = container;
 	}   
+	
+	//{{inyeccion ReservaServicio
+	private ReservaServicio reservaServicio;
+	
+	public void injectReservaServicio(final ReservaServicio reservaServicio) {
+		this.reservaServicio = reservaServicio;
+	}
+	//}}
 
 	//{{Usuario actual
 	private String usuario;

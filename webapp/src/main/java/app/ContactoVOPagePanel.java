@@ -1,24 +1,35 @@
 package app;
 
-import org.apache.isis.viewer.wicket.ui.pages.entity.EntityPage;
+import org.apache.isis.viewer.wicket.model.models.ValueModel;
 import org.apache.isis.viewer.wicket.ui.panels.PanelAbstract;
-import org.apache.wicket.Component;
+import org.apache.wicket.markup.html.basic.Label;
 
-public class ContactoVOPagePanel extends PanelAbstract<> {
+public class ContactoVOPagePanel extends PanelAbstract<ValueModel> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7034354524600963726L;
-
-	public ContactoVOPagePanel(String id, EntityPage entityPageModel) {
-		// TODO Auto-generated constructor stub
+	private static final String ID_DIRECCION = "direccion";
+	private static final String ID_TELEFONO = "telefono";
+	private static final String ID_CORREO = "correo";
+	
+	private static final long serialVersionUID = 1L;
+	
+	public ContactoVOPagePanel(String id, ValueModel model) {
+		super(id, model);
+		buildGui();
 	}
 
-	@Override
-	protected void onRender() {
-		// TODO Auto-generated method stub
+	private void buildGui() {
+		
+		//final ValueModel contactoVOPagePanel = getModel();
+		
+		final Label direccion = new Label(ID_DIRECCION,"la direccion de la entidad");
 
+		final Label telefono = new Label(ID_TELEFONO,"el telefono de la entidad");
+
+		final Label correo = new Label(ID_CORREO,getModel().getObject().toString());
+		
+		add(direccion);
+		add(telefono);
+		add(correo);
+		
 	}
-
 }

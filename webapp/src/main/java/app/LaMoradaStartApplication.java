@@ -110,7 +110,7 @@ public class LaMoradaStartApplication extends IsisWicketApplication {
             protected void configure() {
             	
             	//bind(ComponentFactoryRegistrar.class).to(ComponentFactoryRegistrarForLaMoradaStart.class);
-                bind(ComponentFactoryRegistrar.class).to(ContactoVOFactoryRegistrar.class);
+                bind(ComponentFactoryRegistrar.class).to(ContactoVOPagePanelFactoryRegistrar.class);
                 bind(String.class).annotatedWith(Names.named("applicationName")).toInstance("La Morada");
                 bind(String.class).annotatedWith(Names.named("applicationFooter")).toInstance("Capo");
                 bind(String.class).annotatedWith(Names.named("applicationCss")).toInstance("css/application.css");

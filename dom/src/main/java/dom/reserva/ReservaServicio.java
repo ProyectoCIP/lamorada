@@ -2,8 +2,11 @@ package dom.reserva;
 
 import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.annotation.NotInServiceMenu;
 import org.apache.isis.applib.annotation.Optional;
 import org.joda.time.LocalDate;
+
+import dom.consumo.Consumo;
 import dom.huesped.Huesped;
 
 public class ReservaServicio extends AbstractFactoryAndRepository {
@@ -30,6 +33,21 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 			getContainer().informUser("Reserva realizada con éxito!");
 			
 			return reserva;
+	}
+	
+	@NotInServiceMenu
+	public Consumo agregarConsumo(
+			String descripcion,
+			int cantidad,
+			float precio
+    		) {
+		
+		Consumo consumo = newTransientInstance(Consumo.class);
+		consumo.setDescripcion(descripcion);
+		consumo.setCantidad(cantidad);
+		consumo.setPrecio(precio);
+		persistIfNotAlready(consumo);
+		return consumo;
 	}
 	
 	protected String usuarioActual() {
