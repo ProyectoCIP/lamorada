@@ -2,14 +2,16 @@ package dom.contacto;
 
 import java.io.Serializable;
 
+import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.VersionStrategy;
+
 import org.apache.isis.applib.annotation.Value;
 
-@Value(semanticsProviderName = "ContactValueSemanticsProvider")
 public final class ContactoVO implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 981967545177159614L;
+	private static final long serialVersionUID = 1L;
 
 	public ContactoVO(String direccion, String telefono, String correo) {
 		this.domicilio = direccion;

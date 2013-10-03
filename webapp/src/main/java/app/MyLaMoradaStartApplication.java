@@ -134,8 +134,4 @@ public class MyLaMoradaStartApplication extends IsisWicketApplication {
         }
     }
     
-    private void addUserName() {
-    	
-    }
-
 }

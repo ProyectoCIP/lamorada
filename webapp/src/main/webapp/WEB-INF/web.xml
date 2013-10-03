@@ -153,7 +153,7 @@
         <filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
         <init-param>
             <param-name>applicationClassName</param-name>
-            <param-value>app.LaMoradaStartApplication</param-value>
+            <param-value>app.MyLaMoradaStartApplication</param-value>
         </init-param>
     </filter>
     <filter-mapping>

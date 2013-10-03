@@ -83,6 +83,7 @@ public class Empresa {
 	 * Contacto -> Value Object
 	 */
 	
+	@Persistent
 	private ContactoVO contacto;
 	
 	public ContactoVO getContacto() {

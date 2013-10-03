@@ -4,33 +4,17 @@
       xml:lang="en"  
       lang="en">
 	<body>
-		<div>
-			<table border="0">
-				<tr>
-					<td>
-						DIRECCIÓN:
-					</td>
-					<td>
-						<span wicket:id="direccion"></span>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						TELÉFONO:
-					</td>
-					<td>
-						<span wicket:id="telefono"></span>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						CORREO:
-					</td>
-					<td>
-						<span wicket:id="correo"></span>
-					</td>
-				</tr>
-			</table>
-		</div>
+		<div class="inputFormTable properties">
+        	<fieldset wicket:id="memberGroup" class="memberGroup
+myBlockContainer">
+            	<legend wicket:id="memberGroupName">[group
+name]</legend>
+                	<div wicket:id="properties">
+                    	<div wicket:id="property"
+class="property">[property]
+						</div>
+                 	</div>
+            </fieldset>
+        </div>
 	</body>
 </html>

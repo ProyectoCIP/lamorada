@@ -6,6 +6,8 @@ import org.apache.isis.viewer.wicket.ui.ComponentType;
 import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
 
+import dom.contacto.ContactoVO;
+
 public class ContactoVOPagePanelFactory extends ComponentFactoryAbstract {
 	
 	/**
@@ -16,10 +18,15 @@ public class ContactoVOPagePanelFactory extends ComponentFactoryAbstract {
 	public ContactoVOPagePanelFactory() {
         super(ComponentType.SCALAR_NAME_AND_VALUE);
     }
-
+	
     @Override
     public ApplicationAdvice appliesTo(final IModel<?> model) {
-        return appliesIf(model instanceof ScalarModel);
+    	if (!(model instanceof ScalarModel)) {
+            return ApplicationAdvice.DOES_NOT_APPLY;
+        }    	
+    	
+    	final ScalarModel scalarModel = (ScalarModel) model;
+    	return appliesIf(ContactoVO.class.isAssignableFrom(scalarModel.getTypeOfSpecification().getCorrespondingClass()));
     }
 
     @Override
