@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
+import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.annotation.Value;
 
 public final class ContactoVO implements Serializable {
@@ -21,7 +22,7 @@ public final class ContactoVO implements Serializable {
 	
 	private String domicilio;
 
-
+	@Title
 	public String getDomicilio() {
 		return domicilio;
 	}
