@@ -37,6 +37,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 	
 	@NotInServiceMenu
 	public Consumo agregarConsumo(
+			Reserva reserva,
 			String descripcion,
 			int cantidad,
 			float precio
@@ -46,6 +47,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 		consumo.setDescripcion(descripcion);
 		consumo.setCantidad(cantidad);
 		consumo.setPrecio(precio);
+		consumo.setReserva(reserva);
 		persistIfNotAlready(consumo);
 		return consumo;
 	}

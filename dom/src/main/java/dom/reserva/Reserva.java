@@ -146,7 +146,7 @@ public class Reserva {
 		/*
 		 * Se envian los datos del formulario consumo al servicio y nos lo retorna ya persistido
 		 */
-		getConsumos().add(reservaServicio.agregarConsumo(descripcion, cantidad, precio));
+		getConsumos().add(reservaServicio.agregarConsumo(this, descripcion, cantidad, precio));
 		return this;
 	}
 	//}}

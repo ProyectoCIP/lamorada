@@ -10,6 +10,8 @@ import org.apache.isis.applib.annotation.NotPersisted;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Title;
 
+import dom.reserva.Reserva;
+
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
@@ -52,9 +54,13 @@ public class Consumo {
 		this.precioTotal = precioTotal;
 	} */
 	
+	private Reserva reserva;
 	
-
-	
-	
+	public Reserva getReserva() {
+		return reserva;
+	}
+	public void setReserva(Reserva reserva) {
+		this.reserva = reserva;
+	}
 
 }
