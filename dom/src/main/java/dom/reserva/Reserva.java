@@ -17,7 +17,6 @@ import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.NotPersisted;
 import org.apache.isis.applib.annotation.ObjectType;
-import org.apache.isis.applib.annotation.PublishedAction;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.annotation.When;
@@ -26,7 +25,8 @@ import org.apache.isis.applib.annotation.Render.Type;
 import org.joda.time.LocalDate;
 
 import dom.consumo.Consumo;
-import dom.empresa.Empresa;
+import dom.enumeradores.FormaPago;
+import dom.habitacion.Habitacion;
 import dom.huesped.Huesped;
 
 
@@ -94,6 +94,30 @@ public class Reserva {
 
 	public void setMontoSeña(float montoSeña) {
 		this.montoSeña = montoSeña;
+	}
+	//}}
+	
+	//{{Forma en la que se hace la seña
+	private FormaPago tipoSeña;
+	
+	public FormaPago getTipoSeña() {
+		return tipoSeña;
+	}
+	
+	public void setTipoSeña(FormaPago tipoSeña) {
+		this.tipoSeña = tipoSeña;
+	}
+	//}}
+	
+	//{{Lista de habitaciones a reservar
+	private List<Habitacion> listaHabitaciones;
+	
+	public List<Habitacion> getListaHabitaciones() {
+		return listaHabitaciones;
+	}
+
+	public void setListaHabitaciones(List<Habitacion> listaHabitaciones) {
+		this.listaHabitaciones = listaHabitaciones;
 	}
 	//}}
 	
@@ -324,6 +348,5 @@ public class Reserva {
 		}
 	}
     //}}
-
 	
 }

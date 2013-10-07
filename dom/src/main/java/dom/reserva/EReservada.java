@@ -7,6 +7,7 @@ import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Optional;
 import org.joda.time.LocalDate;
 
+import dom.enumeradores.FormaPago;
 import dom.huesped.Huesped;
 
 public class EReservada extends AbstractFactoryAndRepository implements IEReserva {
@@ -23,18 +24,24 @@ public class EReservada extends AbstractFactoryAndRepository implements IEReserv
 	@Hidden
 	@Override
 	public Reserva accion(Reserva reserva) {
-		return reservar(reserva,null,null);
+		return reservar(reserva,null,null,0,null);
 	}
 	
 	private Reserva reservar(
 			Reserva reserva,
 			@Named("Huesped") Huesped huesped,
 			@Optional
+			@Named("Tipo Seña") FormaPago tipoSeña,
+			@Optional
+			@Named("Seña") float seña,
+			@Optional
 			@MultiLine(numberOfLines=3)
 			@Named("Comentario") String comentario
 			) {
-			//final Reserva reserva = newTransientInstance(Reserva.class);
+		
 			reserva.setHuesped(huesped);
+			reserva.setTipoSeña(tipoSeña);
+			reserva.setMontoSeña(seña);
 			reserva.setFecha(LocalDate.now());
 			reserva.setComentario(comentario);
 			reserva.setUsuario(getContainer().getUser().getName());
