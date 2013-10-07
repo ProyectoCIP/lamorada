@@ -1,7 +1,14 @@
 package dom.reserva;
 
-public class ECheckIN  implements IEReserva {
+import org.apache.isis.applib.AbstractFactoryAndRepository;
+
+public class ECheckIN extends AbstractFactoryAndRepository implements IEReserva {
 	
+	public String getIcon() {
+		return "CheckIN";
+	}
+	
+	@Override
 	public String getNombre() {
 		return "CheckIN";
 	}

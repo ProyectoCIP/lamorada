@@ -11,6 +11,10 @@ import dom.huesped.Huesped;
 
 public class EReservada extends AbstractFactoryAndRepository implements IEReserva {
 
+	public String getIcon() {
+		return "Reservada";
+	}
+	
 	@Override
 	public String getNombre() {
 		return "CheckOUT";

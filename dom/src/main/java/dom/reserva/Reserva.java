@@ -85,6 +85,18 @@ public class Reserva {
 	}
 	//}}
 	
+	//{{Monto de la seña
+	private float montoSeña;
+
+	public float getMontoSeña() {
+		return montoSeña;
+	}
+
+	public void setMontoSeña(float montoSeña) {
+		this.montoSeña = montoSeña;
+	}
+	//}}
+	
 	//{{Consumos
 	@Persistent(mappedBy="reserva")
 	private List<Consumo> consumos;
@@ -260,7 +272,31 @@ public class Reserva {
      * Los datos del Cierre
      */
     
-    //{{El monto total que se debe pagar
+    //{{Número de la factura impresa
+    private String numeroFactura;
+
+	public String getNumeroFactura() {
+		return numeroFactura;
+	}
+
+	public void setNumeroFactura(String numeroFactura) {
+		this.numeroFactura = numeroFactura;
+	}
+	//}}
+	
+	//{{Fecha de la factura impresa
+	private LocalDate fechaFactura;
+	
+	public LocalDate getFechaFactura() {
+		return fechaFactura;
+	}
+
+	public void setFechaFactura(LocalDate fechaFactura) {
+		this.fechaFactura = fechaFactura;
+	}	
+	//}}
+	
+	//{{El monto total que se debe pagar
     private float total;
     
     public float getTotal() {
@@ -288,9 +324,6 @@ public class Reserva {
 		}
 	}
     //}}
-    
-    
-    
-    
+
 	
 }
