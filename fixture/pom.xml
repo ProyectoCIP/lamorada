@@ -21,17 +21,17 @@
 
     <parent>
     	<groupId>com.mycompany</groupId>
-        <artifactId>hosteria</artifactId>
+        <artifactId>enterprise</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-	<artifactId>hosteria-fixture</artifactId>
+	<artifactId>enterprise-fixture</artifactId>
 	<name>La Morada - Wicket/Restful/JDO Fixtures</name>
 
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>hosteria-dom</artifactId>
+			<artifactId>enterprise-dom</artifactId>
 		</dependency>
 	</dependencies>
 

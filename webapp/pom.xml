@@ -21,11 +21,11 @@
 
     <parent>
         <groupId>com.mycompany</groupId>
-        <artifactId>hosteria</artifactId>
+        <artifactId>enterprise</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>hosteria-webapp</artifactId>
+    <artifactId>enterprise-webapp</artifactId>
     <name>La Morada - Wicket/Restful/JDO Webapp</name>
 
     <description>This module runs both the Wicket viewer and the Restfulobjects viewer in a single webapp configured to run using the datanucleus object store.</description>
@@ -92,7 +92,7 @@
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
-                    <warName>hosteria</warName>
+                    <warName>enterprise</warName>
                     <archive>
                         <manifest>
                             <addClasspath>false</addClasspath>
@@ -147,7 +147,7 @@
         <!-- other modules in this project -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>hosteria-dom</artifactId>
+            <artifactId>enterprise-dom</artifactId>
             <exclusions>
                 <exclusion>
                     <!-- so don't pick up transitive dependency to asm 4.0.0 -->
@@ -158,7 +158,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>hosteria-fixture</artifactId>
+            <artifactId>enterprise-fixture</artifactId>
             <exclusions>
                 <exclusion>
                     <!-- so don't pick up transitive dependency to asm 4.0.0 -->
@@ -171,7 +171,7 @@
         <!-- objectstore/domain service/repository implementations (brings in dependency to objectstore-jdo)-->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>hosteria-objstore-jdo</artifactId>
+            <artifactId>enterprise-objstore-jdo</artifactId>
             <exclusions>
                 <exclusion>
                     <!-- so don't pick up transitive dependency to asm 4.0.0 -->

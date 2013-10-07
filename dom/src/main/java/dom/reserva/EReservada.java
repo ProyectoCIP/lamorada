@@ -10,6 +10,11 @@ import org.joda.time.LocalDate;
 import dom.huesped.Huesped;
 
 public class EReservada extends AbstractFactoryAndRepository implements IEReserva {
+
+	@Override
+	public String getNombre() {
+		return "CheckOUT";
+	}
 	
 	@Hidden
 	@Override
@@ -21,7 +26,7 @@ public class EReservada extends AbstractFactoryAndRepository implements IEReserv
 			Reserva reserva,
 			@Named("Huesped") Huesped huesped,
 			@Optional
-			@MultiLine(numberOfLines=4)
+			@MultiLine(numberOfLines=3)
 			@Named("Comentario") String comentario
 			) {
 			//final Reserva reserva = newTransientInstance(Reserva.class);

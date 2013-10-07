@@ -21,11 +21,11 @@
 
     <parent>
     	<groupId>com.mycompany</groupId>
-        <artifactId>hosteria</artifactId>
+        <artifactId>enterprise</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-	<artifactId>hosteria-objstore-jdo</artifactId>
+	<artifactId>enterprise-objstore-jdo</artifactId>
 	<name>La Morada - Wicket/Restful/JDO Repositories (for JDO)</name>
 
 	<dependencyManagement>
@@ -43,7 +43,7 @@
 		<!-- other modules in this project -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>hosteria-dom</artifactId>
+			<artifactId>enterprise-dom</artifactId>
 		</dependency>
 		
         <dependency>

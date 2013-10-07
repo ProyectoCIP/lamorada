@@ -10,6 +10,7 @@ import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Audited;
 import org.apache.isis.applib.annotation.AutoComplete;
 import org.apache.isis.applib.annotation.Bulk;
+import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.MultiLine;
@@ -18,6 +19,8 @@ import org.apache.isis.applib.annotation.NotPersisted;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.PublishedAction;
 import org.apache.isis.applib.annotation.Render;
+import org.apache.isis.applib.annotation.Title;
+import org.apache.isis.applib.annotation.When;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.annotation.Render.Type;
 import org.joda.time.LocalDate;
@@ -43,7 +46,7 @@ public class Reserva {
 		return numero;
 	}
 	
-	public void setNumero(long numero) {
+	public void setNumero(final long numero) {
 		this.numero = numero;
 	}
 	//}}
@@ -57,8 +60,15 @@ public class Reserva {
 		return estado;
 	}
 
-	public void setEstado(IEReserva estado) {
+	public void setEstado(final IEReserva estado) {
 		this.estado = estado;
+	}
+	//}}
+	
+	//{{Nombre del estado actual que aparece en el viewer : Disponible, Reservada, CheckIN, CheckOUT, Cerrada
+	@Title
+	public String getNombreEstado() {
+		return (estado == null) ? "Disponible" : getEstado().getNombre();		
 	}
 	//}}
 	
@@ -70,7 +80,7 @@ public class Reserva {
 		return fecha;
 	}
 
-	public void setFecha(LocalDate fecha) {
+	public void setFecha(final LocalDate fecha) {
 		this.fecha = fecha;
 	}
 	//}}
@@ -85,9 +95,10 @@ public class Reserva {
 		return consumos;
 	}
 	
-	public void setConsumos(List<Consumo> consumos) {
+	public void setConsumos(final List<Consumo> consumos) {
 		this.consumos = consumos;
 	}
+	//}}
 
 	//{{Agregar consumo
 	@Named("Agregar Consumo")
@@ -113,6 +124,16 @@ public class Reserva {
     }
 	//}}
 
+	private int cantidadDias;
+	
+	public int getCantidadDias() {
+		return cantidadDias;
+	}
+	
+	public void setCantidadDias(final int cantidadDias) {
+		this.cantidadDias = cantidadDias;
+	}
+	
 	//{{Comentarios - No se muestran cuando se lista la reserva
 	private String comentario;
 	
@@ -123,7 +144,7 @@ public class Reserva {
 		return comentario;
 	}
 
-	public void setComentario(String comentario) {
+	public void setComentario(final String comentario) {
 		this.comentario = comentario;
 	}
 	//}}
@@ -135,13 +156,14 @@ public class Reserva {
 		return huesped;
 	}
 
-	public void setHuesped(Huesped huesped) {
+	public void setHuesped(final Huesped huesped) {
 		this.huesped = huesped;
 	}	
 	//}}
 	
-	//{{Accion : Reservar
+	//{{Accion : Reservar / Desactivada cuando el objeto ya está persistido (ya se encuentra reservada)
 	@Named("Reservar")
+	@Disabled(when=When.ONCE_PERSISTED)
 	@Bulk
 	public void reservar() {
 		/*
@@ -152,14 +174,23 @@ public class Reserva {
 			getEstado().accion(this);
 		}
 		else {
-			container.informUser("Ya se encuentra reservada!");
+			container.informUser("No se puede realizar la Reserva solicitada");
 		}
+	}
+	//}}
+	
+	//{{Accion : Borrar Reserva / desactivada cuando el objeto aún no se ha persistido (no es reserva)
+	@Named("Borrar Reserva")
+	@Disabled(when=When.UNTIL_PERSISTED)
+	public void borrarReserva() {
+		container.informUser("Reserva número: "+getNumero()+" a sido borrada");
+		container.removeIfNotAlready(this);
 	}
 	//}}
 	
 	private DomainObjectContainer container;
 	
-	public void setContainer(DomainObjectContainer container) {
+	public void setContainer(final DomainObjectContainer container) {
 		this.container = container;
 	}   
 	
@@ -182,5 +213,84 @@ public class Reserva {
     public void setUsuario(final String usuario) {
         this.usuario = usuario;
     }//}}
+    
+    /*
+     * Los datos del CheckIN
+     */
+    
+    //{{Acción : CheckIN / desactivada cuando el objeto aún no se ha persistido (no es reserva)
+    @Named("CheckIN")
+	@Disabled(when=When.UNTIL_PERSISTED)
+    public void checkIn() {
+		/*
+		 * Se puede checkIn
+		 */
+		if(getEstado() instanceof EReservada) {
+			setEstado(new ECheckIN());
+			getEstado().accion(this);
+		}
+		else {
+			container.informUser("No se puede realizar el CheckIN solicitado");
+		}
+	}
+    //}}
+    
+    /*
+     * Los datos del CheckOUT
+     */
+    
+    //{{Acción : CheckOUT / desactivada cuando el objeto aún no se ha persistido (no es reserva)
+    @Named("CheckOUT")
+    @Disabled(when=When.UNTIL_PERSISTED)
+	public void checkOut() {
+		/*
+		 * Se puede checkIn
+		 */
+		if(getEstado() instanceof ECheckIN) {
+			setEstado(new ECheckOUT());
+			getEstado().accion(this);
+		}
+		else {
+			container.informUser("No se puede realizar el CheckOUT solicitado");
+		}
+	}
+    //}}
+    
+    /*
+     * Los datos del Cierre
+     */
+    
+    //{{El monto total que se debe pagar
+    private float total;
+    
+    public float getTotal() {
+    	return total;
+    }
+    
+    public void setTotal(final float total) {
+    	this.total = total;
+    }
+    //}}
+    
+    //{{Acción : Cerrar / desactivada cuando el objeto aún no se ha persistido (no es reserva)
+    @Named("Cerrar")
+    @Disabled(when=When.UNTIL_PERSISTED)
+	public void cerrar() {
+		/*
+		 * Se puede checkIn
+		 */
+		if(getEstado() instanceof ECheckOUT) {
+			setEstado(new ECerrada());
+			getEstado().accion(this);
+		}
+		else {
+			container.informUser("No se puede realizar el Cierre solicitado");
+		}
+	}
+    //}}
+    
+    
+    
+    
 	
 }

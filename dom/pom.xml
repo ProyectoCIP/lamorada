@@ -21,11 +21,11 @@
 
 	<parent>
     	<groupId>com.mycompany</groupId>
-    	<artifactId>hosteria</artifactId>
+    	<artifactId>enterprise</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>hosteria-dom</artifactId>
+	<artifactId>enterprise-dom</artifactId>
 	<name>La Morada - Wicket/Restful/JDO DOM</name>
 
 	<build>
