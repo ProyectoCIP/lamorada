@@ -66,6 +66,20 @@ public class Habitacion {
 	}
 	//}}
 	
+	//{{Cuanto cuesta la habitación por noche en base a su capacidad
+	/*
+	private float costo;
+	
+	public float getCosto() {
+		
+	}
+	
+	public void setCosto() {
+		
+	}
+	*/
+	//}}
+	
 	//{{Estado del objeto
 	private boolean estado;
 	
