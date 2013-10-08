@@ -5,7 +5,9 @@ import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Audited;
+import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.ObjectType;
+import org.apache.isis.applib.annotation.Where;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
@@ -18,8 +20,13 @@ import org.apache.isis.applib.annotation.ObjectType;
 @Audited
 public class Tarifa {
 	
+	public String title() {
+		return Integer.toString(getPax());
+	}
+	
 	private int pax;
-
+	
+	@Hidden(where=Where.ALL_TABLES)
 	public int getPax() {
 		return pax;
 	}
@@ -27,7 +34,11 @@ public class Tarifa {
 	public void setPax(int pax) {
 		this.pax = pax;
 	}
-
+	
+	public String validatePax(int pax) {
+        return (pax>4)? "Cuadruple es lo máximo":null;
+    }
+	
 	private float precio;
 
 	public float getPrecio() {

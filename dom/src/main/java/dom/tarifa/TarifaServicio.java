@@ -5,10 +5,7 @@ import java.util.List;
 import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
-import org.apache.isis.applib.filter.Filter;
 import org.apache.isis.applib.query.QueryDefault;
-
-import dom.empresa.Empresa;
 
 @Named("Tarifas")
 public class TarifaServicio extends AbstractFactoryAndRepository {
@@ -22,22 +19,32 @@ public class TarifaServicio extends AbstractFactoryAndRepository {
 			@Named("Precio") float precio
 			) {
 		
-		QueryDefault<Tarifa> query = QueryDefault.create(Tarifa.class,"traerPax","pax",cantidad);
-       
-		if(uniqueMatch(query) != null)
-		{    
-			tarifa = uniqueMatch(query);
-			tarifa.setPrecio(precio);
+		if(cantidad < 5) {
+		
+			QueryDefault<Tarifa> query = QueryDefault.create(Tarifa.class,"traerPax","pax",cantidad);
+	       
+			if(uniqueMatch(query) != null)
+			{    
+				tarifa = uniqueMatch(query);
+				tarifa.setPrecio(precio);
+			}
+			else
+			{
+				tarifa = newTransientInstance(Tarifa.class);
+				tarifa.setPax(cantidad);
+				tarifa.setPrecio(precio);
+				persistIfNotAlready(tarifa);
+			}
+			
+			return tarifa;
+			
 		}
 		else
 		{
-			tarifa = newTransientInstance(Tarifa.class);
-			tarifa.setPax(cantidad);
-			tarifa.setPrecio(precio);
-			persistIfNotAlready(tarifa);
+			getContainer().informUser("El máximo permitido es cuadruple");
+			return null;
 		}
 		
-		return tarifa;
 	}
 	
 	@MemberOrder(sequence="2")
