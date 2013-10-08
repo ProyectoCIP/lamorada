@@ -3,6 +3,7 @@ package dom.tarifa;
 import java.util.List;
 
 import org.apache.isis.applib.AbstractFactoryAndRepository;
+import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.filter.Filter;
 import org.apache.isis.applib.query.QueryDefault;
@@ -14,6 +15,7 @@ public class TarifaServicio extends AbstractFactoryAndRepository {
 	
 	private Tarifa tarifa;
 	
+	@MemberOrder(sequence="1")
 	@Named("Nueva")
 	public Tarifa nueva(
 			@Named("Cantidad de Personas") int cantidad,
@@ -24,12 +26,12 @@ public class TarifaServicio extends AbstractFactoryAndRepository {
        
 		if(uniqueMatch(query) != null)
 		{    
-			Tarifa tarifa = uniqueMatch(query);
+			tarifa = uniqueMatch(query);
 			tarifa.setPrecio(precio);
 		}
 		else
 		{
-			Tarifa tarifa = newTransientInstance(Tarifa.class);
+			tarifa = newTransientInstance(Tarifa.class);
 			tarifa.setPax(cantidad);
 			tarifa.setPrecio(precio);
 			persistIfNotAlready(tarifa);
@@ -38,6 +40,7 @@ public class TarifaServicio extends AbstractFactoryAndRepository {
 		return tarifa;
 	}
 	
+	@MemberOrder(sequence="2")
 	@Named("Listar")
 	public List<Tarifa> listarTarifa() {
 		QueryDefault<Tarifa> query = QueryDefault.create(Tarifa.class,"traerTodosPax");

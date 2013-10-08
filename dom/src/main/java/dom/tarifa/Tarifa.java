@@ -11,7 +11,7 @@ import org.apache.isis.applib.annotation.ObjectType;
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
 @javax.jdo.annotations.Queries({
-	@javax.jdo.annotations.Query(name="traerPax", language="JDOQL",value="SELECT FROM dom.tarifa.Tarifa WHERE pax == :cantidad"),
+	@javax.jdo.annotations.Query(name="traerPax", language="JDOQL",value="SELECT FROM dom.tarifa.Tarifa WHERE pax == :pax"),
 	@javax.jdo.annotations.Query(name="traerTodosPax", language="JDOQL",value="SELECT FROM dom.tarifa.Tarifa")
 })
 @ObjectType("TARIFA")
