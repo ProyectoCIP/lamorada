@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.DomainObjectContainer;
@@ -41,7 +42,7 @@ public class Reserva {
 	//{{Numero de la reserva, autoincremental. Responsabilidad del ORM
 	private long numero;
 
-	@NotPersisted
+	@PrimaryKey
 	public long getNumero() {
 		return numero;
 	}
@@ -206,6 +207,7 @@ public class Reserva {
 		 * Se puede reservar
 		 */
 		if(getEstado()==null) {
+			
 			setEstado(new EReservada());
 			getEstado().accion(this);
 		}
