@@ -42,7 +42,6 @@ import dom.todo.ToDoItem;
 	    	return d.getDays();
 	    }
 		
-		@Programmatic
 		public Reserva traerReserva() {
 			
 			List<Disponibilidad> disponibilidad = allMatches(QueryDefault.create(Disponibilidad.class,"traerLosQueSeReservan"));
@@ -52,10 +51,11 @@ import dom.todo.ToDoItem;
 			for(Disponibilidad d : disponibilidad) {
 
 				habitaciones.add(d.getHabitacion());
-				getContainer().remove(d);
+				//getContainer().remove(d);
 			}
 			
 			Reserva reserva = newTransientInstance(Reserva.class);
+			persistIfNotAlready(reserva);
 			
 			reserva.setListaHabitaciones(habitaciones);
 			

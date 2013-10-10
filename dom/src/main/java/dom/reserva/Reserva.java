@@ -51,12 +51,23 @@ public class Reserva {
 		this.numero = numero;
 	}
 	//}}
-	
 	//{{Estado actual de la reserva
 	@Persistent
-	private IEReserva estado = null;
+	private EReservada eReservada;
+	//{{Estado actual de la reserva
+	@Persistent
+	private ECheckIN eCheckin;
+	//{{Estado actual de la reserva
+	@Persistent
+	private ECheckOUT eCheckout;
+	//{{Estado actual de la reserva
+	@Persistent
+	private ECerrada eCerrada;
+	
 
-	@MemberOrder(sequence="1")
+	private IEReserva estado;
+
+	@Hidden
 	public IEReserva getEstado() {
 		return estado;
 	}
@@ -207,8 +218,8 @@ public class Reserva {
 		 * Se puede reservar
 		 */
 		if(getEstado()==null) {
-			
-			setEstado(new EReservada());
+			eReservada = container.newTransientInstance(EReservada.class);
+			setEstado(eReservada);
 			getEstado().accion(this);
 		}
 		else {
@@ -264,7 +275,8 @@ public class Reserva {
 		 * Se puede checkIn
 		 */
 		if(getEstado() instanceof EReservada) {
-			setEstado(new ECheckIN());
+			eCheckin = container.newTransientInstance(ECheckIN.class);
+			setEstado(eCheckin);
 			getEstado().accion(this);
 		}
 		else {
@@ -285,7 +297,8 @@ public class Reserva {
 		 * Se puede checkIn
 		 */
 		if(getEstado() instanceof ECheckIN) {
-			setEstado(new ECheckOUT());
+			eCheckout = container.newTransientInstance(ECheckOUT.class);
+			setEstado(eCheckout);
 			getEstado().accion(this);
 		}
 		else {
@@ -341,8 +354,9 @@ public class Reserva {
 		/*
 		 * Se puede checkIn
 		 */
-		if(getEstado() instanceof ECheckOUT) {
-			setEstado(new ECerrada());
+		if(getEstado() instanceof ECerrada) {
+			eCerrada =  container.newTransientInstance(ECerrada.class);
+			setEstado(eCerrada);
 			getEstado().accion(this);
 		}
 		else {
