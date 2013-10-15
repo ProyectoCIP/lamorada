@@ -1,15 +1,19 @@
 package dom.disponibilidad;
 
+import java.util.List;
+
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Audited;
 import org.apache.isis.applib.annotation.Bulk;
 import org.apache.isis.applib.annotation.Hidden;
+import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.joda.time.LocalDate;
 
+import dom.habitacion.Habitacion;
 import dom.reserva.HabitacionFecha;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
@@ -23,7 +27,7 @@ public class Disponibilidad {
 	public String title() {
 		return getHabitacion().getNombreHabitacion();
 	}
-
+	
     private HabitacionFecha habitacion;
     
     @Hidden
@@ -58,7 +62,7 @@ public class Disponibilidad {
 	
 	@Bulk
 	@Named("Reservar")
-	public void reservar() {
+	public void seleccionar() {
 		setParaReservar(true);
 		container.persistIfNotAlready(this);
 		disponibleServicio.listaHabitacionesReservas();

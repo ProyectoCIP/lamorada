@@ -1,6 +1,5 @@
 package dom.reserva;
 
-import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +16,7 @@ import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.annotation.NotPersisted;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Title;
@@ -25,13 +25,13 @@ import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.annotation.Render.Type;
 import org.joda.time.LocalDate;
 
+import com.google.common.collect.Lists;
+
 import dom.consumo.Consumo;
 import dom.enumeradores.FormaPago;
 import dom.huesped.Huesped;
-
-
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
-@javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
+@javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY, column="numero")
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
 @ObjectType("RESERVA")
 @AutoComplete(repository=ReservaServicio.class, action="completaReservas")
@@ -41,6 +41,7 @@ public class Reserva {
 	//{{Numero de la reserva, autoincremental. Responsabilidad del ORM
 	private long numero;
 
+	@NotPersisted
 	public long getNumero() {
 		return numero;
 	}
@@ -75,17 +76,10 @@ public class Reserva {
 	}
 	//}}
 	
-	//{{Nombre del estado actual que aparece en el viewer : Disponible, Reservada, CheckIN, CheckOUT, Cerrada
-	private String nombreEstado;
-	
 	@Title
 	public String getNombreEstado() {
 		return (estado == null) ? "Disponible" : getEstado().getNombre();		
 		//return "Reservada";
-	}
-	
-	public void setNombreEstado(String nombreEstado) {
-		this.nombreEstado = nombreEstado;
 	}
 	
 	//}}
@@ -139,9 +133,10 @@ public class Reserva {
 		this.habitaciones = listaHabitaciones;
 	}
 	
+	@Named("Borrar Habitación")
 	@MemberOrder(name="habitaciones",sequence="1")
-	public Reserva borrarHabitacion(final HabitacionFecha habitacion) {
-		getHabitaciones().remove(habitacion);
+	public Reserva remove(final HabitacionFecha habitacion) {
+		habitaciones.remove(habitacion);
 		container.removeIfNotAlready(habitacion);
 		return this;
 	}
@@ -154,6 +149,11 @@ public class Reserva {
 	    habitacion.setReserva(this);
 	    habitaciones.add(habitacion);
 	}
+		   
+    // provide a drop-down
+    public List<HabitacionFecha> choices0Remove() {
+        return Lists.newArrayList(getHabitaciones());
+    }
 	//}}
 	
 	//{{Consumos
@@ -202,6 +202,7 @@ public class Reserva {
     @MemberOrder(name="consumos",sequence="2")
     public Reserva remove(final Consumo consumo) {
     	getConsumos().remove(consumo);
+    	container.removeIfNotAlready(consumo);
     	return this;
     }	
 

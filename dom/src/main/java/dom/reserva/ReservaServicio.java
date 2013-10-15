@@ -6,16 +6,11 @@ import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
-import org.apache.isis.applib.annotation.NotInServiceMenu;
 import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.filter.Filter;
-import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.LocalDate;
 
-import com.google.common.base.Objects;
-
 import dom.consumo.Consumo;
-import dom.disponibilidad.Disponibilidad;
 import dom.enumeradores.FormaPago;
 import dom.huesped.Huesped;
 
@@ -43,7 +38,6 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 			reserva.setCantidadDias(3);
 			reserva.setMontoSena(400);
 			reserva.setNumero(1);
-			reserva.setNombreEstado("reservada");
 			reserva.setTipoSena(FormaPago.Efectivo);
 			
 			persistIfNotAlready(reserva);
@@ -52,24 +46,27 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 			return reserva;
 	}
 	
-	@NotInServiceMenu
-	public Consumo agregarConsumo(
-			final Reserva reserva,
-			final String descripcion,
-			final int cantidad,
-			final float precio
-    		) {
-		
-		Consumo consumo = newTransientInstance(Consumo.class);
-		consumo.setDescripcion(descripcion);
-		consumo.setCantidad(cantidad);
-		consumo.setPrecio(precio);
-		consumo.setReserva(reserva);
-		//dependencia
-		reserva.addToConsumo(consumo);
-		
-		persistIfNotAlready(consumo);
-		return consumo;
+	public List<Reserva> listaReservas() {
+		return allMatches(Reserva.class, new Filter<Reserva>() {
+
+			@Override
+			public boolean accept(Reserva r) {
+				// TODO Auto-generated method stub
+				return r.getNombreEstado().contains("Reservada");
+			}
+			
+		});
+	}
+	
+	@Hidden
+	public List<Consumo> completaConsumicion(final String nombre) {
+		return allMatches(Consumo.class, new Filter<Consumo>() {
+			@Override
+			public boolean accept(Consumo c) {
+				// TODO Auto-generated method stub
+				return c.getDescripcion().contains(nombre);
+			}			
+		});
 	}
 	
 	@Hidden
@@ -78,7 +75,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 			@Override
 			public boolean accept(final HabitacionFecha habitacion) {
 				// TODO Auto-generated method stub
-				return Objects.equal(habitacion.getNombreHabitacion(), nombre);
+				return habitacion.getNombreHabitacion().contains(nombre);
 			}			
 		});
 	}

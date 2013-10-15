@@ -83,6 +83,7 @@ public class Empresa {
 	 * Contacto -> Value Object
 	 */
 	
+	/*
 	@Persistent
 	private ContactoVO contacto;
 	
@@ -93,6 +94,7 @@ public class Empresa {
 	public void setContacto(ContactoVO contacto) {
 		this.contacto = contacto;
 	}
+	*/
 	
 	/*
 	 * Forma en que la empresa le paga al hotel

@@ -80,8 +80,7 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
 	           		}
 	           }
 	    	);    
-    }
-	
+    }	
 		
     /*
      * Método para llenar el DropDownList de huespedes, con la posibilidad de que te autocompleta las coincidencias al ir tipeando

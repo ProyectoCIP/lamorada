@@ -83,7 +83,7 @@ public class MyLaMoradaStartApplication extends IsisWicketApplication {
     @Override
     protected Module newIsisWicketModule() {
     
-    	try {
+    	/*try {
     		
     	    SchedulerFactory schedulerFactory = new StdSchedulerFactory();
     		org.quartz.Scheduler scheduler = schedulerFactory.getScheduler();
@@ -100,7 +100,7 @@ public class MyLaMoradaStartApplication extends IsisWicketApplication {
         	
     	}catch(Exception ex) {
     		ex.printStackTrace();
-    	}
+    	}*/
 
     	
     	final Module isisDefaults = super.newIsisWicketModule();

@@ -28,26 +28,21 @@ import dom.reserva.Reserva;
 	    	List<Disponibilidad> listaDeHabitaciones = new ArrayList<Disponibilidad>();
 	    	final List<Habitacion> habitaciones = listaHabitaciones();
 	    	
-	    	LocalDate fechaAuxiliar = desde;
-	    	System.out.println("FECHA:"+fechaAuxiliar);
-	    	
+	    	LocalDate fechaAuxiliar = desde;	    	
 	    	
 	    	for(int i=0; i <= getDiferenciaDesdeHasta(desde, hasta); i++) {
 
 	    			for(Habitacion habitacion : habitaciones) {
+	    				
 	    				final HabitacionFecha hf = newTransientInstance(HabitacionFecha.class);
 	    				
 	    				hf.setNombreHabitacion(habitacion.getNombre());
 	    				hf.setFecha(fechaAuxiliar);
 	    				
-	    				System.out.println("FECHA EN EL OBJETO:"+hf.getFecha());
-	    				//poner en disponibilidad la hf
-	    				
-	    				Disponibilidad reservaRelleno = newTransientInstance(Disponibilidad.class);
-	    				reservaRelleno.setHabitacion(hf);
-	    				reservaRelleno.setFecha(fechaAuxiliar);
-	    				listaDeHabitaciones.add(reservaRelleno);
-	    				System.out.println("NUEVA FECHA:"+fechaAuxiliar);
+	    				Disponibilidad fila = newTransientInstance(Disponibilidad.class);
+	    				fila.setHabitacion(hf);
+	    				fila.setFecha(fechaAuxiliar);
+	    				listaDeHabitaciones.add(fila);
 	    			}
 
     				fechaAuxiliar = desde.plusDays(i+1);
@@ -67,7 +62,7 @@ import dom.reserva.Reserva;
 			
 			Reserva reserva = newTransientInstance(Reserva.class);
 			
-			List<Disponibilidad> disponibilidad = allMatches(QueryDefault.create(Disponibilidad.class,"traerLosQueSeReservan"));
+			List<Disponibilidad> disponibilidad = listaHabitacionesReservas();
 			
 			if(disponibilidad.size() > 0)
 			{	
@@ -115,11 +110,28 @@ import dom.reserva.Reserva;
 	    }*/
 	    
 	    @Programmatic
-	    List<Habitacion> listaHabitaciones() {
+	    public List<Habitacion> listaHabitaciones() {
 	    	return allMatches(QueryDefault.create(Habitacion.class, "traerHabitaciones"));	
 	    }
 	    @Programmatic
-	    List<Disponibilidad> listaHabitacionesReservas() {
+	    public List<Disponibilidad> listaHabitacionesReservas() {
 	    	return allMatches(QueryDefault.create(Disponibilidad.class,"traerLosQueSeReservan"));
 		}
+	    
+	    @Programmatic
+	    public HabitacionesSeleccionadas seleccionadas() {
+	    	
+	    	HabitacionesSeleccionadas hS = newTransientInstance(HabitacionesSeleccionadas.class);
+	    	
+	    	List<Disponibilidad> lista = listaHabitacionesReservas();
+	    	
+	    	for(Disponibilidad d : lista) {
+	    		hS.getListaHF().add(d.getHabitacion());
+	    		
+	    		System.out.println("HABITACION"+d.getHabitacion().getNombreHabitacion());
+	    	}
+	    	
+	    	return hS;
+	    }
+	    
 	}

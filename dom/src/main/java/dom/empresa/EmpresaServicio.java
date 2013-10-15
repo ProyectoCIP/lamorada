@@ -28,18 +28,19 @@ public class EmpresaServicio extends AbstractFactoryAndRepository{
             @RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*") // words, spaces and selected punctuation
             @Named("Razón Social") String razonSocial,
             @RegEx(validation = "[0-9]")
-            @Named("Tarifa") float tarifa,
-            @Named("Forma de Pago") FormaPago fPago,
+            @Named("Tarifa") float tarifa,            
+            @Named("Forma de Pago") FormaPago fPago
+            /*,
             @Optional
             @Named("Dirección") String direccion,
             @Optional
             @Named("Télefono") String telefono,
             @Optional
-            @Named("Email") String correo
+            @Named("Email") String correo*/
             ) {
-    	final ContactoVO contacto = new ContactoVO(direccion,telefono,correo);
+    	//final ContactoVO contacto = new ContactoVO(direccion,telefono,correo);
     	final String creadoPor = usuarioActual();
-        return nEmpresa(cuit, razonSocial, tarifa, fPago, contacto, creadoPor);
+        return nEmpresa(cuit, razonSocial, tarifa, fPago, creadoPor);
     }
     
     @Hidden
@@ -48,7 +49,6 @@ public class EmpresaServicio extends AbstractFactoryAndRepository{
             final String razonSocial, 
             final float tarifa,
             final FormaPago fPago, 
-            final ContactoVO contacto,
             final String usuario) {
         final Empresa empresa = newTransientInstance(Empresa.class);
         empresa.setCuit(cuit);
@@ -57,11 +57,7 @@ public class EmpresaServicio extends AbstractFactoryAndRepository{
         empresa.setEstado(true);
         empresa.setFormaPago(fPago);
         empresa.setUsuario(usuario);
-        empresa.setContacto(contacto);
         persistIfNotAlready(empresa);
-        
-        
-        
         
         return empresa;
     }

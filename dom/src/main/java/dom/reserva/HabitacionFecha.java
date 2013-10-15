@@ -1,18 +1,13 @@
 package dom.reserva;
 
-import java.text.SimpleDateFormat;
-
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
-
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Audited;
 import org.apache.isis.applib.annotation.AutoComplete;
 import org.apache.isis.applib.annotation.Hidden;
-import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Where;
-import org.hamcrest.StringDescription;
 import org.joda.time.LocalDate;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
@@ -29,7 +24,6 @@ public class HabitacionFecha {
 	
 	private LocalDate fecha;
 	
-	@Hidden
 	public LocalDate getFecha() {
 		return fecha;
 	}
@@ -37,14 +31,6 @@ public class HabitacionFecha {
 	public void setFecha(final LocalDate fecha) {
 		this.fecha = fecha;
 	}
-	
-	private SimpleDateFormat fechaFormato = new SimpleDateFormat("yyyy/MM/dd");
-	
-	@Named("DIA")
-	public String getFechaFormateada() {
-		return fechaFormato.format(getFecha());
-	}
-	
 	
 	private String nombreHabitacion;
 	
