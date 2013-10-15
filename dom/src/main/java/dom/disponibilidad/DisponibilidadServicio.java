@@ -4,23 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.isis.applib.AbstractFactoryAndRepository;
-import org.apache.isis.applib.annotation.Disabled;
-import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
-import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.annotation.Programmatic;
-import org.apache.isis.applib.annotation.RegEx;
-import org.apache.isis.applib.annotation.Title;
-import org.apache.isis.applib.clock.Clock;
 import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
-import com.google.common.base.Objects;
 
 import dom.habitacion.Habitacion;
+import dom.reserva.HabitacionFecha;
 import dom.reserva.Reserva;
-import dom.todo.ToDoItem;
 
 	@Named("Disponibilidad")
 	public class DisponibilidadServicio extends AbstractFactoryAndRepository {
@@ -32,10 +25,38 @@ import dom.todo.ToDoItem;
 	            @Named("Fecha hasta:") LocalDate hasta
 	        ){
 			
-	        return consultar(desde,hasta);
+	    	List<Disponibilidad> listaDeHabitaciones = new ArrayList<Disponibilidad>();
+	    	final List<Habitacion> habitaciones = listaHabitaciones();
+	    	
+	    	LocalDate fechaAuxiliar = desde;
+	    	System.out.println("FECHA:"+fechaAuxiliar);
+	    	
+	    	
+	    	for(int i=0; i <= getDiferenciaDesdeHasta(desde, hasta); i++) {
+
+	    			for(Habitacion habitacion : habitaciones) {
+	    				final HabitacionFecha hf = newTransientInstance(HabitacionFecha.class);
+	    				
+	    				hf.setNombreHabitacion(habitacion.getNombre());
+	    				hf.setFecha(fechaAuxiliar);
+	    				
+	    				System.out.println("FECHA EN EL OBJETO:"+hf.getFecha());
+	    				//poner en disponibilidad la hf
+	    				
+	    				Disponibilidad reservaRelleno = newTransientInstance(Disponibilidad.class);
+	    				reservaRelleno.setHabitacion(hf);
+	    				reservaRelleno.setFecha(fechaAuxiliar);
+	    				listaDeHabitaciones.add(reservaRelleno);
+	    				System.out.println("NUEVA FECHA:"+fechaAuxiliar);
+	    			}
+
+    				fechaAuxiliar = desde.plusDays(i+1);
+			}
+	    	
+	    	return listaDeHabitaciones;
 	    }
 		
-		private int getDiferenciaDesdeHasta(LocalDate desde, LocalDate hasta) {
+		private int getDiferenciaDesdeHasta(final LocalDate desde,final LocalDate hasta) {
 	      	//calcula la diferencia entre la fecha desde y hasta
 	    	Days d = Days.daysBetween(desde, hasta);
 	    	
@@ -44,44 +65,61 @@ import dom.todo.ToDoItem;
 		
 		public Reserva traerReserva() {
 			
+			Reserva reserva = newTransientInstance(Reserva.class);
+			
 			List<Disponibilidad> disponibilidad = allMatches(QueryDefault.create(Disponibilidad.class,"traerLosQueSeReservan"));
 			
-			List<Habitacion> habitaciones = new ArrayList<Habitacion>();
-			
-			for(Disponibilidad d : disponibilidad) {
-
-				habitaciones.add(d.getHabitacion());
-				//getContainer().remove(d);
+			if(disponibilidad.size() > 0)
+			{	
+				persistIfNotAlready(reserva);
+				reserva.setFecha(LocalDate.now());
+					
+				for(Disponibilidad d : disponibilidad) {
+					persistIfNotAlready(d.getHabitacion());
+					d.getHabitacion().setReserva(reserva);
+					reserva.addToHabitacion(d.getHabitacion());
+						
+					getContainer().removeIfNotAlready(d);
+				}
 			}
-			
-			Reserva reserva = newTransientInstance(Reserva.class);
-			persistIfNotAlready(reserva);
-			
-			reserva.setListaHabitaciones(habitaciones);
-			
+					
 			return reserva;
 		}
-		
-		
 	    
-	    private List<Disponibilidad> consultar(LocalDate fechaDesde, LocalDate hasta) {
+		/*
+	    private List<Disponibilidad> consultar(final LocalDate fechaDesde, final LocalDate hasta) {
 			
-	    	List<Disponibilidad> reservar = new ArrayList<Disponibilidad>();
+	    	final List<Disponibilidad> reservar = new ArrayList<Disponibilidad>();
 			
-	    	Habitacion habitacion = newTransientInstance(Habitacion.class);
-	    	habitacion.setNombre("Dorada");
 	    	LocalDate fechaAuxiliar = fechaDesde;
+	    	final List<Habitacion> habitaciones = listaHabitaciones();
 	    	
 	    	for(int i=0; i <= getDiferenciaDesdeHasta(fechaDesde, hasta); i++) {
 
-		    		Disponibilidad reservaRelleno = newTransientInstance(Disponibilidad.class);
-		    		reservaRelleno.setFecha(fechaAuxiliar);reservar.add(reservaRelleno);
-		    		fechaAuxiliar = fechaDesde.plusDays(i+1);
-		    	
-			    	reservar.add(reservaRelleno);
-			    	
+	    			for(Habitacion habitacion : habitaciones) {
+	    				final HabitacionFecha hf = newTransientInstance(HabitacionFecha.class);
+	    				
+	    				hf.setNombreHabitacion(habitacion.getNombre());
+	    				hf.setFecha(fechaAuxiliar);
+	    				//poner en disponibilidad la hf
+	    				
+	    				Disponibilidad reservaRelleno = newTransientInstance(Disponibilidad.class);
+	    				reservaRelleno.setHabitacion(hf);
+	    				reservaRelleno.setFecha(fechaAuxiliar);
+	    				reservar.add(reservaRelleno);
+	    				fechaAuxiliar = fechaDesde.plusDays(i+1);
+	    			}
 			}
 	    	
 	    	return reservar;
+	    }*/
+	    
+	    @Programmatic
+	    List<Habitacion> listaHabitaciones() {
+	    	return allMatches(QueryDefault.create(Habitacion.class, "traerHabitaciones"));	
 	    }
+	    @Programmatic
+	    List<Disponibilidad> listaHabitacionesReservas() {
+	    	return allMatches(QueryDefault.create(Disponibilidad.class,"traerLosQueSeReservan"));
+		}
 	}

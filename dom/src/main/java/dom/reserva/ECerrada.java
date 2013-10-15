@@ -20,10 +20,12 @@ public class ECerrada extends AbstractFactoryAndRepository implements IEReserva 
 	@Override
 	public Reserva accion(Reserva reserva) {
 		
-		return cerrar(reserva,"nulo",null);
+		//return cerrar(reserva,"nulo",null);
 		
+		return null;
 	}
 	
+	/*
 	private Reserva cerrar(
 			Reserva reserva,
 			@Optional
@@ -42,5 +44,6 @@ public class ECerrada extends AbstractFactoryAndRepository implements IEReserva 
 			
 			return reserva;
 	}
+	*/
 
 }

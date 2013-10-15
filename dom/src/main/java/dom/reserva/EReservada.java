@@ -18,7 +18,7 @@ public class EReservada extends AbstractFactoryAndRepository implements IEReserv
 	
 	@Override
 	public String getNombre() {
-		return "CheckOUT";
+		return "Reservada";
 	}
 	
 	@Hidden
@@ -31,17 +31,17 @@ public class EReservada extends AbstractFactoryAndRepository implements IEReserv
 			Reserva reserva,
 			@Named("Huesped") Huesped huesped,
 			@Optional
-			@Named("Tipo Seña") FormaPago tipoSeña,
+			@Named("Tipo Seña") FormaPago tipoSena,
 			@Optional
-			@Named("Seña") float seña,
+			@Named("Seña") float sena,
 			@Optional
 			@MultiLine(numberOfLines=3)
 			@Named("Comentario") String comentario
 			) {
 		
 			reserva.setHuesped(huesped);
-			reserva.setTipoSeña(tipoSeña);
-			reserva.setMontoSeña(seña);
+			reserva.setTipoSena(tipoSena);
+			reserva.setMontoSena(sena);
 			reserva.setFecha(LocalDate.now());
 			reserva.setComentario(comentario);
 			reserva.setUsuario(getContainer().getUser().getName());

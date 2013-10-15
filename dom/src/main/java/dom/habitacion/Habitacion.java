@@ -20,10 +20,12 @@ import com.google.common.base.Objects;
 
 import dom.enumeradores.EstadoHabitacion;
 import dom.enumeradores.TipoHabitacion;
+import dom.reserva.Reserva;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
+@javax.jdo.annotations.Query(name="traerHabitaciones", language="JDOQL",value="SELECT FROM dom.habitacion.Habitacion")
 @ObjectType("HABITACION")
 @AutoComplete(repository=HabitacionServicio.class,action="completaHabitaciones")
 @Audited
@@ -64,6 +66,7 @@ public class Habitacion {
 	public void setTipoHabitacion(final TipoHabitacion tipoHabitacion) {
 		this.tipoHabitacion = tipoHabitacion;
 	}
+	
 	//}}
 	
 	//{{Cuanto cuesta la habitación por noche en base a su capacidad

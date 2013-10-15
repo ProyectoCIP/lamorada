@@ -1,10 +1,11 @@
 package dom.reserva;
 
+import java.io.ObjectInputStream.GetField;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.DomainObjectContainer;
@@ -16,7 +17,6 @@ import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
-import org.apache.isis.applib.annotation.NotPersisted;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Title;
@@ -27,7 +27,6 @@ import org.joda.time.LocalDate;
 
 import dom.consumo.Consumo;
 import dom.enumeradores.FormaPago;
-import dom.habitacion.Habitacion;
 import dom.huesped.Huesped;
 
 
@@ -42,7 +41,6 @@ public class Reserva {
 	//{{Numero de la reserva, autoincremental. Responsabilidad del ORM
 	private long numero;
 
-	@PrimaryKey
 	public long getNumero() {
 		return numero;
 	}
@@ -51,6 +49,7 @@ public class Reserva {
 		this.numero = numero;
 	}
 	//}}
+	
 	//{{Estado actual de la reserva
 	@Persistent
 	private EReservada eReservada;
@@ -64,8 +63,7 @@ public class Reserva {
 	@Persistent
 	private ECerrada eCerrada;
 	
-
-	private IEReserva estado;
+	private IEReserva estado = new EReservada();
 
 	@Hidden
 	public IEReserva getEstado() {
@@ -78,10 +76,18 @@ public class Reserva {
 	//}}
 	
 	//{{Nombre del estado actual que aparece en el viewer : Disponible, Reservada, CheckIN, CheckOUT, Cerrada
+	private String nombreEstado;
+	
 	@Title
 	public String getNombreEstado() {
 		return (estado == null) ? "Disponible" : getEstado().getNombre();		
+		//return "Reservada";
 	}
+	
+	public void setNombreEstado(String nombreEstado) {
+		this.nombreEstado = nombreEstado;
+	}
+	
 	//}}
 	
 	//{{Fecha en la que se realiza la reserva
@@ -98,44 +104,61 @@ public class Reserva {
 	//}}
 	
 	//{{Monto de la seña
-	private float montoSeña;
+	private float montoSena;
 
-	public float getMontoSeña() {
-		return montoSeña;
+	public float getMontoSena() {
+		return montoSena;
 	}
 
-	public void setMontoSeña(float montoSeña) {
-		this.montoSeña = montoSeña;
+	public void setMontoSena(float montoSena) {
+		this.montoSena = montoSena;
 	}
 	//}}
 	
 	//{{Forma en la que se hace la seña
-	private FormaPago tipoSeña;
+	private FormaPago tipoSena;
 	
-	public FormaPago getTipoSeña() {
-		return tipoSeña;
+	public FormaPago getTipoSena() {
+		return tipoSena;
 	}
 	
-	public void setTipoSeña(FormaPago tipoSeña) {
-		this.tipoSeña = tipoSeña;
+	public void setTipoSena(FormaPago tipoSena) {
+		this.tipoSena = tipoSena;
 	}
 	//}}
 	
 	//{{Lista de habitaciones a reservar
-	private List<Habitacion> listaHabitaciones;
+	@Persistent(mappedBy="reserva")
+	private List<HabitacionFecha> habitaciones = new ArrayList<HabitacionFecha>();
 	
-	public List<Habitacion> getListaHabitaciones() {
-		return listaHabitaciones;
+	public List<HabitacionFecha> getHabitaciones() {
+		return habitaciones;
 	}
 
-	public void setListaHabitaciones(List<Habitacion> listaHabitaciones) {
-		this.listaHabitaciones = listaHabitaciones;
+	public void setHabitaciones(List<HabitacionFecha> listaHabitaciones) {
+		this.habitaciones = listaHabitaciones;
+	}
+	
+	@MemberOrder(name="habitaciones",sequence="1")
+	public Reserva borrarHabitacion(final HabitacionFecha habitacion) {
+		getHabitaciones().remove(habitacion);
+		container.removeIfNotAlready(habitacion);
+		return this;
+	}
+	
+	@Hidden
+	public void addToHabitacion(HabitacionFecha habitacion) {
+	    if(habitacion == null || habitaciones.contains(habitacion)) {
+	    	return;
+	    }
+	    habitacion.setReserva(this);
+	    habitaciones.add(habitacion);
 	}
 	//}}
 	
 	//{{Consumos
 	@Persistent(mappedBy="reserva")
-	private List<Consumo> consumos;
+	private List<Consumo> consumos = new ArrayList<Consumo>();
 	
 	@Named("Consumición en esta reserva")
 	@Render(Type.EAGERLY)
@@ -158,18 +181,38 @@ public class Reserva {
 		/*
 		 * Se envian los datos del formulario consumo al servicio y nos lo retorna ya persistido
 		 */
-		getConsumos().add(reservaServicio.agregarConsumo(this, descripcion, cantidad, precio));
+		
+		Consumo consumo = container.newTransientInstance(Consumo.class);
+		consumo.setDescripcion(descripcion);
+		consumo.setCantidad(cantidad);
+		consumo.setPrecio(precio);
+		consumo.setReserva(this);
+		
+		//dependencia
+		addToConsumo(consumo);
+		
+		container.persistIfNotAlready(consumo);
+		
 		return this;
 	}
-	//}}
+	//}}	
 	
 	//{{Borrar consumo
 	@Named("Borrar Consumo")
     @MemberOrder(name="consumos",sequence="2")
     public Reserva remove(final Consumo consumo) {
-    	getConsumos().remove(consumos);
+    	getConsumos().remove(consumo);
     	return this;
-    }
+    }	
+
+	@Hidden
+	public void addToConsumo(Consumo consumo) {
+	    if(consumo == null || consumos.contains(consumo)) {
+	    	return;
+	    }
+	    consumo.setReserva(this);
+	    consumos.add(consumo);
+	}
 	//}}
 
 	private int cantidadDias;
@@ -211,20 +254,21 @@ public class Reserva {
 	
 	//{{Accion : Reservar / Desactivada cuando el objeto ya está persistido (ya se encuentra reservada)
 	@Named("Reservar")
-	@Disabled(when=When.ONCE_PERSISTED)
+	@Hidden(when=When.ONCE_PERSISTED)
 	@Bulk
 	public void reservar() {
 		/*
 		 * Se puede reservar
 		 */
-		if(getEstado()==null) {
+		/*if(getEstado()==null) {
 			eReservada = container.newTransientInstance(EReservada.class);
 			setEstado(eReservada);
 			getEstado().accion(this);
 		}
 		else {
+		*/
 			container.informUser("No se puede realizar la Reserva solicitada");
-		}
+		//}
 	}
 	//}}
 	
@@ -263,106 +307,6 @@ public class Reserva {
         this.usuario = usuario;
     }//}}
     
-    /*
-     * Los datos del CheckIN
-     */
-    
-    //{{Acción : CheckIN / desactivada cuando el objeto aún no se ha persistido (no es reserva)
-    @Named("CheckIN")
-	@Disabled(when=When.UNTIL_PERSISTED)
-    public void checkIn() {
-		/*
-		 * Se puede checkIn
-		 */
-		if(getEstado() instanceof EReservada) {
-			eCheckin = container.newTransientInstance(ECheckIN.class);
-			setEstado(eCheckin);
-			getEstado().accion(this);
-		}
-		else {
-			container.informUser("No se puede realizar el CheckIN solicitado");
-		}
-	}
-    //}}
-    
-    /*
-     * Los datos del CheckOUT
-     */
-    
-    //{{Acción : CheckOUT / desactivada cuando el objeto aún no se ha persistido (no es reserva)
-    @Named("CheckOUT")
-    @Disabled(when=When.UNTIL_PERSISTED)
-	public void checkOut() {
-		/*
-		 * Se puede checkIn
-		 */
-		if(getEstado() instanceof ECheckIN) {
-			eCheckout = container.newTransientInstance(ECheckOUT.class);
-			setEstado(eCheckout);
-			getEstado().accion(this);
-		}
-		else {
-			container.informUser("No se puede realizar el CheckOUT solicitado");
-		}
-	}
-    //}}
-    
-    /*
-     * Los datos del Cierre
-     */
-    
-    //{{Número de la factura impresa
-    private String numeroFactura;
 
-	public String getNumeroFactura() {
-		return numeroFactura;
-	}
-
-	public void setNumeroFactura(String numeroFactura) {
-		this.numeroFactura = numeroFactura;
-	}
-	//}}
-	
-	//{{Fecha de la factura impresa
-	private LocalDate fechaFactura;
-	
-	public LocalDate getFechaFactura() {
-		return fechaFactura;
-	}
-
-	public void setFechaFactura(LocalDate fechaFactura) {
-		this.fechaFactura = fechaFactura;
-	}	
-	//}}
-	
-	//{{El monto total que se debe pagar
-    private float total;
-    
-    public float getTotal() {
-    	return total;
-    }
-    
-    public void setTotal(final float total) {
-    	this.total = total;
-    }
-    //}}
-    
-    //{{Acción : Cerrar / desactivada cuando el objeto aún no se ha persistido (no es reserva)
-    @Named("Cerrar")
-    @Disabled(when=When.UNTIL_PERSISTED)
-	public void cerrar() {
-		/*
-		 * Se puede checkIn
-		 */
-		if(getEstado() instanceof ECerrada) {
-			eCerrada =  container.newTransientInstance(ECerrada.class);
-			setEstado(eCerrada);
-			getEstado().accion(this);
-		}
-		else {
-			container.informUser("No se puede realizar el Cierre solicitado");
-		}
-	}
-    //}}
 	
 }
