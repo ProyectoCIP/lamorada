@@ -24,6 +24,8 @@ import dom.reserva.Reserva;
 @javax.jdo.annotations.Query(name="traerLosQueSeReservan", language="JDOQL",value="SELECT FROM dom.disponibilidad.Disponibilidad WHERE paraReservar == true")
 public class Disponibilidad {
 	
+	
+	
 	public String title() {
 		return getHabitacionFecha().getNombreHabitacion();
 	}	

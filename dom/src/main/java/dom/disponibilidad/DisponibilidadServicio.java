@@ -1,6 +1,6 @@
 package dom.disponibilidad;
 
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +10,6 @@ import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.filter.Filter;
 import org.apache.isis.applib.query.QueryDefault;
-import org.apache.isis.applib.value.Date;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
@@ -42,22 +41,20 @@ import dom.reserva.Reserva;
 	    				if(existeReserva(fechaAuxiliar,habitacion.getNombre()) != null) {
 	    					HabitacionFecha hf = existeReserva(fechaAuxiliar,habitacion.getNombre());
 	    					fila.setHabitacionFecha(hf);
+	    					fila.setReserva(hf.getReserva());
 	    				}
 	    				else {
 	    					HabitacionFecha hf = newTransientInstance(HabitacionFecha.class);
 	    					hf.setNombreHabitacion(habitacion.getNombre());
-	    					hf.setFecha(fechaAuxiliar);
+	    					hf.setFecha(fechaAuxiliar.toDate());
 		    				fila.setHabitacionFecha(hf);
-	    				}
-	    				
+	    				}	    				
 	    				
 	    				fila.setFechaReal(fechaAuxiliar.toDate());
 	    				listaDeHabitaciones.add(fila);
 	    			}
 
     				fechaAuxiliar = desde.plusDays(i+1);
-    						//desde.add(0,0,i+1);
-    						//
 			}
 	    	
 	    	return listaDeHabitaciones;
@@ -65,16 +62,16 @@ import dom.reserva.Reserva;
 		
 		private HabitacionFecha existeReserva(final LocalDate fecha,final String nombre) {
 			
+			//getContainer().informUser("FECHA:"+fecha+"y el Nombre:"+nombre);
+			
 			return uniqueMatch(HabitacionFecha.class, new Filter<HabitacionFecha>(){
 
 				@Override
 				public boolean accept(HabitacionFecha habitacion) {
 					// TODO Auto-generated method stub
-					return habitacion.getFecha().equals(fecha)&&habitacion.getNombreHabitacion().equals(nombre);
-				}
-				
-			}); 
-			
+					return habitacion.getFecha().equals(fecha.toDate())&&habitacion.getNombreHabitacion().equals(nombre);
+				}				
+			}); 			
 		}
 		
 		private int getDiferenciaDesdeHasta(final LocalDate desde,final LocalDate hasta) {
@@ -106,34 +103,6 @@ import dom.reserva.Reserva;
 					
 			return reserva;
 		}
-	    
-		/*
-	    private List<Disponibilidad> consultar(final LocalDate fechaDesde, final LocalDate hasta) {
-			
-	    	final List<Disponibilidad> reservar = new ArrayList<Disponibilidad>();
-			
-	    	LocalDate fechaAuxiliar = fechaDesde;
-	    	final List<Habitacion> habitaciones = listaHabitaciones();
-	    	
-	    	for(int i=0; i <= getDiferenciaDesdeHasta(fechaDesde, hasta); i++) {
-
-	    			for(Habitacion habitacion : habitaciones) {
-	    				final HabitacionFecha hf = newTransientInstance(HabitacionFecha.class);
-	    				
-	    				hf.setNombreHabitacion(habitacion.getNombre());
-	    				hf.setFecha(fechaAuxiliar);
-	    				//poner en disponibilidad la hf
-	    				
-	    				Disponibilidad reservaRelleno = newTransientInstance(Disponibilidad.class);
-	    				reservaRelleno.setHabitacion(hf);
-	    				reservaRelleno.setFecha(fechaAuxiliar);
-	    				reservar.add(reservaRelleno);
-	    				fechaAuxiliar = fechaDesde.plusDays(i+1);
-	    			}
-			}
-	    	
-	    	return reservar;
-	    }*/
 	    
 	    @Programmatic
 	    public List<Habitacion> listaHabitaciones() {

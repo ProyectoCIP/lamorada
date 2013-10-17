@@ -1,5 +1,7 @@
 package dom.reserva;
 
+import java.util.Date;
+
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 import org.apache.isis.applib.DomainObjectContainer;
@@ -22,13 +24,13 @@ public class HabitacionFecha {
 		return getNombreHabitacion();
 	}
 	
-	private LocalDate fecha;
+	private Date fecha;
 	
-	public LocalDate getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(final LocalDate fecha) {
+	public void setFecha(final Date fecha) {
 		this.fecha = fecha;
 	}
 	
