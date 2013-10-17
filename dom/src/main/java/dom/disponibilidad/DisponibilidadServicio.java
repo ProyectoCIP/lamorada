@@ -1,5 +1,6 @@
 package dom.disponibilidad;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,9 @@ import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Programmatic;
+import org.apache.isis.applib.filter.Filter;
 import org.apache.isis.applib.query.QueryDefault;
+import org.apache.isis.applib.value.Date;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
@@ -21,35 +24,58 @@ import dom.reserva.Reserva;
 		@MemberOrder(sequence = "1")
 		@Named("Por Fechas")
 	    public List<Disponibilidad> porFechas(
-	            @Named("Fecha desde:") LocalDate desde,
-	            @Named("Fecha hasta:") LocalDate hasta
+	            @Named("Fecha desde:") final LocalDate desde,
+	            @Named("Fecha hasta:") final LocalDate hasta
 	        ){
 			
 	    	List<Disponibilidad> listaDeHabitaciones = new ArrayList<Disponibilidad>();
 	    	final List<Habitacion> habitaciones = listaHabitaciones();
 	    	
-	    	LocalDate fechaAuxiliar = desde;	    	
+	    	LocalDate fechaAuxiliar = desde;
 	    	
 	    	for(int i=0; i <= getDiferenciaDesdeHasta(desde, hasta); i++) {
-
+	    	
 	    			for(Habitacion habitacion : habitaciones) {
 	    				
-	    				final HabitacionFecha hf = newTransientInstance(HabitacionFecha.class);
+	    				final Disponibilidad fila = newTransientInstance(Disponibilidad.class);
+	    	    		
+	    				if(existeReserva(fechaAuxiliar,habitacion.getNombre()) != null) {
+	    					HabitacionFecha hf = existeReserva(fechaAuxiliar,habitacion.getNombre());
+	    					fila.setHabitacionFecha(hf);
+	    				}
+	    				else {
+	    					HabitacionFecha hf = newTransientInstance(HabitacionFecha.class);
+	    					hf.setNombreHabitacion(habitacion.getNombre());
+	    					hf.setFecha(fechaAuxiliar);
+		    				fila.setHabitacionFecha(hf);
+	    				}
 	    				
-	    				hf.setNombreHabitacion(habitacion.getNombre());
-	    				hf.setFecha(fechaAuxiliar);
 	    				
-	    				Disponibilidad fila = newTransientInstance(Disponibilidad.class);
-	    				fila.setHabitacion(hf);
-	    				fila.setFecha(fechaAuxiliar);
+	    				fila.setFechaReal(fechaAuxiliar.toDate());
 	    				listaDeHabitaciones.add(fila);
 	    			}
 
     				fechaAuxiliar = desde.plusDays(i+1);
+    						//desde.add(0,0,i+1);
+    						//
 			}
 	    	
 	    	return listaDeHabitaciones;
 	    }
+		
+		private HabitacionFecha existeReserva(final LocalDate fecha,final String nombre) {
+			
+			return uniqueMatch(HabitacionFecha.class, new Filter<HabitacionFecha>(){
+
+				@Override
+				public boolean accept(HabitacionFecha habitacion) {
+					// TODO Auto-generated method stub
+					return habitacion.getFecha().equals(fecha)&&habitacion.getNombreHabitacion().equals(nombre);
+				}
+				
+			}); 
+			
+		}
 		
 		private int getDiferenciaDesdeHasta(final LocalDate desde,final LocalDate hasta) {
 	      	//calcula la diferencia entre la fecha desde y hasta
@@ -70,9 +96,9 @@ import dom.reserva.Reserva;
 				reserva.setFecha(LocalDate.now());
 					
 				for(Disponibilidad d : disponibilidad) {
-					persistIfNotAlready(d.getHabitacion());
-					d.getHabitacion().setReserva(reserva);
-					reserva.addToHabitacion(d.getHabitacion());
+					persistIfNotAlready(d.getHabitacionFecha());
+					d.getHabitacionFecha().setReserva(reserva);
+					reserva.addToHabitacion(d.getHabitacionFecha());
 						
 					getContainer().removeIfNotAlready(d);
 				}
@@ -118,6 +144,7 @@ import dom.reserva.Reserva;
 	    	return allMatches(QueryDefault.create(Disponibilidad.class,"traerLosQueSeReservan"));
 		}
 	    
+	    /*
 	    @Programmatic
 	    public HabitacionesSeleccionadas seleccionadas() {
 	    	
@@ -130,6 +157,6 @@ import dom.reserva.Reserva;
 	    	}
 	    	
 	    	return hS;
-	    }
+	    }*/
 	    
 	}

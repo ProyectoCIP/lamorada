@@ -1,6 +1,6 @@
 package dom.disponibilidad;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
 
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
@@ -8,13 +8,13 @@ import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Audited;
 import org.apache.isis.applib.annotation.Bulk;
 import org.apache.isis.applib.annotation.Hidden;
-import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.ObjectType;
+import org.apache.isis.applib.value.Date;
 import org.joda.time.LocalDate;
 
-import dom.habitacion.Habitacion;
 import dom.reserva.HabitacionFecha;
+import dom.reserva.Reserva;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
@@ -25,18 +25,28 @@ import dom.reserva.HabitacionFecha;
 public class Disponibilidad {
 	
 	public String title() {
-		return getHabitacion().getNombreHabitacion();
-	}
+		return getHabitacionFecha().getNombreHabitacion();
+	}	
 	
-    private HabitacionFecha habitacion;
+    private HabitacionFecha habitacionFecha;
     
     @Hidden
-	public HabitacionFecha getHabitacion() {
-		return habitacion;
+	public HabitacionFecha getHabitacionFecha() {
+		return habitacionFecha;
 	}
 
-	public void setHabitacion(HabitacionFecha hf) {
-		this.habitacion = hf;
+	public void setHabitacionFecha(final HabitacionFecha hf) {
+		this.habitacionFecha = hf;
+	}
+	
+	private Reserva reserva;
+	
+	public Reserva getReserva() {
+		return reserva;
+	}
+	
+	public void setReserva(final Reserva reserva) {
+		this.reserva = reserva;
 	}
 	
 	private boolean paraReservar;
@@ -50,14 +60,21 @@ public class Disponibilidad {
 		this.paraReservar = paraReservar;
 	}
 	
-	private LocalDate fecha;
+	private SimpleDateFormat sF = new SimpleDateFormat("dd/MM/yyyy");
+	
+	public String getFecha() {
+		return sF.format(getFechaReal());
+	}
+	
+	private java.util.Date fechaReal;
 
-	public LocalDate getFecha() {
-		return getHabitacion().getFecha();
+	@Hidden
+	public java.util.Date getFechaReal() {
+		return fechaReal;
 	}
 
-	public void setFecha(LocalDate fecha) {
-		this.fecha = fecha;
+	public void setFechaReal(final java.util.Date date) {
+		this.fechaReal = date;
 	}
 	
 	@Bulk
@@ -82,4 +99,5 @@ public class Disponibilidad {
     public void injectDomainObjectContainer(final DomainObjectContainer container) {
         this.container = container;
     }
+
 }
