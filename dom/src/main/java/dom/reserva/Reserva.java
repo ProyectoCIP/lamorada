@@ -30,6 +30,7 @@ import com.google.common.collect.Lists;
 import dom.consumo.Consumo;
 import dom.enumeradores.FormaPago;
 import dom.huesped.Huesped;
+import dom.todo.ToDoItem;
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY, column="numero")
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
@@ -133,14 +134,14 @@ public class Reserva {
 		this.habitaciones = listaHabitaciones;
 	}
 	
+	
 	@Named("Borrar Habitación")
 	@MemberOrder(name="habitaciones",sequence="1")
-	public Reserva remove(final HabitacionFecha habitacion) {
+	public Reserva removeFromHabitaciones(final HabitacionFecha habitacion) {
 		habitaciones.remove(habitacion);
 		container.removeIfNotAlready(habitacion);
 		return this;
 	}
-	
 	@Hidden
 	public void addToHabitacion(HabitacionFecha habitacion) {
 	    if(habitacion == null || habitaciones.contains(habitacion)) {
@@ -148,10 +149,11 @@ public class Reserva {
 	    }
 	    habitacion.setReserva(this);
 	    habitaciones.add(habitacion);
-	}
-		   
+	}	
+	
+	
     // provide a drop-down
-    public List<HabitacionFecha> choices0Remove() {
+    public List<HabitacionFecha> choices0RemoveFromHabitaciones() {
         return Lists.newArrayList(getHabitaciones());
     }
 	//}}
@@ -186,13 +188,10 @@ public class Reserva {
 		consumo.setDescripcion(descripcion);
 		consumo.setCantidad(cantidad);
 		consumo.setPrecio(precio);
-		consumo.setReserva(this);
-		
+
 		//dependencia
 		addToConsumo(consumo);
-		
 		container.persistIfNotAlready(consumo);
-		
 		return this;
 	}
 	//}}	
@@ -200,11 +199,11 @@ public class Reserva {
 	//{{Borrar consumo
 	@Named("Borrar Consumo")
     @MemberOrder(name="consumos",sequence="2")
-    public Reserva remove(final Consumo consumo) {
-    	getConsumos().remove(consumo);
+    public Reserva removeFromConsumos(final Consumo consumo) {
+    	consumos.remove(consumo);
     	container.removeIfNotAlready(consumo);
     	return this;
-    }	
+    }
 
 	@Hidden
 	public void addToConsumo(Consumo consumo) {
@@ -214,8 +213,12 @@ public class Reserva {
 	    consumo.setReserva(this);
 	    consumos.add(consumo);
 	}
+	
+	public List<Consumo> choices0RemoveFromConsumos() {
+		return Lists.newArrayList(getConsumos());
+	}
 	//}}
-
+	
 	private int cantidadDias;
 	
 	public int getCantidadDias() {

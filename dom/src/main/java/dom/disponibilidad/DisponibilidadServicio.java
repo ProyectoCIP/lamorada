@@ -127,8 +127,6 @@ import dom.reserva.Reserva;
 	    	
 	    	for(Disponibilidad d : lista) {
 	    		hS.getListaHF().add(d.getHabitacion());
-	    		
-	    		System.out.println("HABITACION"+d.getHabitacion().getNombreHabitacion());
 	    	}
 	    	
 	    	return hS;

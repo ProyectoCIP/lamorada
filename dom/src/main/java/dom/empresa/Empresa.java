@@ -216,7 +216,7 @@ public class Empresa {
     }
     
     @Hidden
-    public void addToHuesped(Huesped huesped) {
+    public void addToHuesped(final Huesped huesped) {
     	if(huesped == null || huespedes.contains(huesped)) {
     		return;
     	}

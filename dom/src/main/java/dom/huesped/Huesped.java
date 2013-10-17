@@ -15,7 +15,9 @@ import org.apache.isis.applib.filter.Filter;
 
 import com.google.common.base.Objects;
 
+import dom.consumo.Consumo;
 import dom.empresa.Empresa;
+import dom.habitacion.Habitacion;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
@@ -113,7 +115,8 @@ public class Huesped {
 	public void setContainer(DomainObjectContainer container) {
 		this.container = container;
 	}   
-
+	
+	
 	//{{Usuario actual
 	private String usuario;
 

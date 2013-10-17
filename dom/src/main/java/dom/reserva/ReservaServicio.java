@@ -8,6 +8,7 @@ import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.filter.Filter;
+import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.LocalDate;
 
 import dom.consumo.Consumo;
@@ -48,7 +49,6 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 	
 	public List<Reserva> listaReservas() {
 		return allMatches(Reserva.class, new Filter<Reserva>() {
-
 			@Override
 			public boolean accept(Reserva r) {
 				// TODO Auto-generated method stub
@@ -62,7 +62,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 	public List<Consumo> completaConsumicion(final String nombre) {
 		return allMatches(Consumo.class, new Filter<Consumo>() {
 			@Override
-			public boolean accept(Consumo c) {
+			public boolean accept(final Consumo c) {
 				// TODO Auto-generated method stub
 				return c.getDescripcion().contains(nombre);
 			}			
@@ -78,6 +78,10 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 				return habitacion.getNombreHabitacion().contains(nombre);
 			}			
 		});
+	}
+	
+	public List<Consumo> listaConsumos() {
+		return allMatches(QueryDefault.create(Consumo.class,"consumos"));
 	}
 	
 	protected String usuarioActual() {
