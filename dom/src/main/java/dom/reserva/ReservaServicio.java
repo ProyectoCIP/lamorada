@@ -69,17 +69,6 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 		});
 	}
 	
-	@Hidden
-	public List<HabitacionFecha> habitacionesReservadas(final String nombre) {
-		return allMatches(HabitacionFecha.class,new Filter<HabitacionFecha>(){
-			@Override
-			public boolean accept(final HabitacionFecha habitacion) {
-				// TODO Auto-generated method stub
-				return habitacion.getNombreHabitacion().contains(nombre);
-			}			
-		});
-	}
-	
 	public List<Consumo> listaConsumos() {
 		return allMatches(QueryDefault.create(Consumo.class,"consumos"));
 	}
