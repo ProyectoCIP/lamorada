@@ -2,11 +2,11 @@ package dom.reserva;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
 import javax.jdo.annotations.VersionStrategy;
-
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Audited;
 import org.apache.isis.applib.annotation.AutoComplete;
@@ -24,15 +24,12 @@ import org.apache.isis.applib.annotation.When;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.annotation.Render.Type;
 import org.joda.time.LocalDate;
-
 import com.google.common.collect.Lists;
-
 import dom.consumo.Consumo;
 import dom.disponibilidad.HabitacionFecha;
 import dom.enumeradores.FormaPago;
 import dom.huesped.Huesped;
-@javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
-@javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY, column="numero")
+@javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.APPLICATION)
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
 @ObjectType("RESERVA")
 @AutoComplete(repository=ReservaServicio.class, action="completaReservas")
@@ -40,6 +37,8 @@ import dom.huesped.Huesped;
 public class Reserva {
 	
 	//{{Numero de la reserva, autoincremental. Responsabilidad del ORM
+	@PrimaryKey
+	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)  
 	private long numero;
 
 	@NotPersisted
@@ -125,7 +124,8 @@ public class Reserva {
 	//{{Lista de habitaciones a reservar
 	@Persistent(mappedBy="reserva")
 	private List<HabitacionFecha> habitaciones = new ArrayList<HabitacionFecha>();
-	
+
+	@Render(Type.EAGERLY)
 	public List<HabitacionFecha> getHabitaciones() {
 		return habitaciones;
 	}

@@ -140,7 +140,9 @@ public class Empresa {
     @Bulk
     @MemberOrder(name="accionesEmpresa", sequence = "1")
     public List<Empresa> baja() {
-    	setEstado(false);
+    	
+    	container.removeIfNotAlready(this);
+    	
     	return empresaServicio.listaEmpresas();
     }
 

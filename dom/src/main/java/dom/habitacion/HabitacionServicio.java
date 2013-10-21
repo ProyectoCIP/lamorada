@@ -47,6 +47,7 @@ public class HabitacionServicio extends AbstractFactoryAndRepository{
 		habitacion.setNombre(nombre);
 		habitacion.setCapacidad(capacidad);
 		habitacion.setTipoHabitacion(tipoHabitacion);
+		habitacion.setUsuario(usuarioActual());
 		
 		persist(habitacion);
 		

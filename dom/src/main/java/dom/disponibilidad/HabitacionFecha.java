@@ -1,24 +1,27 @@
 package dom.disponibilidad;
 
 import java.util.Date;
-
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Audited;
 import org.apache.isis.applib.annotation.AutoComplete;
 import org.apache.isis.applib.annotation.Bulk;
-import org.apache.isis.applib.annotation.Disabled;
+import org.apache.isis.applib.annotation.DescribedAs;
 import org.apache.isis.applib.annotation.Hidden;
+import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Where;
-
 import dom.reserva.Reserva;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
+@javax.jdo.annotations.Queries({
+	@javax.jdo.annotations.Query(name="habitacion_para_reservar", language="JDOQL",value="SELECT FROM dom.disponibilidad.HabitacionFecha WHERE paraReservar == true"),
+	@javax.jdo.annotations.Query(name="habitacion_relleno", language="JDOQL",value="SELECT FROM dom.disponibilidad.HabitacionFecha WHERE paraReservar == false")
+})
 @ObjectType("HF")
 @AutoComplete(repository=HabitacionFechaServicio.class,action="habitacionesReservadas")
 @Audited
@@ -36,7 +39,7 @@ public class HabitacionFecha {
 	
 	private boolean paraReservar;
 
-	@Hidden
+	@Named("Seleccionada")
 	public boolean isParaReservar() {
 		return paraReservar;
 	}
@@ -51,14 +54,21 @@ public class HabitacionFecha {
 	
 	@Named("Seleccionar")
 	@Bulk
+    @MemberOrder(name="paraReservar", sequence = "1")
+	@DescribedAs("Para reservar las habitaciones seleccionadas debe hacerlo desde el menu Disponibilidad -> Opcion:Reservar")
 	@Hidden(where=Where.OBJECT_FORMS)
 	public HabitacionFecha seleccionar() {
+		
 		if(getReserva() == null) {
-			this.paraReservar = true;
-			container.persistIfNotAlready(this);
+			setParaReservar(true);
 		}
+				
 		return this;
 	}
+	
+	  public String disableSeleccionar() {
+	        return paraReservar ? "Ya esta seleccionada!" : null;
+	  }
 	
 	private String nombreHabitacion;
 	
@@ -81,10 +91,10 @@ public class HabitacionFecha {
 		this.reserva = reserva;
 	}
 	
-	private DomainObjectContainer container;
+	public void injectHabitacionFechaServicio(final HabitacionFechaServicio servicio) {
+	}
 	
 	public void injectDomainObjectContainer(final DomainObjectContainer container) {
-		this.container = container;
 	}
 	//}}
 	
