@@ -148,9 +148,10 @@ public class Reserva {
 	    	return;
 	    }
 	    habitacion.setReserva(this);
+	    
 	    habitaciones.add(habitacion);
-	}	
-	
+	    container.informUser("TAMAÑO:"+habitaciones.size());
+	}
 	
     // provide a drop-down
     public List<HabitacionFecha> choices0RemoveFromHabitaciones() {

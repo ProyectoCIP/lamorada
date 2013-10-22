@@ -1,28 +1,32 @@
 package dom.disponibilidad;
 
 import java.util.Date;
-
+import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.VersionStrategy;
 import org.apache.isis.applib.DomainObjectContainer;
+import org.apache.isis.applib.annotation.Audited;
 import org.apache.isis.applib.annotation.Bulk;
-import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
-import org.apache.isis.applib.annotation.Where;
-import org.joda.time.LocalDate;
+import org.apache.isis.applib.annotation.ObjectType;
+import dom.reserva.Reserva;
 
-import dom.habitacion.Habitacion;
-
+@javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
+@javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
+@javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
+@javax.jdo.annotations.Query(name="disponibilidad", language="JDOQL",value="SELECT FROM dom.disponibilidad.Disponibilidad")
+@ObjectType("DISPONIBILIDAD")
+@Audited
 public class Disponibilidad {
-
-	private HabitacionFecha habitacion;
 	
-	@Hidden
-	public HabitacionFecha getHabitacion() {
-		return habitacion;
+	private String nombreHabitacion;
+
+	public String getNombreHabitacion() {
+		return nombreHabitacion;
 	}
 	
-	public void setHabitacion(HabitacionFecha habitacion) {
-		this.habitacion = habitacion;
+	public void setNombreHabitacion(String nombreHabitacion) {
+		this.nombreHabitacion = nombreHabitacion;
 	}
 	
 	private boolean paraReservar;
@@ -54,10 +58,22 @@ public class Disponibilidad {
 		return this;
 	}
 	
+	private Reserva reserva;
+	
+	@Named("Estado")
+	public Reserva getReserva() {
+		return reserva;
+	}
+
+	public void setReserva(Reserva reserva) {
+		this.reserva = reserva;
+	}
+	
 	// {{ injected: DomainObjectContainer
 	private DomainObjectContainer container;
 	
 	public void injectDomainObjectContainer(final DomainObjectContainer container) {
 	    this.container = container;
 	}
+
 }

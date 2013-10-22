@@ -1,7 +1,6 @@
 package dom.reserva;
 
 import java.util.List;
-
 import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MultiLine;
@@ -12,6 +11,7 @@ import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.LocalDate;
 
 import dom.consumo.Consumo;
+import dom.disponibilidad.Disponibilidad;
 import dom.disponibilidad.HabitacionFecha;
 import dom.huesped.Huesped;
 
@@ -25,7 +25,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 			@Named("Comentario") String comentario) {
 		
 		
-		List<HabitacionFecha> disponibilidad = listaHabitacionesReservas();
+		List<Disponibilidad> disponibilidad = listaHabitacionesReservas();
 		
 		if(disponibilidad.size() > 0)
 		{	
@@ -37,19 +37,25 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 			persistIfNotAlready(reserva);
 			reserva.setFecha(LocalDate.now());
 				
-			for(HabitacionFecha h : disponibilidad) {
+			for(Disponibilidad d : disponibilidad) {
 				
-				getContainer().informUser(""+h.isParaReservar());
-				//persistIfNotAlready(h);
-				reserva.addToHabitacion(h);
-				h.setParaReservar(false);	
+				if(d.isParaReservar())
+				{
+					HabitacionFecha hF = newTransientInstance(HabitacionFecha.class);
+					hF.setFecha(d.getFecha());
+					hF.setNombreHabitacion(d.getNombreHabitacion());
+					persistIfNotAlready(hF);
+					reserva.addToHabitacion(hF);
+					getContainer().informUser("RELACIONADA CON:"+hF.getReserva().getNumero());
+					hF.setParaReservar(false);
+				}
+				
+				/*
+				 * se eliminan de la base de datos todos los rastros de la consulta
+				 */
+				getContainer().removeIfNotAlready(d);
+				
 			}
-			
-			/*List<HabitacionFecha> sobrantes = listaHabitacionesRelleno();
-			
-			for(HabitacionFecha sobrante : sobrantes) {
-				getContainer().removeIfNotAlready(sobrante);
-			}*/
 			
 			return reserva;
 		}
@@ -57,17 +63,11 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 			return null;
 	}
     
-    private List<HabitacionFecha> listaHabitacionesReservas() {
+    private List<Disponibilidad> listaHabitacionesReservas() {
     	
-		return allMatches(QueryDefault.create(HabitacionFecha.class, "habitacion_para_reservar"));
+		return allMatches(QueryDefault.create(Disponibilidad.class, "disponibilidad"));
     	
     } 
-    
-    private List<HabitacionFecha> listaHabitacionesRelleno() {
-    	
-		return allMatches(QueryDefault.create(HabitacionFecha.class, "habitacion_relleno"));
-    	
-    }
 	
 	public List<Reserva> listaReservas() {
 		return allMatches(Reserva.class, new Filter<Reserva>() {

@@ -33,6 +33,8 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 	            @Optional
 	            @Named("Fecha hasta:") LocalDate hasta
 	        ){
+		
+			eliminarDisponibilidad();
 			
 	    	List<Disponibilidad> listaDeHabitaciones = new ArrayList<Disponibilidad>();
 	    	final List<Habitacion> habitaciones = listaHabitaciones();
@@ -45,21 +47,26 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 	    	
 	    			for(Habitacion habitacion : habitaciones) {
 	    				
-	    				HabitacionFecha hf;
+	    				Disponibilidad d = newTransientInstance(Disponibilidad.class);
 	    				
 	    				if(existeReserva(fechaAuxiliar,habitacion.getNombre()) != null) {
-	    					hf = existeReserva(fechaAuxiliar,habitacion.getNombre());
+	    					HabitacionFecha hf = existeReserva(fechaAuxiliar,habitacion.getNombre());
+	    					d.setReserva(hf.getReserva());
 	    				}
 	    				else {
+	    					d.setNombreHabitacion(habitacion.getNombre());
+	    					
+	    				}
+	    				/*else {
 	    					hf = newTransientInstance(HabitacionFecha.class);
 	    					hf.setNombreHabitacion(habitacion.getNombre());
 	    					hf.setParaReservar(false);
-			    		}	    				
+			    		}   				
 	    				
-	    				hf.setFecha(fechaAuxiliar.toDate());
-	    				Disponibilidad d = newTransientInstance(Disponibilidad.class);
+	    				hf.setFecha(fechaAuxiliar.toDate());*/	 
+	    				
 	    				d.setFecha(fechaAuxiliar.toDate());
-	    				d.setHabitacion(hf);
+	    				persistIfNotAlready(d);
 	    				listaDeHabitaciones.add(d);
 
 		    		}
@@ -70,6 +77,12 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 	    	return listaDeHabitaciones;
 	    	
 		}
+	
+	 	private void eliminarDisponibilidad() {
+	    	List<Disponibilidad> d = allMatches(QueryDefault.create(Disponibilidad.class, "disponibilidad"));
+	    	for(Disponibilidad borrar : d)
+	    		getContainer().removeIfNotAlready(borrar);
+	    }
 		
 		private HabitacionFecha existeReserva(final LocalDate fecha,final String nombre) {
 			
@@ -90,7 +103,6 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 	    	return d.getDays();
 	    }
 		
-
 	    @Programmatic
 	    public List<Habitacion> listaHabitaciones() {
 	    	return allMatches(QueryDefault.create(Habitacion.class, "traerHabitaciones"));	
