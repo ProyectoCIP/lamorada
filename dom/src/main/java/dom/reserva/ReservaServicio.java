@@ -24,19 +24,28 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 			@MultiLine(numberOfLines=3)
 			@Named("Comentario") String comentario) {
 		
+		Reserva reserva = newTransientInstance(Reserva.class);
+		persistIfNotAlready(reserva);
 		
 		List<Disponibilidad> disponibilidad = listaHabitacionesReservas();
 		
+		return crear(reserva,disponibilidad,huesped,comentario);
+		
+	}
+
+	private Reserva crear(
+			final Reserva reserva,
+			final List<Disponibilidad> disponibilidad,
+			final Huesped huesped,
+			final String comentario) {
+		
+		
 		if(disponibilidad.size() > 0)
 		{	
-			Reserva reserva = newTransientInstance(Reserva.class);
-			
 			reserva.setHuesped(huesped);
 			reserva.setComentario(comentario);
-			
-			persistIfNotAlready(reserva);
 			reserva.setFecha(LocalDate.now());
-				
+			
 			for(Disponibilidad d : disponibilidad) {
 				
 				if(d.isParaReservar())
@@ -44,10 +53,9 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 					HabitacionFecha hF = newTransientInstance(HabitacionFecha.class);
 					hF.setFecha(d.getFecha());
 					hF.setNombreHabitacion(d.getNombreHabitacion());
-					persistIfNotAlready(hF);
+					hF.setReserva(reserva);
 					reserva.addToHabitacion(hF);
-					getContainer().informUser("RELACIONADA CON:"+hF.getReserva().getNumero());
-					hF.setParaReservar(false);
+					persistIfNotAlready(hF);
 				}
 				
 				/*
@@ -55,14 +63,15 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 				 */
 				getContainer().removeIfNotAlready(d);
 				
-			}
+				}
 			
+			}
 			return reserva;
-		}
-		else
-			return null;
+			
+			
 	}
-    
+	
+	    
     private List<Disponibilidad> listaHabitacionesReservas() {
     	
 		return allMatches(QueryDefault.create(Disponibilidad.class, "disponibilidad"));

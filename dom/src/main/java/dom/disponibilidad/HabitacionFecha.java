@@ -37,39 +37,10 @@ public class HabitacionFecha {
 		return fecha;
 	}
 	
-	private boolean paraReservar;
-
-	@Named("Seleccionada")
-	public boolean isParaReservar() {
-		return paraReservar;
-	}
-
-	public void setParaReservar(boolean paraReservar) {
-		this.paraReservar = paraReservar;
-	}
-
-	public void setFecha(final Date fecha) {
+	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-	
-	@Named("Seleccionar")
-	@Bulk
-    @MemberOrder(name="paraReservar", sequence = "1")
-	@DescribedAs("Para reservar las habitaciones seleccionadas debe hacerlo desde el menu Disponibilidad -> Opcion:Reservar")
-	@Hidden(where=Where.OBJECT_FORMS)
-	public HabitacionFecha seleccionar() {
-		
-		if(getReserva() == null) {
-			setParaReservar(true);
-		}
-				
-		return this;
-	}
-	
-	  public String disableSeleccionar() {
-	        return paraReservar ? "Ya esta seleccionada!" : null;
-	  }
-	
+	  
 	private String nombreHabitacion;
 	
 	@Hidden

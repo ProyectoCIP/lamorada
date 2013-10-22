@@ -6,9 +6,12 @@ import javax.jdo.annotations.VersionStrategy;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Audited;
 import org.apache.isis.applib.annotation.Bulk;
+import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.ObjectType;
+import org.apache.isis.applib.annotation.Title;
+
 import dom.reserva.Reserva;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
@@ -21,6 +24,8 @@ public class Disponibilidad {
 	
 	private String nombreHabitacion;
 
+	@Title
+	@Hidden
 	public String getNombreHabitacion() {
 		return nombreHabitacion;
 	}
@@ -31,6 +36,7 @@ public class Disponibilidad {
 	
 	private boolean paraReservar;
 	
+	@Named("Seleccionada")
 	public boolean isParaReservar() {
 		return paraReservar;
 	}
@@ -54,9 +60,20 @@ public class Disponibilidad {
 	@MemberOrder(name="paraReservar",sequence="1")
 	public Disponibilidad reservar() {
 		
-		setParaReservar(true);
+		if(getReserva() == null) {			
+			if(isParaReservar())
+				setParaReservar(false);
+			else
+				setParaReservar(true);			
+		}
+		
 		return this;
 	}
+	
+	public String disableReservar() {
+        return paraReservar ? "Ya esta seleccionada!" : null;
+	}
+
 	
 	private Reserva reserva;
 	

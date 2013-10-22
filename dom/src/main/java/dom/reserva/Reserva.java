@@ -16,7 +16,6 @@ import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
-import org.apache.isis.applib.annotation.NotPersisted;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Title;
@@ -29,19 +28,21 @@ import dom.consumo.Consumo;
 import dom.disponibilidad.HabitacionFecha;
 import dom.enumeradores.FormaPago;
 import dom.huesped.Huesped;
+
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.APPLICATION)
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
 @ObjectType("RESERVA")
 @AutoComplete(repository=ReservaServicio.class, action="completaReservas")
 @Audited
+
 public class Reserva {
 	
 	//{{Numero de la reserva, autoincremental. Responsabilidad del ORM
 	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)  
+	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private long numero;
 
-	@NotPersisted
+	@MemberOrder(sequence="1")
 	public long getNumero() {
 		return numero;
 	}
@@ -77,9 +78,9 @@ public class Reserva {
 	//}}
 	
 	@Title
+	@Hidden(where=Where.OBJECT_FORMS)
 	public String getNombreEstado() {
-		return (estado == null) ? "Disponible" : getEstado().getNombre();		
-		//return "Reservada";
+		return getEstado().getNombre();	
 	}
 	
 	//}}
@@ -87,6 +88,7 @@ public class Reserva {
 	//{{Fecha en la que se realiza la reserva
 	private LocalDate fecha;
 	
+	@Disabled
 	@MemberOrder(sequence="5")
 	public LocalDate getFecha() {
 		return fecha;
@@ -148,9 +150,7 @@ public class Reserva {
 	    	return;
 	    }
 	    habitacion.setReserva(this);
-	    
 	    habitaciones.add(habitacion);
-	    container.informUser("TAMAÑO:"+habitaciones.size());
 	}
 	
     // provide a drop-down
