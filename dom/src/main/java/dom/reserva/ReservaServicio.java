@@ -44,7 +44,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 		{	
 			reserva.setHuesped(huesped);
 			reserva.setComentario(comentario);
-			reserva.setFecha(LocalDate.now());
+			reserva.setFecha(LocalDate.now().toDate());
 			
 			for(Disponibilidad d : disponibilidad) {
 				

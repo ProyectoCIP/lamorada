@@ -31,7 +31,7 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 	public List<Disponibilidad> porFechas(
 	            @Named("Fecha desde:") final LocalDate desde,
 	            @Optional
-	            @Named("Fecha hasta:") LocalDate hasta
+	            @Named("Fecha hasta:") final LocalDate hasta
 	        ){
 		
 			eliminarDisponibilidad();
@@ -40,10 +40,9 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 	    	final List<Habitacion> habitaciones = listaHabitaciones();
 	    	
 	    	LocalDate fechaAuxiliar = desde;
-	    	if(hasta == null) 
-	    		hasta = desde;
+	    	LocalDate hastaAuxiliar = (hasta!=null) ? hasta : desde;
 	    	
-	    	for(int i=0; i <= getDiferenciaDesdeHasta(desde, hasta); i++) {
+	    	for(int i=0; i <= getDiferenciaDesdeHasta(desde, hastaAuxiliar); i++) {
 	    	
 	    			for(Habitacion habitacion : habitaciones) {
 	    				
@@ -55,20 +54,11 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 	    				}
 	    				else {
 	    					d.setNombreHabitacion(habitacion.getNombre());
-	    					
 	    				}
-	    				/*else {
-	    					hf = newTransientInstance(HabitacionFecha.class);
-	    					hf.setNombreHabitacion(habitacion.getNombre());
-	    					hf.setParaReservar(false);
-			    		}   				
-	    				
-	    				hf.setFecha(fechaAuxiliar.toDate());*/	 
 	    				
 	    				d.setFecha(fechaAuxiliar.toDate());
 	    				persistIfNotAlready(d);
 	    				listaDeHabitaciones.add(d);
-
 		    		}
 
     				fechaAuxiliar = desde.plusDays(i+1);
@@ -77,6 +67,15 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 	    	return listaDeHabitaciones;
 	    	
 		}
+	
+	public String validatePorFechas(LocalDate desde, LocalDate hasta) {
+		if(hasta.isBefore(desde)||hasta.isEqual(desde)) {
+			return "La fecha hasta debe ser mayor a desde";
+		}
+		else {
+			return null;
+		}
+	}
 	
 	 	private void eliminarDisponibilidad() {
 	    	List<Disponibilidad> d = allMatches(QueryDefault.create(Disponibilidad.class, "disponibilidad"));
@@ -108,16 +107,6 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 	    	return allMatches(QueryDefault.create(Habitacion.class, "traerHabitaciones"));	
 	    }
 	  
-
-/*	    @Named("Listado")
-	    @ActionSemantics(Of.SAFE)
-	    public List<HabitacionFecha> listaHabitacionesReservas() {
-	    	
-	    	return porFechas(null, null);
-	    	//return allMatches(QueryDefault.create(HabitacionFecha.class, "habitacion_para_reservar"));
-	    	
-	    }
-	*/    
 		@Hidden
 		public List<HabitacionFecha> habitacionesReservadas(final String nombre) {
 			return allMatches(HabitacionFecha.class,new Filter<HabitacionFecha>(){

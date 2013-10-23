@@ -56,26 +56,27 @@ public class Reserva {
 	//}}
 	
 	//{{Estado actual de la reserva
-	@Persistent
+	/*@Persistent
 	private EReservada eReservada;
 	//{{Estado actual de la reserva
 	@Persistent
-	private ECheckIN eCheckin;
+	private ECheckIN eCheckin = new ECheckIN();
 	//{{Estado actual de la reserva
 	@Persistent
-	private ECheckOUT eCheckout;
+	private ECheckOUT eCheckout = new ECheckOUT();
 	//{{Estado actual de la reserva
 	@Persistent
-	private ECerrada eCerrada;
+	private ECerrada eCerrada;*/
 	
-	private IEReserva estado = new EReservada();
+	@Persistent
+	private EReserva estado = new EReservada();
 
 	@Hidden
-	public IEReserva getEstado() {
+	public EReserva getEstado() {
 		return estado;
 	}
 
-	public void setEstado(final IEReserva estado) {
+	public void setEstado(final EReserva estado) {
 		this.estado = estado;
 	}
 	//}}
@@ -89,15 +90,15 @@ public class Reserva {
 	//}}
 	
 	//{{Fecha en la que se realiza la reserva
-	private LocalDate fecha;
+	private Date fecha;
 	
 	@Disabled
 	@MemberOrder(name="Datos de la Reserva",sequence="2")
-	public LocalDate getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(final LocalDate fecha) {
+	public void setFecha(final Date fecha) {
 		this.fecha = fecha;
 	}
 	//}}
@@ -252,7 +253,8 @@ public class Reserva {
 	
 	//{{Huesped
 	private Huesped huesped;
-	
+
+	@MemberOrder(name="Datos de la Reserva",sequence="6")
 	public Huesped getHuesped() {
 		return huesped;
 	}
@@ -358,6 +360,22 @@ public class Reserva {
 		this.fechaFactura = fechaFactura;
 	}
 	
+	public Reserva checkIn() {
+		estado = new ECheckIN();
+		container.informUser("Check IN realizado con éxito!:"+this.estado.getNombre());	
+		
+		return this;
+	}
+	
+	public String disableCheckIn() {
+		if(getEstado() instanceof EReserva) {
+			return null;
+		}
+		else {
+			return "La reserva debe estar en Reservada para hacer el CheckIN";
+		}
+	}
+	
 	public Reserva cerrar(
 			@Named("Forma de Pago") FormaPago fP,
 			@Optional
@@ -367,8 +385,18 @@ public class Reserva {
 			@Optional
 			@Named("Fecha de Factura") LocalDate fechaFactura
 			) {
+		
+			estado = new ECerrada();
+		
+			/*List<Object> listaParametros = new ArrayList<Object>();
+			
+			listaParametros.add(this);
+			listaParametros.add(fP);
+			listaParametros.add(descuento);
+			listaParametros.add(numeroFactura);
+			listaParametros.add(fechaFactura);
+			*/
 
-			setEstado(eCerrada);
 			setNumeroFactura(numeroFactura);
 			setFechaFactura(fechaFactura.toDate());
 			setDescuento(descuento);
@@ -376,24 +404,21 @@ public class Reserva {
 			
 			container.informUser("Cierre realizado con éxito!");
 			
-			return this; 
+			return this;
 	}
 	
 	
 	public String disableCerrar(
-			@Named("Forma de Pago") FormaPago fP,
-			@Optional
-			@Named("Descuento") float descuento,
-			@Optional
-			@Named("Número de Factura") String numeroFactura,
-			@Optional
-			@Named("Fecha de Factura") LocalDate fechaFactura
+			FormaPago fP,
+			float descuento,
+			String numeroFactura,
+			LocalDate fechaFactura
 			) {
 		if(estado instanceof ECheckOUT) {
 			return null;
 		}
 		else {
-			return "La reserva debe estar CheckOUT para realizar el cierre";
+			return "La reserva debe estar CheckOUT para realizar el CIERRE";
 		}
 	}
 	

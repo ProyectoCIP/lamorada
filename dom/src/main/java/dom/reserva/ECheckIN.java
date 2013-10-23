@@ -1,23 +1,10 @@
 package dom.reserva;
 
-import org.apache.isis.applib.AbstractFactoryAndRepository;
-
-public class ECheckIN extends AbstractFactoryAndRepository implements IEReserva {
+public class ECheckIN extends EReserva {
 	
-	public String getIcon() {
-		return "CheckIN";
-	}
-	
-	@Override
 	public String getNombre() {
+		// TODO Auto-generated method stub
 		return "CheckIN";
 	}
-
-	@Override
-	public Reserva accion(Reserva reserva) {
-		
-		return reserva;
-		
-	}
-
+	
 }
