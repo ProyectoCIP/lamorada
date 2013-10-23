@@ -1,6 +1,7 @@
 package dom.reserva;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
@@ -13,10 +14,12 @@ import org.apache.isis.applib.annotation.AutoComplete;
 import org.apache.isis.applib.annotation.Bulk;
 import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.Hidden;
+import org.apache.isis.applib.annotation.MemberGroups;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.ObjectType;
+import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.annotation.When;
@@ -33,8 +36,8 @@ import dom.huesped.Huesped;
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
 @ObjectType("RESERVA")
 @AutoComplete(repository=ReservaServicio.class, action="completaReservas")
+@MemberGroups({"Datos de la Reserva","Datos del Cierre"})
 @Audited
-
 public class Reserva {
 	
 	//{{Numero de la reserva, autoincremental. Responsabilidad del ORM
@@ -42,7 +45,7 @@ public class Reserva {
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private long numero;
 
-	@MemberOrder(sequence="1")
+	@MemberOrder(name="Datos de la Reserva",sequence="1")
 	public long getNumero() {
 		return numero;
 	}
@@ -89,7 +92,7 @@ public class Reserva {
 	private LocalDate fecha;
 	
 	@Disabled
-	@MemberOrder(sequence="5")
+	@MemberOrder(name="Datos de la Reserva",sequence="2")
 	public LocalDate getFecha() {
 		return fecha;
 	}
@@ -102,6 +105,7 @@ public class Reserva {
 	//{{Monto de la seña
 	private float montoSena;
 
+	@MemberOrder(name="Datos de la Reserva",sequence="3")
 	public float getMontoSena() {
 		return montoSena;
 	}
@@ -113,7 +117,8 @@ public class Reserva {
 	
 	//{{Forma en la que se hace la seña
 	private FormaPago tipoSena;
-	
+
+	@MemberOrder(name="Datos de la Reserva",sequence="4")
 	public FormaPago getTipoSena() {
 		return tipoSena;
 	}
@@ -235,7 +240,7 @@ public class Reserva {
 	
 	@Hidden(where=Where.ALL_TABLES)
 	@MultiLine(numberOfLines=3)
-	@MemberOrder(sequence="3")
+	@MemberOrder(name="Datos de la Reserva",sequence="5")
 	public String getComentario() {
 		return comentario;
 	}
@@ -256,6 +261,7 @@ public class Reserva {
 		this.huesped = huesped;
 	}	
 	//}}
+	
 	
 	//{{Accion : Reservar / Desactivada cuando el objeto ya está persistido (ya se encuentra reservada)
 	@Named("Reservar")
@@ -312,6 +318,84 @@ public class Reserva {
         this.usuario = usuario;
     }//}}
     
+    private FormaPago formaDeCierre;
 
+	public FormaPago getFormaDeCierre() {
+		return formaDeCierre;
+	}
+
+	public void setFormaDeCierre(FormaPago formaDeCierre) {
+		this.formaDeCierre = formaDeCierre;
+	}
+    
+    private float descuento;
+
+	public float getDescuento() {
+		return descuento;
+	}
+
+	public void setDescuento(float descuento) {
+		this.descuento = descuento;
+	}
+    
+	private String numeroFactura;
+	
+    public String getNumeroFactura() {
+		return numeroFactura;
+	}
+
+	public void setNumeroFactura(String numeroFactura) {
+		this.numeroFactura = numeroFactura;
+	}
+	
+	private Date fechaFactura;
+
+	public Date getFechaFactura() {
+		return fechaFactura;
+	}
+
+	public void setFechaFactura(Date fechaFactura) {
+		this.fechaFactura = fechaFactura;
+	}
+	
+	public Reserva cerrar(
+			@Named("Forma de Pago") FormaPago fP,
+			@Optional
+			@Named("Descuento") float descuento,
+			@Optional
+			@Named("Número de Factura") String numeroFactura,
+			@Optional
+			@Named("Fecha de Factura") LocalDate fechaFactura
+			) {
+
+			setEstado(eCerrada);
+			setNumeroFactura(numeroFactura);
+			setFechaFactura(fechaFactura.toDate());
+			setDescuento(descuento);
+			setFormaDeCierre(fP);
+			
+			container.informUser("Cierre realizado con éxito!");
+			
+			return this; 
+	}
+	
+	
+	public String disableCerrar(
+			@Named("Forma de Pago") FormaPago fP,
+			@Optional
+			@Named("Descuento") float descuento,
+			@Optional
+			@Named("Número de Factura") String numeroFactura,
+			@Optional
+			@Named("Fecha de Factura") LocalDate fechaFactura
+			) {
+		if(estado instanceof ECheckOUT) {
+			return null;
+		}
+		else {
+			return "La reserva debe estar CheckOUT para realizar el cierre";
+		}
+	}
+	
 	
 }
