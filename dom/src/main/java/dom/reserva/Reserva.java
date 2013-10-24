@@ -14,6 +14,7 @@ import org.apache.isis.applib.annotation.AutoComplete;
 import org.apache.isis.applib.annotation.Bulk;
 import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.Hidden;
+import org.apache.isis.applib.annotation.MaxLength;
 import org.apache.isis.applib.annotation.MemberGroups;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.MultiLine;
@@ -34,6 +35,7 @@ import dom.huesped.Huesped;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.APPLICATION)
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
+@javax.jdo.annotations.Query(name="reservas", language="JDOQL",value="SELECT FROM dom.reserva.Reserva order by numero desc")
 @ObjectType("RESERVA")
 @AutoComplete(repository=ReservaServicio.class, action="completaReservas")
 @MemberGroups({"Datos de la Reserva","Datos del Cierre"})
@@ -45,6 +47,7 @@ public class Reserva {
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private long numero;
 
+    @MaxLength(5)
 	@MemberOrder(name="Datos de la Reserva",sequence="1")
 	public long getNumero() {
 		return numero;
@@ -54,19 +57,6 @@ public class Reserva {
 		this.numero = numero;
 	}
 	//}}
-	
-	//{{Estado actual de la reserva
-	/*@Persistent
-	private EReservada eReservada;
-	//{{Estado actual de la reserva
-	@Persistent
-	private ECheckIN eCheckin = new ECheckIN();
-	//{{Estado actual de la reserva
-	@Persistent
-	private ECheckOUT eCheckout = new ECheckOUT();
-	//{{Estado actual de la reserva
-	@Persistent
-	private ECerrada eCerrada;*/
 	
 	@Persistent
 	private EReserva estado = new EReservada();
@@ -81,12 +71,10 @@ public class Reserva {
 	}
 	//}}
 	
-	@Title
-	@Hidden(where=Where.OBJECT_FORMS)
-	public String getNombreEstado() {
+	//{{Titulo
+	public String title(){
 		return getEstado().getNombre();	
 	}
-	
 	//}}
 	
 	//{{Fecha en la que se realiza la reserva
@@ -105,7 +93,8 @@ public class Reserva {
 	
 	//{{Monto de la seña
 	private float montoSena;
-
+	
+    @Hidden(where=Where.ALL_TABLES)
 	@MemberOrder(name="Datos de la Reserva",sequence="3")
 	public float getMontoSena() {
 		return montoSena;
@@ -119,6 +108,7 @@ public class Reserva {
 	//{{Forma en la que se hace la seña
 	private FormaPago tipoSena;
 
+    @Hidden(where=Where.ALL_TABLES)
 	@MemberOrder(name="Datos de la Reserva",sequence="4")
 	public FormaPago getTipoSena() {
 		return tipoSena;
@@ -229,9 +219,9 @@ public class Reserva {
 	//{{Comentarios - No se muestran cuando se lista la reserva
 	private String comentario;
 	
-	@Hidden(where=Where.ALL_TABLES)
 	@MultiLine(numberOfLines=3)
 	@MemberOrder(name="Datos de la Reserva",sequence="5")
+	@Hidden(where=Where.ALL_TABLES)
 	public String getComentario() {
 		return comentario;
 	}
@@ -254,30 +244,8 @@ public class Reserva {
 	}	
 	//}}
 	
-	
-	//{{Accion : Reservar / Desactivada cuando el objeto ya está persistido (ya se encuentra reservada)
-	@Named("Reservar")
-	@Hidden(when=When.ONCE_PERSISTED)
-	@Bulk
-	public void reservar() {
-		/*
-		 * Se puede reservar
-		 */
-		/*if(getEstado()==null) {
-			eReservada = container.newTransientInstance(EReservada.class);
-			setEstado(eReservada);
-			getEstado().accion(this);
-		}
-		else {
-		*/
-			container.informUser("No se puede realizar la Reserva solicitada");
-		//}
-	}
-	//}}
-	
-	//{{Accion : Borrar Reserva / desactivada cuando el objeto aún no se ha persistido (no es reserva)
-	@Named("Borrar Reserva")
-	@Disabled(when=When.UNTIL_PERSISTED)
+	//{{Accion
+	@Named("Borrar")
 	public void borrarReserva() {
 		container.informUser("Reserva número: "+getNumero()+" a sido borrada");
 		container.removeIfNotAlready(this);
@@ -310,19 +278,32 @@ public class Reserva {
         this.usuario = usuario;
     }//}}
     
-    /*
-    public float totalAPagar() {
+    private float total;
+    
+    @MaxLength(5)
+    public float getTotal() {
     	
     	float total = 0;
     	
     	for(HabitacionFecha h : getHabitaciones()) {
-    		total += 
+    		total += h.getTarifa();
     	}
+    	for(Consumo c : getConsumos()) {
+    		total += c.getPrecioTotal();
+    	}
+    	
+    	return total;
     }
-    */
+    
+    public void setTotal(float total) {
+    	this.total = total;
+    }
+    
+    
     
     private FormaPago formaDeCierre;
 
+    @Hidden(where=Where.ALL_TABLES)
 	public FormaPago getFormaDeCierre() {
 		return formaDeCierre;
 	}
@@ -332,7 +313,8 @@ public class Reserva {
 	}
     
     private float descuento;
-
+    
+    @Hidden(where=Where.ALL_TABLES)
 	public float getDescuento() {
 		return descuento;
 	}
@@ -343,6 +325,7 @@ public class Reserva {
     
 	private String numeroFactura;
 	
+    @Hidden(where=Where.ALL_TABLES)
     public String getNumeroFactura() {
 		return numeroFactura;
 	}
@@ -353,6 +336,7 @@ public class Reserva {
 	
 	private Date fechaFactura;
 
+    @Hidden(where=Where.ALL_TABLES)
 	public Date getFechaFactura() {
 		return fechaFactura;
 	}
@@ -363,18 +347,39 @@ public class Reserva {
 	
 	public Reserva checkIn() {
 		estado = new ECheckIN();
-		container.informUser("Check IN realizado con éxito!");	
-		
 		return this;
 	}
 	
 	public String disableCheckIn() {
-		if(estado instanceof EReserva) {
-			container.informUser("Entro aca:"+estado.getClass().getName());
+		if(estado instanceof EReservada) {
 			return null;
 		}
 		else {
-			return "La reserva debe estar en Reservada para hacer el CheckIN";
+			if(estado instanceof ECheckIN) {
+				return "La reserva ya se encuentra CheckIN";
+			}
+			else {
+				return "Tiene que estar Reservada para realizar el CheckIN";
+			}
+		}
+	}
+	
+	public Reserva checkOut() {
+		estado = new ECheckOUT();
+		return this;
+	}
+	
+	public String disableCheckOut() {
+		if(estado instanceof ECheckOUT) {
+			return null;
+		}
+		else {
+			if(estado instanceof ECheckOUT) {
+				return "La reserva ya se encuentra CheckOUT";
+			}
+			else {
+				return "Tiene que estar CheckIN para realizar el CheckOUT";
+			}
 		}
 	}
 	
@@ -420,7 +425,12 @@ public class Reserva {
 			return null;
 		}
 		else {
-			return "La reserva debe estar CheckOUT para realizar el CIERRE";
+			if(estado instanceof ECerrada) {
+				return "La reserva ya se encuentra Cerrada";
+			}
+			else {
+				return "Tiene que estar CheckOUT para realizar el Cierre";
+			}
 		}
 	}
 	

@@ -86,6 +86,17 @@ public class Disponibilidad {
 	public void setTipoHabitacion(TipoHabitacion tipoHabitacion) {
 		this.tipoHabitacion = tipoHabitacion;
 	}
+	
+	private float tarifa;
+	
+	@Hidden(where=Where.OBJECT_FORMS)
+	public float getTarifa() {
+		return tarifa;
+	}
+
+	public void setTarifa(float tarifa) {
+		this.tarifa = tarifa;
+	}
 
 	
 	private Reserva reserva;

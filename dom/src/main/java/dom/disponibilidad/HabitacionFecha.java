@@ -1,23 +1,18 @@
 package dom.disponibilidad;
 
-import java.awt.Container;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
-
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Audited;
 import org.apache.isis.applib.annotation.AutoComplete;
-import org.apache.isis.applib.annotation.Bulk;
-import org.apache.isis.applib.annotation.DescribedAs;
+import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.Hidden;
-import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Where;
 import dom.reserva.Reserva;
+import dom.tarifa.TarifaServicio;
 import dom.enumeradores.TipoHabitacion;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
@@ -76,6 +71,7 @@ public class HabitacionFecha {
 	}
 
 	public void setPax(int pax) {
+		//this.tarifa = tFS.tarifa(pax);
 		this.pax = pax;
 	}
 	
@@ -83,6 +79,18 @@ public class HabitacionFecha {
 		return mayorPaxPermitido(pax) ? null : "El número de personas es mayor al permitido";
 	}
 	
+	private boolean mayorPaxPermitido(int pax) {
+		if((getTipoHabitacion() == TipoHabitacion.Doble) && (pax > 2)) {
+			return false;
+		}
+		if((getTipoHabitacion() == TipoHabitacion.Triple) && (pax > 3)) {
+			return false;
+		}
+		if((getTipoHabitacion() == TipoHabitacion.Cuadruple) && (pax > 4)) {
+			return false;
+		}
+		return true;
+	}
 	/*
 	 * Se guarda la tarifa de la habitación en esa fecha para que no cambie 
 	 * si se cambia el costo del pax en general
@@ -99,22 +107,10 @@ public class HabitacionFecha {
 		this.tarifa = tarifa;
 	}
 	
-	private boolean mayorPaxPermitido(int pax) {
-		if((getTipoHabitacion() == TipoHabitacion.Doble) && (pax > 2)) {
-			return false;
-		}
-		if((getTipoHabitacion() == TipoHabitacion.Triple) && (pax > 3)) {
-			return false;
-		}
-		if((getTipoHabitacion() == TipoHabitacion.Cuadruple) && (pax > 4)) {
-			return false;
-		}
-		return true;
-	}
-	
 	private Reserva reserva;
 	
 	@Named("Estado")
+	@Disabled
 	public Reserva getReserva() {
 		return reserva;
 	}
@@ -126,6 +122,12 @@ public class HabitacionFecha {
 	private DomainObjectContainer container;
 	
 	public void injectDomainObjectContainer(final DomainObjectContainer container) {
+	}
+	
+	private TarifaServicio tFS;
+	
+	public void injectTarifaServicio(TarifaServicio tFS) {
+		this.tFS = tFS;
 	}
 	//}}
 	

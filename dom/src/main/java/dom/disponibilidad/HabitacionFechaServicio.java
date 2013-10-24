@@ -19,9 +19,12 @@ import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
+import dom.enumeradores.TipoHabitacion;
 import dom.habitacion.Habitacion;
 import dom.huesped.Huesped;
 import dom.reserva.Reserva;
+import dom.tarifa.Tarifa;
+import dom.tarifa.TarifaServicio;
 
 @Named("Disponibilidad")
 public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
@@ -51,7 +54,7 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 	    				if(existeReserva(fechaAuxiliar,habitacion.getNombre()) != null) {
 	    					HabitacionFecha hf = existeReserva(fechaAuxiliar,habitacion.getNombre());
 	    					d.setReserva(hf.getReserva());
-	    					
+	    					d.setTarifa(hf.getTarifa());
 	    				}
 	    				else {
 	    					d.setNombreHabitacion(habitacion.getNombre());
@@ -70,20 +73,30 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 	    	
 		}
 	
+	/*
+	 * Validacion del ingreso de fechas por el UI
+	 */
 	public String validatePorFechas(LocalDate desde, LocalDate hasta) {
-		if(hasta.isBefore(desde)||hasta.isEqual(desde)) {
-			return "La fecha hasta debe ser mayor a desde";
+		if(hasta == null) {
+			return null;
 		}
 		else {
-			return null;
+			if(hasta.isBefore(desde)||hasta.isEqual(desde)) {
+				return "La fecha hasta debe ser mayor a desde";
+			}
+			else {
+				return null;
+			}
 		}
 	}
 	
-	 	private void eliminarDisponibilidad() {
-	    	List<Disponibilidad> d = allMatches(QueryDefault.create(Disponibilidad.class, "disponibilidad"));
-	    	for(Disponibilidad borrar : d)
-	    		getContainer().removeIfNotAlready(borrar);
-	    }
+	private void eliminarDisponibilidad() {
+	
+		List<Disponibilidad> d = allMatches(QueryDefault.create(Disponibilidad.class, "disponibilidad"));
+		for(Disponibilidad borrar : d)
+			getContainer().removeIfNotAlready(borrar);
+	
+	}
 		
 		private HabitacionFecha existeReserva(final LocalDate fecha,final String nombre) {
 			
@@ -118,6 +131,12 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 					return habitacion.getNombreHabitacion().contains(nombre);
 				}			
 			});
+		}
+		
+		private TarifaServicio tFS;
+		
+		public void injectTarifaServicio(TarifaServicio tFS) {
+			this.tFS = tFS;
 		}
 	    
 	}
