@@ -53,6 +53,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 					HabitacionFecha hF = newTransientInstance(HabitacionFecha.class);
 					hF.setFecha(d.getFecha());
 					hF.setNombreHabitacion(d.getNombreHabitacion());
+					hF.setPax(1);
 					hF.setReserva(reserva);
 					reserva.addToHabitacion(hF);
 					persistIfNotAlready(hF);

@@ -11,7 +11,9 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Title;
+import org.apache.isis.applib.annotation.Where;
 
+import dom.enumeradores.TipoHabitacion;
 import dom.reserva.Reserva;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
@@ -72,6 +74,17 @@ public class Disponibilidad {
 	
 	public String disableReservar() {
         return paraReservar ? "Ya esta seleccionada!" : null;
+	}	
+	
+	private TipoHabitacion tipoHabitacion;
+	
+	@Hidden(where=Where.STANDALONE_TABLES)
+	public TipoHabitacion getTipoHabitacion() {
+		return tipoHabitacion;
+	}
+	
+	public void setTipoHabitacion(TipoHabitacion tipoHabitacion) {
+		this.tipoHabitacion = tipoHabitacion;
 	}
 
 	

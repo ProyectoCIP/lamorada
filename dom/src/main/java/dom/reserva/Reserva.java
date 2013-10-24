@@ -226,16 +226,6 @@ public class Reserva {
 	}
 	//}}
 	
-	private int cantidadDias;
-	
-	public int getCantidadDias() {
-		return cantidadDias;
-	}
-	
-	public void setCantidadDias(final int cantidadDias) {
-		this.cantidadDias = cantidadDias;
-	}
-	
 	//{{Comentarios - No se muestran cuando se lista la reserva
 	private String comentario;
 	
@@ -320,6 +310,17 @@ public class Reserva {
         this.usuario = usuario;
     }//}}
     
+    /*
+    public float totalAPagar() {
+    	
+    	float total = 0;
+    	
+    	for(HabitacionFecha h : getHabitaciones()) {
+    		total += 
+    	}
+    }
+    */
+    
     private FormaPago formaDeCierre;
 
 	public FormaPago getFormaDeCierre() {
@@ -362,13 +363,14 @@ public class Reserva {
 	
 	public Reserva checkIn() {
 		estado = new ECheckIN();
-		container.informUser("Check IN realizado con éxito!:"+this.estado.getNombre());	
+		container.informUser("Check IN realizado con éxito!");	
 		
 		return this;
 	}
 	
 	public String disableCheckIn() {
-		if(getEstado() instanceof EReserva) {
+		if(estado instanceof EReserva) {
+			container.informUser("Entro aca:"+estado.getClass().getName());
 			return null;
 		}
 		else {

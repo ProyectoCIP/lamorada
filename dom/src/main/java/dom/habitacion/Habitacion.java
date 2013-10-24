@@ -44,44 +44,16 @@ public class Habitacion {
 	}
 	//}}
 	
-	//{{Capacidad
-	private int capacidad;
-		
-	@MemberOrder(sequence = "2")
-	public int getCapacidad() {
-		return capacidad;
-	}
-	public void setCapacidad(final int capacidad) {
-		this.capacidad = capacidad;
-	}
-	//}}
-	
 	//{{Tipo de Habitacion
 	private TipoHabitacion tipoHabitacion;
 		
-	@MemberOrder(sequence = "3")
+	@MemberOrder(sequence = "2")
 	public TipoHabitacion getTipoHabitacion() {
 		return tipoHabitacion;
 	}
 	public void setTipoHabitacion(final TipoHabitacion tipoHabitacion) {
 		this.tipoHabitacion = tipoHabitacion;
 	}
-	
-	//}}
-	
-	//{{Cuanto cuesta la habitación por noche en base a su capacidad
-	/*
-	private float costo;
-	
-	public float getCosto() {
-		
-	}
-	
-	public void setCosto() {
-		
-	}
-	*/
-	//}}
 	
 	//{{Estado del objeto
 	private boolean estado;
@@ -106,18 +78,6 @@ public class Habitacion {
 	}
 	//}}	
 	
-	//{{Fecha
-	private LocalDate fecha;
-
-	@Hidden
-	public LocalDate getFecha() {
-		return fecha;
-	}
-	public void setFecha(LocalDate fecha) {
-		this.fecha = fecha;
-	}
-	//}}
-	
 	//{{Usuario actual
 	private String usuario;
 
@@ -141,10 +101,11 @@ public class Habitacion {
 	
 	@Named("Borrar Habitación")
 	@Bulk
-	public void borrar() {		
+	public Habitacion borrar() {		
 		if(isEstado()) {
 			setEstado(false);
 		}
+		return this;
 	}
 	
 	private DomainObjectContainer container;

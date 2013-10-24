@@ -35,17 +35,15 @@ public class HabitacionServicio extends AbstractFactoryAndRepository{
 			@Named("Nombre") String nombre,
 			@Named("Capacidad") int capacidad,
 			@Named("Tipo de Habitación") TipoHabitacion tipoHabitacion) {
-		return nuevoHabitacion(nombre, capacidad, tipoHabitacion);
+		return nuevoHabitacion(nombre, tipoHabitacion);
 	}
 	
 	@Hidden
 	public Habitacion nuevoHabitacion(
-			final String nombre,						
-			final int capacidad,
+			final String nombre,		
 			final TipoHabitacion tipoHabitacion) {
 		final Habitacion habitacion = newTransientInstance(Habitacion.class);		
 		habitacion.setNombre(nombre);
-		habitacion.setCapacidad(capacidad);
 		habitacion.setTipoHabitacion(tipoHabitacion);
 		habitacion.setUsuario(usuarioActual());
 		
