@@ -3,27 +3,17 @@ package dom.disponibilidad;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.isis.applib.AbstractFactoryAndRepository;
-import org.apache.isis.applib.annotation.ActionSemantics;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
-import org.apache.isis.applib.annotation.NotInServiceMenu;
 import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.annotation.Programmatic;
-import org.apache.isis.applib.annotation.ActionSemantics.Of;
 import org.apache.isis.applib.filter.Filter;
 import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
-
-import dom.enumeradores.TipoHabitacion;
 import dom.habitacion.Habitacion;
-import dom.huesped.Huesped;
-import dom.reserva.Reserva;
-import dom.tarifa.Tarifa;
 import dom.tarifa.TarifaServicio;
 
 @Named("Disponibilidad")
@@ -98,45 +88,45 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 	
 	}
 		
-		private HabitacionFecha existeReserva(final LocalDate fecha,final String nombre) {
+	private HabitacionFecha existeReserva(final LocalDate fecha,final String nombre) {
 			
-			return uniqueMatch(HabitacionFecha.class, new Filter<HabitacionFecha>(){
+		return uniqueMatch(HabitacionFecha.class, new Filter<HabitacionFecha>(){
 
-				@Override
-				public boolean accept(HabitacionFecha habitacion) {
-					// TODO Auto-generated method stub
-					return habitacion.getFecha().equals(fecha.toDate())&&habitacion.getNombreHabitacion().equals(nombre);
-				}				
-			}); 			
-		}
-		
-		private int getDiferenciaDesdeHasta(final LocalDate desde,final LocalDate hasta) {
-	      	//calcula la diferencia entre la fecha desde y hasta
-	    	Days d = Days.daysBetween(desde, hasta);
-	    	
-	    	return d.getDays();
-	    }
-		
-	    @Programmatic
-	    public List<Habitacion> listaHabitaciones() {
-	    	return allMatches(QueryDefault.create(Habitacion.class, "traerHabitaciones"));	
-	    }
-	  
-		@Hidden
-		public List<HabitacionFecha> habitacionesReservadas(final String nombre) {
-			return allMatches(HabitacionFecha.class,new Filter<HabitacionFecha>(){
-				@Override
-				public boolean accept(final HabitacionFecha habitacion) {
-					// TODO Auto-generated method stub
-					return habitacion.getNombreHabitacion().contains(nombre);
-				}			
-			});
-		}
-		
-		private TarifaServicio tFS;
-		
-		public void injectTarifaServicio(TarifaServicio tFS) {
-			this.tFS = tFS;
-		}
-	    
+			@Override
+			public boolean accept(HabitacionFecha habitacion) {
+				// TODO Auto-generated method stub
+				return habitacion.getFecha().equals(fecha.toDate())&&habitacion.getNombreHabitacion().equals(nombre);
+			}				
+		}); 			
 	}
+		
+	private int getDiferenciaDesdeHasta(final LocalDate desde,final LocalDate hasta) {
+	   	//calcula la diferencia entre la fecha desde y hasta
+	   	Days d = Days.daysBetween(desde, hasta);
+	    	
+	   	return d.getDays();
+	}
+		
+	@Programmatic
+	public List<Habitacion> listaHabitaciones() {
+	  	return allMatches(QueryDefault.create(Habitacion.class, "traerHabitaciones"));	
+	}
+	  
+	@Hidden
+	public List<HabitacionFecha> habitacionesReservadas(final String nombre) {
+		return allMatches(HabitacionFecha.class,new Filter<HabitacionFecha>(){
+			@Override
+			public boolean accept(final HabitacionFecha habitacion) {
+				// TODO Auto-generated method stub
+				return habitacion.getNombreHabitacion().contains(nombre);
+			}			
+		});
+	}
+		
+	private TarifaServicio tFS;
+		
+	public void injectTarifaServicio(TarifaServicio tFS) {
+		this.tFS = tFS;
+	}
+	    
+}

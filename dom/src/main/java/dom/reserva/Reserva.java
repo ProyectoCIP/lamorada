@@ -370,7 +370,7 @@ public class Reserva {
 	}
 	
 	public String disableCheckOut() {
-		if(estado instanceof ECheckOUT) {
+		if(estado instanceof ECheckIN) {
 			return null;
 		}
 		else {

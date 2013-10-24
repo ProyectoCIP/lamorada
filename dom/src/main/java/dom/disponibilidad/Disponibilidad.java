@@ -78,7 +78,7 @@ public class Disponibilidad {
 	
 	private TipoHabitacion tipoHabitacion;
 	
-	@Hidden(where=Where.STANDALONE_TABLES)
+	//@Hidden(where=Where.STANDALONE_TABLES)
 	public TipoHabitacion getTipoHabitacion() {
 		return tipoHabitacion;
 	}
