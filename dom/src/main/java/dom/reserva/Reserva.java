@@ -1,6 +1,5 @@
 package dom.reserva;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,19 +11,16 @@ import javax.jdo.annotations.VersionStrategy;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Audited;
 import org.apache.isis.applib.annotation.AutoComplete;
-import org.apache.isis.applib.annotation.Bulk;
-import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MaxLength;
 import org.apache.isis.applib.annotation.MemberGroups;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.annotation.NotPersisted;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.annotation.Render;
-import org.apache.isis.applib.annotation.Title;
-import org.apache.isis.applib.annotation.When;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.annotation.Render.Type;
 import org.joda.time.LocalDate;
@@ -40,7 +36,7 @@ import dom.huesped.Huesped;
 @javax.jdo.annotations.Query(name="reservas", language="JDOQL",value="SELECT FROM dom.reserva.Reserva order by numero desc")
 @ObjectType("RESERVA")
 @AutoComplete(repository=ReservaServicio.class, action="completaReservas")
-@MemberGroups({"Datos de la Reserva","Datos del Cierre"})
+@MemberGroups({"Estados","Datos de la Reserva","Datos del Cierre"})
 @Audited
 public class Reserva {
 	
@@ -60,7 +56,20 @@ public class Reserva {
 	}
 	//}}
 	
-	@Persistent
+	private String nombreEstado;
+	
+	@Named("Estado")
+	@NotPersisted
+	@MemberOrder(name="Estados",sequence="1")
+	public String getNombreEstado() {
+		nombreEstado = getEstado().toString();
+		return nombreEstado;
+	}
+	
+	public void setNombreEstado(String nombreEstado) {
+		this.nombreEstado = nombreEstado;
+	}
+	
 	private EstadoReserva estado;
 	
 	@Hidden
@@ -81,16 +90,18 @@ public class Reserva {
 	
 	//{{Fecha en la que se realiza la reserva
 	
+	/*
 	@Named("Fecha")
 	@MemberOrder(name="Datos de la Reserva",sequence="2")
 	public String getFechaString() {
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		return formato.format(getFecha());
-	}
+	}*/
 	
 	private Date fecha;
 	
-	@Hidden
+	//@Hidden
+	@MemberOrder(name="Datos de la Reserva",sequence="2")
 	public Date getFecha() {
 		return fecha;
 	}
@@ -290,6 +301,7 @@ public class Reserva {
     private float total;
     
     @MaxLength(5)
+    @MemberOrder(name="Datos del Cierre",sequence="4")
     public float getTotal() {
     	
     	float total = 0;
@@ -328,6 +340,7 @@ public class Reserva {
 	private boolean isDescuento;
 	
 	@Hidden
+	@NotPersisted
 	public boolean isDescuento() {
 		return isDescuento;
 	}
@@ -349,13 +362,18 @@ public class Reserva {
 		this.descuento = descuento;
 	}
 	
-	@Named("Aplicar")
+	@Named("On/Off")
 	@MemberOrder(name="descuento",sequence="1")
 	public Reserva aplicarDescuento() {
-		setDescuento(true);
+		
+		if(!isDescuento())
+			setDescuento(true);
+		else
+			setDescuento(false);
+		
 		return this;
 	}
-	
+		
 	public String disableDescuento() {
 		return isDescuento() ? null : "Aplicar para ingresar descuento";
 	}
@@ -374,15 +392,16 @@ public class Reserva {
 		this.numeroFactura = numeroFactura;
 	}	
 
-    @MemberOrder(name="Datos del Cierre",sequence="4")
-	public String getFechaFacturaString() {
+
+	/*public String getFechaFacturaString() {
     	SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-		return formato.format(getFechaFactura());
-	}
+		return (getFechaFactura() != null) ? formato.format(getFechaFactura()) : "";
+	}*/
 	
 	private Date fechaFactura;
 
-    @Hidden
+    //@Hidden    
+    @MemberOrder(name="Datos del Cierre",sequence="4")
 	public Date getFechaFactura() {
 		return fechaFactura;
 	}
@@ -391,7 +410,7 @@ public class Reserva {
 		this.fechaFactura = fechaFactura;
 	}
 	
-	@MemberOrder(name="estado",sequence="1")
+	@MemberOrder(name="nombreEstado",sequence="1")
 	public Reserva checkIn() {
 		setEstado(EstadoReserva.CheckIN);
 		return this;
@@ -411,9 +430,9 @@ public class Reserva {
 		}
 	}
 	
-	@MemberOrder(name="estado",sequence="2")
+	@MemberOrder(name="nombreEstado",sequence="2")
 	public Reserva checkOut() {
-		if(getEstado() == EstadoReserva.CheckOUT);
+		setEstado(EstadoReserva.CheckOUT);
 		return this;
 	}
 	
@@ -431,7 +450,7 @@ public class Reserva {
 		}
 	}
 	
-	@MemberOrder(name="estado",sequence="3")
+	@MemberOrder(name="nombreEstado",sequence="3")
 	public Reserva cerrar(
 			@Named("Forma de Pago") FormaPago fP,
 			@Optional
