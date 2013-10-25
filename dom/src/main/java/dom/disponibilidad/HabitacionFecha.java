@@ -1,5 +1,6 @@
 package dom.disponibilidad;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +25,6 @@ import org.apache.isis.applib.query.QueryDefault;
 import dom.reserva.Reserva;
 import dom.tarifa.Tarifa;
 import dom.tarifa.TarifaServicio;
-import dom.enumeradores.Pax;
 import dom.enumeradores.TipoHabitacion;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
@@ -33,7 +33,6 @@ import dom.enumeradores.TipoHabitacion;
 @javax.jdo.annotations.Queries({
 	@javax.jdo.annotations.Query(name="habitacion_para_reservar", language="JDOQL",value="SELECT FROM dom.disponibilidad.HabitacionFecha WHERE paraReservar == true"),
 	@javax.jdo.annotations.Query(name="habitacion_relleno", language="JDOQL",value="SELECT FROM dom.disponibilidad.HabitacionFecha WHERE paraReservar == false"),
-	@javax.jdo.annotations.Query(name="traerTarifa", language="JDOQL",value="SELECT FROM dom.tarifa.Tarifa WHERE pax := pax")
 })
 @ObjectType("HF")
 @AutoComplete(repository=HabitacionFechaServicio.class,action="habitacionesReservadas")
@@ -44,8 +43,15 @@ public class HabitacionFecha {
 		return getNombreHabitacion();
 	}
 	
+	@Named("Fecha")
+	public String getFechaString() {
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		return formato.format(getFecha());
+	}
+	
 	private Date fecha;
 	
+	@Hidden
 	public Date getFecha() {
 		return fecha;
 	}
@@ -90,7 +96,7 @@ public class HabitacionFecha {
 	private int pax;
 	
 	@Named("Personas")
-	@Disabled
+	//@Disabled
 	public int getPax() {
 		return pax;
 	}
@@ -99,27 +105,15 @@ public class HabitacionFecha {
 		this.pax = pax;
 	}	
 	
-	private Tarifa precio;
-
-	@NotPersisted
-	public Tarifa getPrecio() {
-		return precio;
-	}
-
-	public void setPrecio(Tarifa precio) {
-		this.precio = precio;
-	}
-	
-	
-	@Named("Editar")
+	/*@Named("Editar")
 	@MemberOrder(name="pax",sequence="1")
 	public HabitacionFecha personas(@Named("Cantidad de Personas") int personas) {
 		setPax(personas);	
-		setTarifa(tFS.tarifa(personas).getPrecio());
+		//setTarifa(tFS.tarifa(personas).getPrecio());
 		return this;
-	}
+	}*/
 	
-	public String validatePersonas(int personas){
+	public String validatePax(int personas){
 		return mayorPaxPermitido(personas) ? null : "El número de personas es mayor al permitido";
 	}
 	

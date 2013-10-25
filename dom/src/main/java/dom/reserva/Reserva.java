@@ -1,5 +1,6 @@
 package dom.reserva;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,6 +31,7 @@ import org.joda.time.LocalDate;
 import com.google.common.collect.Lists;
 import dom.consumo.Consumo;
 import dom.disponibilidad.HabitacionFecha;
+import dom.enumeradores.EstadoReserva;
 import dom.enumeradores.FormaPago;
 import dom.huesped.Huesped;
 
@@ -48,7 +50,7 @@ public class Reserva {
 	private long numero;
 
     @MaxLength(5)
-	@MemberOrder(name="Datos de la Reserva",sequence="1")
+	@MemberOrder(name="Datos de la Reserva",sequence="1")    
 	public long getNumero() {
 		return numero;
 	}
@@ -59,29 +61,36 @@ public class Reserva {
 	//}}
 	
 	@Persistent
-	private EReserva estado = new EReservada();
-
+	private EstadoReserva estado;
+	
 	@Hidden
-	public EReserva getEstado() {
+	public EstadoReserva getEstado() {
 		return estado;
 	}
 
-	public void setEstado(final EReserva estado) {
+	public void setEstado(final EstadoReserva estado) {
 		this.estado = estado;
 	}
 	//}}
 	
 	//{{Titulo
 	public String title(){
-		return getEstado().getNombre();	
+		return getEstado().toString();	
 	}
 	//}}
 	
 	//{{Fecha en la que se realiza la reserva
+	
+	@Named("Fecha")
+	@MemberOrder(name="Datos de la Reserva",sequence="2")
+	public String getFechaString() {
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		return formato.format(getFecha());
+	}
+	
 	private Date fecha;
 	
-	@Disabled
-	@MemberOrder(name="Datos de la Reserva",sequence="2")
+	@Hidden
 	public Date getFecha() {
 		return fecha;
 	}
@@ -304,7 +313,9 @@ public class Reserva {
     private FormaPago formaDeCierre;
 
     @Hidden(where=Where.ALL_TABLES)
-	public FormaPago getFormaDeCierre() {
+    @MemberOrder(name="Datos del Cierre",sequence="1")
+    @Named("Paga con")
+    public FormaPago getFormaDeCierre() {
 		return formaDeCierre;
 	}
 
@@ -312,9 +323,24 @@ public class Reserva {
 		this.formaDeCierre = formaDeCierre;
 	}
     
+	// {{ Descuento
+	
+	private boolean isDescuento;
+	
+	@Hidden
+	public boolean isDescuento() {
+		return isDescuento;
+	}
+
+	public void setDescuento(boolean isDescuento) {
+		this.isDescuento = isDescuento;
+	}
+	
+	
     private float descuento;
     
     @Hidden(where=Where.ALL_TABLES)
+    @MemberOrder(name="Datos del Cierre",sequence="2")
 	public float getDescuento() {
 		return descuento;
 	}
@@ -322,21 +348,41 @@ public class Reserva {
 	public void setDescuento(float descuento) {
 		this.descuento = descuento;
 	}
+	
+	@Named("Aplicar")
+	@MemberOrder(name="descuento",sequence="1")
+	public Reserva aplicarDescuento() {
+		setDescuento(true);
+		return this;
+	}
+	
+	public String disableDescuento() {
+		return isDescuento() ? null : "Aplicar para ingresar descuento";
+	}
+	
+	// }}
     
 	private String numeroFactura;
 	
     @Hidden(where=Where.ALL_TABLES)
+    @MemberOrder(name="Datos del Cierre",sequence="3")
     public String getNumeroFactura() {
 		return numeroFactura;
 	}
 
 	public void setNumeroFactura(String numeroFactura) {
 		this.numeroFactura = numeroFactura;
+	}	
+
+    @MemberOrder(name="Datos del Cierre",sequence="4")
+	public String getFechaFacturaString() {
+    	SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		return formato.format(getFechaFactura());
 	}
 	
 	private Date fechaFactura;
 
-    @Hidden(where=Where.ALL_TABLES)
+    @Hidden
 	public Date getFechaFactura() {
 		return fechaFactura;
 	}
@@ -345,17 +391,18 @@ public class Reserva {
 		this.fechaFactura = fechaFactura;
 	}
 	
+	@MemberOrder(name="estado",sequence="1")
 	public Reserva checkIn() {
-		estado = new ECheckIN();
+		setEstado(EstadoReserva.CheckIN);
 		return this;
 	}
 	
 	public String disableCheckIn() {
-		if(estado instanceof EReservada) {
+		if(getEstado() == EstadoReserva.Reservada) {
 			return null;
 		}
 		else {
-			if(estado instanceof ECheckIN) {
+			if(getEstado() == EstadoReserva.CheckIN) {
 				return "La reserva ya se encuentra CheckIN";
 			}
 			else {
@@ -364,17 +411,18 @@ public class Reserva {
 		}
 	}
 	
+	@MemberOrder(name="estado",sequence="2")
 	public Reserva checkOut() {
-		estado = new ECheckOUT();
+		if(getEstado() == EstadoReserva.CheckOUT);
 		return this;
 	}
 	
 	public String disableCheckOut() {
-		if(estado instanceof ECheckIN) {
+		if(getEstado() == EstadoReserva.CheckIN) {
 			return null;
 		}
 		else {
-			if(estado instanceof ECheckOUT) {
+			if(getEstado() == EstadoReserva.CheckOUT) {
 				return "La reserva ya se encuentra CheckOUT";
 			}
 			else {
@@ -383,6 +431,7 @@ public class Reserva {
 		}
 	}
 	
+	@MemberOrder(name="estado",sequence="3")
 	public Reserva cerrar(
 			@Named("Forma de Pago") FormaPago fP,
 			@Optional
@@ -393,7 +442,7 @@ public class Reserva {
 			@Named("Fecha de Factura") LocalDate fechaFactura
 			) {
 		
-			estado = new ECerrada();
+			setEstado(EstadoReserva.Cerrada);
 		
 			/*List<Object> listaParametros = new ArrayList<Object>();
 			
@@ -421,18 +470,17 @@ public class Reserva {
 			String numeroFactura,
 			LocalDate fechaFactura
 			) {
-		if(estado instanceof ECheckOUT) {
+		if(getEstado() == EstadoReserva.CheckOUT) {
 			return null;
 		}
 		else {
-			if(estado instanceof ECerrada) {
+			if(getEstado() == EstadoReserva.Cerrada) {
 				return "La reserva ya se encuentra Cerrada";
 			}
 			else {
 				return "Tiene que estar CheckOUT para realizar el Cierre";
 			}
 		}
-	}
-	
+	}	
 	
 }

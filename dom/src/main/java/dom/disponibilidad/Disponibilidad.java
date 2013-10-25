@@ -1,11 +1,13 @@
 package dom.disponibilidad;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Audited;
 import org.apache.isis.applib.annotation.Bulk;
+import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
@@ -47,8 +49,15 @@ public class Disponibilidad {
 		this.paraReservar = paraReservar;
 	}
 	
+	@Named("Fecha")
+	public String getFechaString() {
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		return formato.format(getFecha());
+	}
+	
 	private Date fecha;
 	
+	@Hidden
 	public Date getFecha() {
 		return fecha;
 	}

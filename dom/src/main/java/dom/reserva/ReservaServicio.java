@@ -62,7 +62,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 					 * luego se puede setear desde la reserva la cantidad de personas
 					 */
 					hF.setPax(1);
-					hF.setTarifa(tFS.tarifa(1).getPrecio());
+					//hF.setTarifa(tFS.tarifa(1).getPrecio());
 					//
 					
 					hF.setReserva(reserva);
