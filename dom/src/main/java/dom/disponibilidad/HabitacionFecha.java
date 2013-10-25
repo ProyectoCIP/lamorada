@@ -82,17 +82,6 @@ public class HabitacionFecha {
 		this.tipoHabitacion = tipoHabitacion;
 	}
 	
-	private boolean persistido = false;
-	
-	@Hidden
-	public boolean isPersistido() {
-		return persistido;
-	}
-
-	public void setPersistido(boolean persistido) {
-		this.persistido = persistido;
-	}
-	
 	private int pax;
 	
 	@Named("Personas")
