@@ -3,6 +3,8 @@ package dom.disponibilidad;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Filter;
+import java.util.logging.LogRecord;
 
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
@@ -11,7 +13,9 @@ import org.apache.isis.applib.annotation.Audited;
 import org.apache.isis.applib.annotation.AutoComplete;
 import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.Hidden;
+import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.annotation.NotPersisted;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Where;
@@ -20,6 +24,7 @@ import org.apache.isis.applib.query.QueryDefault;
 import dom.reserva.Reserva;
 import dom.tarifa.Tarifa;
 import dom.tarifa.TarifaServicio;
+import dom.enumeradores.Pax;
 import dom.enumeradores.TipoHabitacion;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
@@ -27,7 +32,8 @@ import dom.enumeradores.TipoHabitacion;
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
 @javax.jdo.annotations.Queries({
 	@javax.jdo.annotations.Query(name="habitacion_para_reservar", language="JDOQL",value="SELECT FROM dom.disponibilidad.HabitacionFecha WHERE paraReservar == true"),
-	@javax.jdo.annotations.Query(name="habitacion_relleno", language="JDOQL",value="SELECT FROM dom.disponibilidad.HabitacionFecha WHERE paraReservar == false")
+	@javax.jdo.annotations.Query(name="habitacion_relleno", language="JDOQL",value="SELECT FROM dom.disponibilidad.HabitacionFecha WHERE paraReservar == false"),
+	@javax.jdo.annotations.Query(name="traerTarifa", language="JDOQL",value="SELECT FROM dom.tarifa.Tarifa WHERE pax := pax")
 })
 @ObjectType("HF")
 @AutoComplete(repository=HabitacionFechaServicio.class,action="habitacionesReservadas")
@@ -81,56 +87,48 @@ public class HabitacionFecha {
 		this.persistido = persistido;
 	}
 	
-	private List<Integer> pax;
-
-	public List<Integer> getPax() {
-		if(getTipoHabitacion() == TipoHabitacion.Doble) {
-			return Arrays.asList(1,2);
-		}
-		if(getTipoHabitacion() == TipoHabitacion.Triple) {
-			return Arrays.asList(1,2,3);
-		}
-		if(getTipoHabitacion() == TipoHabitacion.Cuadruple) {
-			return Arrays.asList(1,2,3,4);
-		}
-		return Arrays.asList(1);
-	}
-
-	public void setPax(List<Integer> pax) {
-		this.pax = pax;
-	}
-	
-	
-	/*
 	private int pax;
 	
 	@Named("Personas")
+	@Disabled
 	public int getPax() {
 		return pax;
 	}
 
 	public void setPax(int pax) {
-		if(!isPersistido()) {
-			setTarifa(tFS.tarifa(pax));
-		}
 		this.pax = pax;
+	}	
+	
+	private Tarifa precio;
+
+	@NotPersisted
+	public Tarifa getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(Tarifa precio) {
+		this.precio = precio;
 	}
 	
-	public String validatePax(int pax){
-		return mayorPaxPermitido(pax) ? null : "El número de personas es mayor al permitido";
-	}
-	*/
 	
-	/*
-	private boolean mayorPaxPermitido(int pax) {
-		if((getTipoHabitacion() == TipoHabitacion.Doble) && (pax > 2)) {
-			return false;
+	@Named("Editar")
+	@MemberOrder(name="pax",sequence="1")
+	public HabitacionFecha personas(@Named("Cantidad de Personas") int personas) {
+		setPax(personas);	
+		setTarifa(tFS.tarifa(personas).getPrecio());
+		return this;
+	}
+	
+	public String validatePersonas(int personas){
+		return mayorPaxPermitido(personas) ? null : "El número de personas es mayor al permitido";
+	}
+	
+	private boolean mayorPaxPermitido(int personas) {
+		if((getTipoHabitacion() == TipoHabitacion.Doble) && (personas > 2)) { return false;
 		}
-		if((getTipoHabitacion() == TipoHabitacion.Triple) && (pax > 3)) {
-			return false;
+		if((getTipoHabitacion() == TipoHabitacion.Triple) && (personas > 3)) { return false;
 		}
-		if((getTipoHabitacion() == TipoHabitacion.Cuadruple) && (pax > 4)) {
-			return false;
+		if((getTipoHabitacion() == TipoHabitacion.Cuadruple) && (personas > 4)) { return false;
 		}
 		return true;
 	}
@@ -166,13 +164,12 @@ public class HabitacionFecha {
 	
 	public void injectDomainObjectContainer(final DomainObjectContainer container) {
 	}
-	//}}	
-	
+	//}}
+
 	private TarifaServicio tFS;
 	
 	public void injectTarifaServicio(TarifaServicio tFS) {
 		this.tFS = tFS;
 	}
-
 	
 }

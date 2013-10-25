@@ -61,14 +61,13 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 					 * Se persiste la tarifa minima de la habitacion (1 persona),
 					 * luego se puede setear desde la reserva la cantidad de personas
 					 */
-					//hF.setPax(1);
-					hF.setTarifa(tFS.tarifa(1));
+					hF.setPax(1);
+					hF.setTarifa(tFS.tarifa(1).getPrecio());
 					//
 					
 					hF.setReserva(reserva);
 					reserva.addToHabitacion(hF);					
 					persistIfNotAlready(hF);
-					hF.setPersistido(true);
 					
 					
 					//hF.setTarifa(tFS.tarifa(1));

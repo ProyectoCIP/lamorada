@@ -51,9 +51,17 @@ public class TarifaServicio extends AbstractFactoryAndRepository {
 	}
 	
 	@Programmatic
-	public float tarifa(int pax) {		
-		Tarifa tarifa = uniqueMatch(QueryDefault.create(Tarifa.class, "traerPax", "pax", pax));
-		return tarifa.getPrecio();
+	public Tarifa tarifa(int pax) {		
+		
+		Tarifa t = uniqueMatch(QueryDefault.create(Tarifa.class, "traerPax", "pax", pax));
+		
+		if(t == null)
+		{
+			t = newTransientInstance(Tarifa.class);
+			t.setPrecio(0);
+		}
+		
+		return t;
 	}
 
 }
