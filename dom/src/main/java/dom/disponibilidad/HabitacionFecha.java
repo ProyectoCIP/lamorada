@@ -94,13 +94,13 @@ public class HabitacionFecha {
 		this.pax = pax;
 	}	
 	
-	/*@Named("Editar")
+	@Named("Editar")
 	@MemberOrder(name="pax",sequence="1")
 	public HabitacionFecha personas(@Named("Cantidad de Personas") int personas) {
 		setPax(personas);	
-		//setTarifa(tFS.tarifa(personas).getPrecio());
+		setTarifa(tFS.tarifa(personas).getPrecio());
 		return this;
-	}*/
+	}
 	
 	public String validatePax(int personas){
 		return mayorPaxPermitido(personas) ? null : "El número de personas es mayor al permitido";
@@ -122,7 +122,6 @@ public class HabitacionFecha {
 	
 	private float tarifa;
 	
-	@Hidden(where=Where.OBJECT_FORMS)
 	public float getTarifa() {
 		return tarifa;
 	}

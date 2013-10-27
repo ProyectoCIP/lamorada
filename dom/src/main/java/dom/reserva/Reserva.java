@@ -1,5 +1,6 @@
 package dom.reserva;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -60,14 +61,11 @@ public class Reserva {
 	
 	@Named("Estado")
 	@NotPersisted
+	@Hidden(where=Where.ALL_TABLES)
 	@MemberOrder(name="Estados",sequence="1")
 	public String getNombreEstado() {
 		nombreEstado = getEstado().toString();
 		return nombreEstado;
-	}
-	
-	public void setNombreEstado(String nombreEstado) {
-		this.nombreEstado = nombreEstado;
 	}
 	
 	private EstadoReserva estado;
@@ -89,19 +87,19 @@ public class Reserva {
 	//}}
 	
 	//{{Fecha en la que se realiza la reserva
-	
-	/*
 	@Named("Fecha")
 	@MemberOrder(name="Datos de la Reserva",sequence="2")
 	public String getFechaString() {
-		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-		return formato.format(getFecha());
-	}*/
+		if(getFecha() != null) {
+			SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+			return formato.format(getFecha());
+		}
+		return null;
+	}
 	
 	private Date fecha;
 	
-	//@Hidden
-	@MemberOrder(name="Datos de la Reserva",sequence="2")
+	@Hidden
 	public Date getFecha() {
 		return fecha;
 	}
@@ -298,6 +296,10 @@ public class Reserva {
         this.usuario = usuario;
     }//}}
     
+    /*
+     * Muestra el total a pagar (tiene en cuenta consumos, descuentos...)
+     */
+    
     private float total;
     
     @MaxLength(5)
@@ -306,12 +308,24 @@ public class Reserva {
     	
     	float total = 0;
     	
+    	/*
+    	 * El precio de las habitaciones
+    	 */
     	for(HabitacionFecha h : getHabitaciones()) {
     		total += h.getTarifa();
     	}
+    	
+    	/*
+    	 * El precio de las consumiciones
+    	 */
     	for(Consumo c : getConsumos()) {
     		total += c.getPrecioTotal();
     	}
+    	
+    	/*
+    	 * Descuentos
+    	 */    	
+    	total -= getDescuento();
     	
     	return total;
     }
@@ -320,7 +334,9 @@ public class Reserva {
     	this.total = total;
     }
     
-    
+    /*
+     * La forma en que se paga la estadía
+     */
     
     private FormaPago formaDeCierre;
 
@@ -349,7 +365,6 @@ public class Reserva {
 		this.isDescuento = isDescuento;
 	}
 	
-	
     private float descuento;
     
     @Hidden(where=Where.ALL_TABLES)
@@ -361,19 +376,7 @@ public class Reserva {
 	public void setDescuento(float descuento) {
 		this.descuento = descuento;
 	}
-	
-	@Named("On/Off")
-	@MemberOrder(name="descuento",sequence="1")
-	public Reserva aplicarDescuento() {
-		
-		if(!isDescuento())
-			setDescuento(true);
-		else
-			setDescuento(false);
-		
-		return this;
-	}
-		
+			
 	public String disableDescuento() {
 		return isDescuento() ? null : "Aplicar para ingresar descuento";
 	}
@@ -390,18 +393,20 @@ public class Reserva {
 
 	public void setNumeroFactura(String numeroFactura) {
 		this.numeroFactura = numeroFactura;
-	}	
+	}
 
-
-	/*public String getFechaFacturaString() {
-    	SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-		return (getFechaFactura() != null) ? formato.format(getFechaFactura()) : "";
-	}*/
+    @MemberOrder(name="Datos del Cierre",sequence="4")
+	public String getFechaFacturaString() {
+		if(getFechaFactura() != null) {
+	    	SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+			return (getFechaFactura() != null) ? formato.format(getFechaFactura()) : "";
+		}
+		return null;
+	}
 	
 	private Date fechaFactura;
 
-    //@Hidden    
-    @MemberOrder(name="Datos del Cierre",sequence="4")
+    @Hidden    
 	public Date getFechaFactura() {
 		return fechaFactura;
 	}
@@ -462,15 +467,6 @@ public class Reserva {
 			) {
 		
 			setEstado(EstadoReserva.Cerrada);
-		
-			/*List<Object> listaParametros = new ArrayList<Object>();
-			
-			listaParametros.add(this);
-			listaParametros.add(fP);
-			listaParametros.add(descuento);
-			listaParametros.add(numeroFactura);
-			listaParametros.add(fechaFactura);
-			*/
 
 			setNumeroFactura(numeroFactura);
 			setFechaFactura(fechaFactura.toDate());
