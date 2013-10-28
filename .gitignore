@@ -7,6 +7,7 @@
 .metadata
 bin/
 tmp/
+datanucleus.log
 *.log
 *.tmp
 *.bak
