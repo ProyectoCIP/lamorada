@@ -26,6 +26,10 @@ import dom.reserva.Reserva;
 @Audited
 public class Disponibilidad {
 	
+	public String iconName() {
+		return "habitacion";
+	}
+	
 	private String nombreHabitacion;
 
 	@Title

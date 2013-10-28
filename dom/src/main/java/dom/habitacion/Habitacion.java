@@ -30,6 +30,10 @@ import dom.reserva.Reserva;
 @AutoComplete(repository=HabitacionServicio.class,action="completaHabitaciones")
 @Audited
 public class Habitacion {
+	
+	public String iconName() {
+		return "habitacion";
+	}
 		
 	//{{Nombre
 	private String nombre;

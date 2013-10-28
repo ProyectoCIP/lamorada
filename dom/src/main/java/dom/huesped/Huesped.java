@@ -27,6 +27,10 @@ import dom.habitacion.Habitacion;
 @Audited
 public class Huesped {
 	
+	public String iconName() {
+		return "huesped";
+	}
+	
 	//{{Nombre
 	private String nombre;
 	

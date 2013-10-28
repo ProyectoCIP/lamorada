@@ -37,6 +37,10 @@ import dom.enumeradores.FormaPago;
 @Audited
 public class Empresa {
 		
+	public String iconName() {
+		return "empresa";
+	}
+	
 	/*
 	 * Razon Social de la empresa
 	 */

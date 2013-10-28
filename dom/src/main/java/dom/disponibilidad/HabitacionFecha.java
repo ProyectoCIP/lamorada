@@ -38,6 +38,10 @@ import dom.enumeradores.TipoHabitacion;
 @AutoComplete(repository=HabitacionFechaServicio.class,action="habitacionesReservadas")
 @Audited
 public class HabitacionFecha {
+	
+	public String iconName() {
+		return "habitacion";
+	}
 
 	public String title() {
 		return getNombreHabitacion();

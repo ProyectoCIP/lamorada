@@ -46,6 +46,10 @@ import dom.huesped.Huesped;
 @Audited
 public class Reserva {
 	
+	public String iconName() {
+		return "reserva";
+	}
+	
 	//{{Numero de la reserva, autoincremental. Responsabilidad del ORM
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)

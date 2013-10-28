@@ -20,6 +20,10 @@ import org.apache.isis.applib.annotation.Where;
 @Audited
 public class Tarifa {
 	
+	public String iconName() {
+		return "tarifa";
+	}
+	
 	public String title() {
 		return Integer.toString(getPax());
 	}
