@@ -36,6 +36,7 @@ import dom.disponibilidad.HabitacionFecha;
 import dom.enumeradores.EstadoReserva;
 import dom.enumeradores.FormaPago;
 import dom.huesped.Huesped;
+import dom.tarifa.TarifaServicio;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.APPLICATION)
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
@@ -269,6 +270,43 @@ public class Reserva {
 	public void setHuesped(final Huesped huesped) {
 		this.huesped = huesped;
 	}	
+	//}}
+	
+	//{{Si el huesped viene con empresa esta la opcion de cobrar la tarifa por convenio
+	private boolean tarifaEmpresa;
+
+	@Disabled
+	@MemberOrder(name="Datos de la Reserva", sequence="7")
+	public boolean isTarifaEmpresa() {
+		return tarifaEmpresa;
+	}
+
+	public void setTarifaEmpresa(boolean tarifaEmpresa) {
+		this.tarifaEmpresa = tarifaEmpresa;
+	}
+	
+	@Named("On/Off")
+	@MemberOrder(name="tarifaEmpresa",sequence="1")
+	public Reserva tarifaEmpresa() {
+		tarifaEmpresa = isTarifaEmpresa() ? false : true;
+		actualizarTarifas();
+		return this;
+	}
+	
+	private void actualizarTarifas() {
+		for(HabitacionFecha h : getHabitaciones()) {
+			if(isTarifaEmpresa()) {			
+				h.setTarifa(getHuesped().getEmpresa().getTarifa());
+			}
+			else {
+				h.setTarifa(tFS.tarifa(h.getPax()).getPrecio());
+			}
+		}
+	}
+	
+	public String disableTarifaEmpresa() {
+		return (getHuesped().getEmpresa() == null) ? "Este cliente no es miembro de ninguna empresa" : null;
+	}
 	//}}
 	
 	//{{Accion
@@ -507,6 +545,12 @@ public class Reserva {
     public boolean isCerrada() {
     	return (getEstado() == EstadoReserva.Cerrada) ? true : false; 
     }
+	
+	private TarifaServicio tFS;
+	
+	public void injectTarifaServicio(TarifaServicio tFS) {
+		this.tFS = tFS;
+	}
 	
 	
 }

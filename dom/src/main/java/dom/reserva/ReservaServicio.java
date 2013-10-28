@@ -31,7 +31,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 			@Optional
 			@Named("Celular") String celular,
 			@Optional
-			@Named("Notifica Em@il") boolean email,
+			@Named("Notificar Em@il") boolean email,
 			@Optional
 			@Named("Emai@l") String correo
 			) {
