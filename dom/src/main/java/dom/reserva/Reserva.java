@@ -305,6 +305,7 @@ public class Reserva {
     private float total;
     
     @Disabled
+    @NotPersisted
     @MemberOrder(name="Datos del Cierre",sequence="4")
     public float getTotal() {
     	

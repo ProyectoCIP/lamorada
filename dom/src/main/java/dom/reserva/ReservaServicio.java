@@ -74,8 +74,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 					
 					hF.setReserva(reserva);
 					reserva.addToHabitacion(hF);					
-					persistIfNotAlready(hF);
-					
+					persistIfNotAlready(hF);					
 				}
 				
 				/*
@@ -89,22 +88,21 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 			return reserva;
 	}
 	
-	public String validateReservar(Huesped h, 
-								   String c, 
-								   boolean nSms, 
-								   String cel, 
-								   boolean nEmail, 
-								   String email) {
+	public String validateReservar(
+			Huesped huesped,
+			String comentario,
+			boolean sms,
+			String celular,
+			boolean email,
+			String correo
+			) {
 		
-		if(nSms && cel.length() == 0) {
+		if(sms && celular == null) {
 			return "Ingrese el número de celular para notificar";
+		}	
+		if(email && correo == null) {
+			return "Ingrese el email para notificar";
 		}
-		else {		
-			if(nEmail && email.length() == 0) {
-				return "Ingrese el email para notificar";
-			}		
-		}
-		
 		return null;
 		
 	}
