@@ -43,6 +43,7 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 	    				
 	    				if(existeReserva(fechaAuxiliar,habitacion.getNombre()) != null) {
 	    					HabitacionFecha hf = existeReserva(fechaAuxiliar,habitacion.getNombre());
+	    					d.setNombreHabitacion(hf.getNombreHabitacion());
 	    					d.setReserva(hf.getReserva());
 	    					d.setTarifa(hf.getTarifa());
 	    				}

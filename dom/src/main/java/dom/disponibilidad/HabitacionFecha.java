@@ -104,7 +104,7 @@ public class HabitacionFecha {
 		return this;
 	}
 	
-	public String validatePax(int personas){
+	public String validatePersonas(int personas){
 		return mayorPaxPermitido(personas) ? null : "El número de personas es mayor al permitido";
 	}
 	
