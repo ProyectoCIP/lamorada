@@ -85,7 +85,6 @@ public class HabitacionFecha {
 	private int pax;
 	
 	@Named("Personas")
-	//@Disabled
 	public int getPax() {
 		return pax;
 	}
@@ -97,7 +96,10 @@ public class HabitacionFecha {
 	@Named("Editar")
 	@MemberOrder(name="pax",sequence="1")
 	public HabitacionFecha personas(@Named("Cantidad de Personas") int personas) {
-		setPax(personas);	
+		setPax(personas);
+		/*
+		 * Actualizo la tarifa con respecto a las nuevas personas ingresadas
+		 */
 		setTarifa(tFS.tarifa(personas).getPrecio());
 		return this;
 	}

@@ -12,6 +12,7 @@ import javax.jdo.annotations.VersionStrategy;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Audited;
 import org.apache.isis.applib.annotation.AutoComplete;
+import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MaxLength;
 import org.apache.isis.applib.annotation.MemberGroups;
@@ -274,7 +275,7 @@ public class Reserva {
 	
 	public void setContainer(final DomainObjectContainer container) {
 		this.container = container;
-	}   
+	}
 	
 	//{{inyeccion ReservaServicio
 	private ReservaServicio reservaServicio;
@@ -295,14 +296,11 @@ public class Reserva {
     public void setUsuario(final String usuario) {
         this.usuario = usuario;
     }//}}
-    
-    /*
-     * Muestra el total a pagar (tiene en cuenta consumos, descuentos...)
-     */
-    
+ 
+    //{{ Muestra el total a pagar (tiene en cuenta consumos, descuentos...)
     private float total;
     
-    @MaxLength(5)
+    @Disabled
     @MemberOrder(name="Datos del Cierre",sequence="4")
     public float getTotal() {
     	
@@ -333,11 +331,9 @@ public class Reserva {
     public void setTotal(float total) {
     	this.total = total;
     }
-    
-    /*
-     * La forma en que se paga la estadía
-     */
-    
+    //}}
+
+    //{{ La forma en que se paga la estadía
     private FormaPago formaDeCierre;
 
     @Hidden(where=Where.ALL_TABLES)
@@ -350,21 +346,13 @@ public class Reserva {
 	public void setFormaDeCierre(FormaPago formaDeCierre) {
 		this.formaDeCierre = formaDeCierre;
 	}
+	
+	public String disableFormaDeCierre() {
+		return isCerrada() ? null : "La reserva debe estar cerrada para editar la forma de pago del cierre";
+	}
+	//}}
     
-	// {{ Descuento
-	
-	private boolean isDescuento;
-	
-	@Hidden
-	@NotPersisted
-	public boolean isDescuento() {
-		return isDescuento;
-	}
-
-	public void setDescuento(boolean isDescuento) {
-		this.isDescuento = isDescuento;
-	}
-	
+	// {{ Descuento	
     private float descuento;
     
     @Hidden(where=Where.ALL_TABLES)
@@ -378,10 +366,10 @@ public class Reserva {
 	}
 			
 	public String disableDescuento() {
-		return isDescuento() ? null : "Aplicar para ingresar descuento";
-	}
+		return isCerrada() ? null : "La reserva debe estar cerrada para editar el descuento";
+	}	
+	//}}
 	
-	// }}
     
 	private String numeroFactura;
 	
@@ -393,6 +381,10 @@ public class Reserva {
 
 	public void setNumeroFactura(String numeroFactura) {
 		this.numeroFactura = numeroFactura;
+	}
+	
+	public String disableNumeroFactura() {
+		return isCerrada() ? null : "La reserva debe estar cerrada para editar el número de factura";
 	}
 
     @MemberOrder(name="Datos del Cierre",sequence="4")
@@ -413,6 +405,10 @@ public class Reserva {
 
 	public void setFechaFactura(Date fechaFactura) {
 		this.fechaFactura = fechaFactura;
+	}
+	
+	public String disableFechaFactura() {
+		return isCerrada() ? null : "La reserva debe estar cerrada para editar la fecha de la factura";
 	}
 	
 	@MemberOrder(name="nombreEstado",sequence="1")
@@ -497,5 +493,11 @@ public class Reserva {
 			}
 		}
 	}	
+	
+	@Hidden
+    public boolean isCerrada() {
+    	return (getEstado() == EstadoReserva.Cerrada) ? true : false; 
+    }
+	
 	
 }

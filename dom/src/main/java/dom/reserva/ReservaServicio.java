@@ -25,7 +25,16 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 			@Named("Huésped") Huesped huesped,
 			@Optional
 			@MultiLine(numberOfLines=3)
-			@Named("Comentario") String comentario) {
+			@Named("Comentario") String comentario,
+			@Optional
+			@Named("Notificar SMS") boolean sms,
+			@Optional
+			@Named("Celular") String celular,
+			@Optional
+			@Named("Notifica Em@il") boolean email,
+			@Optional
+			@Named("Emai@l") String correo
+			) {
 		
 		Reserva reserva = newTransientInstance(Reserva.class);
 		persistIfNotAlready(reserva);
@@ -33,7 +42,6 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 		List<Disponibilidad> disponibilidad = listaHabitacionesReservas();
 		
 		return crear(reserva,disponibilidad,huesped,comentario);
-		
 	}
 
 	private Reserva crear(
@@ -41,7 +49,6 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 			final List<Disponibilidad> disponibilidad,
 			final Huesped huesped,
 			final String comentario) {
-		
 		
 		if(disponibilidad.size() > 0)
 		{	
@@ -62,15 +69,13 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 					 * luego se puede setear desde la reserva la cantidad de personas
 					 */
 					hF.setPax(1);
-					//hF.setTarifa(tFS.tarifa(1).getPrecio());
+					hF.setTarifa(tFS.tarifa(1).getPrecio());
 					//
 					
 					hF.setReserva(reserva);
 					reserva.addToHabitacion(hF);					
 					persistIfNotAlready(hF);
 					
-					
-					//hF.setTarifa(tFS.tarifa(1));
 				}
 				
 				/*
@@ -82,7 +87,27 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 			
 			}
 			return reserva;
-	}	
+	}
+	
+	public String validateReservar(Huesped h, 
+								   String c, 
+								   boolean nSms, 
+								   String cel, 
+								   boolean nEmail, 
+								   String email) {
+		
+		if(nSms && cel.length() == 0) {
+			return "Ingrese el número de celular para notificar";
+		}
+		else {		
+			if(nEmail && email.length() == 0) {
+				return "Ingrese el email para notificar";
+			}		
+		}
+		
+		return null;
+		
+	}
 	    
     private List<Disponibilidad> listaHabitacionesReservas() {    	
 		return allMatches(QueryDefault.create(Disponibilidad.class, "disponibilidad"));
