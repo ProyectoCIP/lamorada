@@ -56,7 +56,7 @@ public class Reserva {
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private long numero;
 
-    @MaxLength(5)
+    @Disabled
 	@MemberOrder(name="Datos de la Reserva",sequence="1")    
 	public long getNumero() {
 		return numero;
@@ -122,7 +122,9 @@ public class Reserva {
 	//{{Monto de la seña
 	private float montoSena;
 	
+	@Named("Monto Seña")
     @Hidden(where=Where.ALL_TABLES)
+    @Optional
 	@MemberOrder(name="Datos de la Reserva",sequence="3")
 	public float getMontoSena() {
 		return montoSena;
@@ -137,6 +139,7 @@ public class Reserva {
 	private FormaPago tipoSena;
 
     @Hidden(where=Where.ALL_TABLES)
+    @Optional
 	@MemberOrder(name="Datos de la Reserva",sequence="4")
 	public FormaPago getTipoSena() {
 		return tipoSena;
@@ -161,7 +164,7 @@ public class Reserva {
 	}
 	
 	
-	@Named("Borrar Habitación")
+	@Named("Borrar")
 	@MemberOrder(name="habitaciones",sequence="1")
 	public Reserva removeFromHabitaciones(final HabitacionFecha habitacion) {
 		habitaciones.remove(habitacion);
@@ -187,8 +190,7 @@ public class Reserva {
 	@Persistent(mappedBy="reserva")
 	private List<Consumo> consumos = new ArrayList<Consumo>();
 	
-	@Named("Consumición en esta reserva")
-	@Render(Type.EAGERLY)
+	@Named("Consumiciónes/Extras")
 	public List<Consumo> getConsumos() {
 		return consumos;
 	}
@@ -199,7 +201,7 @@ public class Reserva {
 	//}}
 
 	//{{Agregar consumo
-	@Named("Agregar Consumo")
+	@Named("Agregar")
 	@MemberOrder(name="consumos",sequence="1")
     public Reserva add(
     		@Named("Descripcion") String descripcion,
@@ -222,7 +224,7 @@ public class Reserva {
 	//}}	
 	
 	//{{Borrar consumo
-	@Named("Borrar Consumo")
+	@Named("Borrar")
     @MemberOrder(name="consumos",sequence="2")
     public Reserva removeFromConsumos(final Consumo consumo) {
     	consumos.remove(consumo);
