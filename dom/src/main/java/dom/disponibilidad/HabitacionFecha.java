@@ -33,6 +33,7 @@ import dom.enumeradores.TipoHabitacion;
 @javax.jdo.annotations.Queries({
 	@javax.jdo.annotations.Query(name="habitacion_para_reservar", language="JDOQL",value="SELECT FROM dom.disponibilidad.HabitacionFecha WHERE paraReservar == true"),
 	@javax.jdo.annotations.Query(name="habitacion_relleno", language="JDOQL",value="SELECT FROM dom.disponibilidad.HabitacionFecha WHERE paraReservar == false"),
+	@javax.jdo.annotations.Query(name="traerOcupacion", language="JDOQL",value="SELECT FROM dom.disponibilidad.HabitacionFecha WHERE fecha >= :inicio && fecha <= :fin ORDER BY fecha ASC")
 })
 @ObjectType("HF")
 @AutoComplete(repository=HabitacionFechaServicio.class,action="habitacionesReservadas")

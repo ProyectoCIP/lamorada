@@ -1,13 +1,12 @@
 package dom.estadisticas;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import org.apache.isis.applib.annotation.Hidden;
 
-@javax.jdo.annotations.Query(name="traerPax", language="JDOQL",value="SELECT FROM dom.disponibilidad.HabitacionFecha WHERE fecha == startsWidth ORDER BY fecha ASC")
 public class Ocupacion {
 	
 	private String año;
-	
+
+	@Hidden
 	public String getAño() {
 		return año;
 	}
@@ -18,6 +17,7 @@ public class Ocupacion {
 
 	private String mes;
 	
+	@Hidden
 	public String getMes() {
 		return mes;
 	}
@@ -36,42 +36,25 @@ public class Ocupacion {
 		this.pax = pax;
 	}
 	
-	private String porcentaje;
+	private int plazas;	
 
+	public int getPlazas() {
+		return plazas;
+	}
+
+	public void setPlazas(int plazas) {
+		this.plazas = plazas;
+	}
+	
+	private String porcentaje;
+	
 	public String getPorcentaje() {
-		return porcentaje;
+		return Float.toString((getPlazas()*getPax()/100))+"%";
 	}
 
 	public void setPorcentaje(String porcentaje) {
 		this.porcentaje = porcentaje;
 	}
 
-	private String nombreMes(Date fecha) {
-		
-		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-		
-		String[] fechaFormateada = formato.format(fecha).split("/");
-		
-		switch(Integer.parseInt(fechaFormateada[1])) {
-		
-			case 1 : return "Enero"; 
-			case 2 : return "Febrero"; 
-			case 3 : return "Marzo"; 
-			case 4 : return "Abril"; 
-			case 5 : return "Mayo"; 
-			case 6 : return "Junio"; 
-			case 7 : return "Julio"; 
-			case 8 : return "Agosto"; 
-			case 9 : return "Septiembre"; 
-			case 10 : return "Octubre"; 
-			case 11 : return "Noviembre"; 
-			case 12 : return "Diciembre";		
-		
-		}
-		
-		return null;
-		
-	}
-	
-
 }
+
