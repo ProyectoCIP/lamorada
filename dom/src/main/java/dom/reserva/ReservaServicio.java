@@ -64,6 +64,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 					hF.setFecha(d.getFecha());
 					hF.setNombreHabitacion(d.getNombreHabitacion());
 					hF.setTipoHabitacion(d.getTipoHabitacion());
+					hF.setInterno(d.getInterno());
 					/*
 					 * Se persiste la tarifa minima de la habitacion (1 persona),
 					 * luego se puede setear desde la reserva la cantidad de personas

@@ -76,6 +76,18 @@ public class HabitacionFecha {
 		this.nombreHabitacion = nombreHabitacion;
 	}
 	
+	//{{ Interno de la habitación para llamadas con la central asterisk
+	private int interno;
+	
+	public int getInterno(){
+		return interno;
+	}
+		
+	public void setInterno(int interno) {
+		this.interno = interno;
+	}
+	//}}
+	
 	private TipoHabitacion tipoHabitacion;
 	
 	@Hidden(where=Where.OBJECT_FORMS)

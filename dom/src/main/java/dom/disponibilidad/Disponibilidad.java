@@ -110,6 +110,19 @@ public class Disponibilidad {
 	public void setTarifa(float tarifa) {
 		this.tarifa = tarifa;
 	}
+	
+	//{{ Interno de la habitación para llamadas con la central asterisk
+	private int interno;
+		
+	@Hidden
+	public int getInterno(){
+		return interno;
+	}
+		
+	public void setInterno(int interno) {
+		this.interno = interno;
+	}
+	//}}
 
 	
 	private Reserva reserva;

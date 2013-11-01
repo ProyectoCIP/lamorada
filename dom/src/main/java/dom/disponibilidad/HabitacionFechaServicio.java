@@ -50,6 +50,7 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 	    				else {
 	    					d.setNombreHabitacion(habitacion.getNombre());
 	    					d.setTipoHabitacion(habitacion.getTipoHabitacion());
+	    					d.setInterno(habitacion.getInterno());
 	    				}
 	    				
 	    				d.setFecha(fechaAuxiliar.toDate());
