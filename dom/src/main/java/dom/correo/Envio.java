@@ -80,12 +80,11 @@ public class Envio {
 					desde.toString()+"," +
 					hasta.toString()+","+
 					mensaje);
-			
-			System.out.println("fecha desde:"+desde+"fechahasta:"+hasta+"mensaje"+mensaje);
-			
+		
 			Transport t = session.getTransport("smtp");
 			t.connect("proyectocipifes@gmail.com","qwertyuio123456");
 			t.sendMessage(message,message.getAllRecipients());
+			
 			t.close();
 		} catch (AddressException e) {
 			// TODO Auto-generated catch block

@@ -36,34 +36,6 @@ public class Mensaje {
 	private String hasta;
 	private String mensaje;
 
-	public String getDesde() {
-		return desde;
-	}
-
-	public void setDesde(String partes) {
-		this.desde = partes;
-	}
-
-	public String getHasta() {
-		return hasta;
-	}
-
-	public void setHasta(String hasta) {
-		this.hasta = hasta;
-	}
-
-	@Hidden(where=Where.ALL_TABLES)
-	@MultiLine(numberOfLines=3)
-	public String getMensaje() {
-		return mensaje;
-	}
-
-	public void setMensaje(String mensaje) {
-		this.mensaje = mensaje;
-	}
-
-	public Mensaje () {}
-	
 	@Title
 	@Optional
 	public String getNombre() {
@@ -96,6 +68,34 @@ public class Mensaje {
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
+
+	public String getDesde() {
+		return desde;
+	}
+
+	public void setDesde(String partes) {
+		this.desde = partes;
+	}
+
+	public String getHasta() {
+		return hasta;
+	}
+
+	public void setHasta(String hasta) {
+		this.hasta = hasta;
+	}
+
+	@Hidden(where=Where.ALL_TABLES)
+	@MultiLine(numberOfLines=3)
+	public String getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
+	
+	
 	/*
 	public List<Habitacion> getListaHabitaciones() {
 		return listaHabitaciones;
@@ -104,7 +104,7 @@ public class Mensaje {
 		this.listaHabitaciones = listaHabitaciones;
 	}*/
 	
-	@Named("Reservar")
+	@Named("Consultar")
 	@Bulk
 	public void reservar() {
 		

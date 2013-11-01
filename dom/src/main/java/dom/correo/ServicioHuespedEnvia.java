@@ -29,7 +29,7 @@ public class ServicioHuespedEnvia extends AbstractFactoryAndRepository {
 		enviar.setProperties();
 		enviar.enviar(nombre,apellido,telefono,correo,desde,hasta,mensaje);
 	
-		
+		getContainer().informUser("GRACIAS POR ENVIARNOS SU CONSULTA, LE CONTESTAREMOS A LA BREVEDAD");
 		
 	}
 		

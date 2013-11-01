@@ -14,6 +14,7 @@ import javax.mail.Session;
 import javax.mail.Store;
 import javax.swing.JOptionPane;
 
+import org.apache.isis.applib.DomainObjectContainer;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 
@@ -98,8 +99,6 @@ public class Recepcion implements Job {
 			       actual.setHasta(partes[5]);
 			       actual.setMensaje(partes[6]);
 			       
-			       
-			       
 			       getListaMensajes().add(actual);
 			       
 			       //perstir aca y ver si se puede mejorar
@@ -165,4 +164,10 @@ public class Recepcion implements Job {
 		   
 	}
 
+    private DomainObjectContainer container;
+    
+    public void injectDomainObjectContainer(DomainObjectContainer container) {
+    	this.container = container;
+    }
+    
 }
