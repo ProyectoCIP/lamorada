@@ -18,7 +18,7 @@ public class ServicioBandejaDeEntrada extends AbstractFactoryAndRepository {
 	@MemberOrder(sequence = "1")
 	public List<Mensaje> bde() {
 
-		ICorreo recepcion = new Recepcion();
+		Recepcion recepcion = new Recepcion();
 		recepcion.setProperties();
 		
 		recepcion.accion();
@@ -69,9 +69,9 @@ public class ServicioBandejaDeEntrada extends AbstractFactoryAndRepository {
 	@MemberOrder(sequence = "2")
 	@Named("Enviar") 
 	public void enviarCorreo() {
-		ICorreo enviar = new Envio();
+		/*Envio enviar = new Envio();
 		enviar.setProperties();
-		enviar.enviar();
+		enviar.enviar();*/
 	}
 	
 	

@@ -8,11 +8,13 @@ import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Audited;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.Immutable;
+import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Bulk;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.annotation.Title;
+import org.apache.isis.applib.annotation.Where;
 import org.joda.time.LocalDate;
 
 //import dom.abm.Habitacion;
@@ -30,10 +32,36 @@ public class Mensaje {
 	private String telefono;
 	private String correo;
 	private LocalDate fechaActual;
-	//private List<Habitacion> listaHabitaciones;
-	
-	
-	
+	private String desde;
+	private String hasta;
+	private String mensaje;
+
+	public String getDesde() {
+		return desde;
+	}
+
+	public void setDesde(String partes) {
+		this.desde = partes;
+	}
+
+	public String getHasta() {
+		return hasta;
+	}
+
+	public void setHasta(String hasta) {
+		this.hasta = hasta;
+	}
+
+	@Hidden(where=Where.ALL_TABLES)
+	@MultiLine(numberOfLines=3)
+	public String getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
+
 	public Mensaje () {}
 	
 	@Title

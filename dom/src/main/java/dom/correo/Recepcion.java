@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 
-public class Recepcion implements ICorreo,Job {
+public class Recepcion implements Job {
 
 	private Session session;
 	private Properties propiedades = new Properties();
@@ -25,30 +25,25 @@ public class Recepcion implements ICorreo,Job {
 	private Message [] mensajes;
 	private List<Mensaje> listaMensajes = new ArrayList<Mensaje>();
 	
-	@Override
 	public List<Mensaje> getListaMensajes() {
 		return listaMensajes;
 	}
 	
-	@Override
 	public void setListaMensajes(List<Mensaje> listaMensajes) {
 		this.listaMensajes = listaMensajes;
 	}
 	
-	@Override
 	public void setSession(Properties propiedades) {
 		// TODO Auto-generated method stub
 		session = Session.getInstance(propiedades);
 		session.setDebug(true);
 	}
 
-	@Override
 	public Session getSession() {
 		// TODO Auto-generated method stub
 		return session;
 	}
 
-	@Override
 	public void setProperties() {
 		// TODO Auto-generated method stub
 		// Deshabilitamos TLS
@@ -65,13 +60,11 @@ public class Recepcion implements ICorreo,Job {
 		setSession(propiedades);
 	}
 
-	@Override
 	public Properties getProperties() {
 		// TODO Auto-generated method stub
 		return propiedades;
 	}
 
-	@Override
 	public void accion() {
 		
 		try {
@@ -94,15 +87,6 @@ public class Recepcion implements ICorreo,Job {
 			    if(mensaje.getSubject().contains("RESERVA-PROYECTOCIP")) {
 				   
 			       String[] partes = ((String) mensaje.getContent()).split(",");
-				   
-			       System.out.println(
-			    		   		"nombre:" + partes[0] + "\n" +
-						   		"apellido:" + partes[1] + "\n" +
-						   		"celular:" + partes[2] + "\n" +
-						   		"correo:" + partes[3] + "\n" +
-						   		"fecha desde:" + partes[4] + "\n" +
-						   		"fecha hasta:" + partes[5]
-						   		);
 			       
 			       final Mensaje actual = new Mensaje();
 			       
@@ -110,8 +94,17 @@ public class Recepcion implements ICorreo,Job {
 			       actual.setApellido(partes[1]);
 			       actual.setTelefono(partes[2]);
 			       actual.setCorreo(partes[3]);
+			       actual.setDesde(partes[4]);
+			       actual.setHasta(partes[5]);
+			       actual.setMensaje(partes[6]);
+			       
+			       
 			       
 			       getListaMensajes().add(actual);
+			       
+			       //perstir aca y ver si se puede mejorar
+			       //container.persistIfNotAlready(actual);
+			       
 			       
 			    }
 			   
