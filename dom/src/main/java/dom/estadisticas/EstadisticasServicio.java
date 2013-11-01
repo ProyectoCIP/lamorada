@@ -20,22 +20,26 @@ public class EstadisticasServicio extends AbstractFactoryAndRepository {
 	@Named("Ocupacion") 
 	public List<Ocupacion> listaOcupacion(@Named("Año:") Años años) {
 		
+		String año = años.toString();
+		año = año.substring(1);
+		
 		List<Ocupacion> listadoOcupacion = new ArrayList<Ocupacion>();
 		
 		for(int i = 1; i < 13; i++) {
 			Ocupacion ocupacion = newTransientInstance(Ocupacion.class);
-			ocupacion.setAño("2013");
+			ocupacion.setAño(año);
 			ocupacion.setMes(nombreMes(i));
 			ocupacion.setPax(0);
-			ocupacion.setPorcentaje("0");
+			ocupacion.setPlazas(plazas(Integer.parseInt(ocupacion.getAño()),i));
+			
 			listadoOcupacion.add(ocupacion);
 			
 		}
 		
 		Calendar cal = Calendar.getInstance();
-		cal.set(2013, 01, 01);
+		cal.set(Integer.parseInt(año), 01, 01);
 		Date inicio = cal.getTime();
-		cal.set(2013, 12, 31);
+		cal.set(Integer.parseInt(año), 12, 31);
 		Date fin = cal.getTime();
 		
 		List<HabitacionFecha> listadoHabitacionesOcupadas = allMatches(QueryDefault.create(HabitacionFecha.class, "traerOcupacion", "inicio", inicio, "fin", fin));
@@ -54,8 +58,8 @@ public class EstadisticasServicio extends AbstractFactoryAndRepository {
 		String[] fechaSeparada = formato.format(h.getFecha()).split("/");
 		for(Ocupacion o : lista) {
 			if(o.getMes().equals(nombreMes(Integer.parseInt(fechaSeparada[1])))){
+				getContainer().informUser("ACA ENTRO:"+h.getPax());
 				o.setPax(o.getPax()+h.getPax());
-				o.setPlazas(plazas(Integer.parseInt(o.getAño()),Integer.parseInt(fechaSeparada[1])));
 			}
 		}		
 		
