@@ -18,14 +18,9 @@ import dom.habitacion.Habitacion;
 @Named("Habitacion")
 public class HabitacionServicio extends AbstractFactoryAndRepository{
 
-	// {{ Id, iconName
-    @Override
-    public String getId() {
-        return "ABM";
-    }
-
+	// {{iconName
     public String iconName() {
-        return "ABM";
+        return "habitacion";
     }
     // }}
     	
@@ -33,18 +28,21 @@ public class HabitacionServicio extends AbstractFactoryAndRepository{
 	@MemberOrder(sequence = "1")
 	public Habitacion nuevaHabitacion(			
 			@Named("Nombre") String nombre,
-			@Named("Tipo de Habitación") TipoHabitacion tipoHabitacion) {
-		return nuevoHabitacion(nombre, tipoHabitacion);
+			@Named("Tipo de Habitación") TipoHabitacion tipoHabitacion,
+			@Named("Interno") int interno) {
+		return nuevoHabitacion(nombre, tipoHabitacion, interno);
 	}
 	
 	@Hidden
 	public Habitacion nuevoHabitacion(
 			final String nombre,		
-			final TipoHabitacion tipoHabitacion) {
+			final TipoHabitacion tipoHabitacion,
+			final int interno) {
 		final Habitacion habitacion = newTransientInstance(Habitacion.class);		
 		habitacion.setNombre(nombre);
 		habitacion.setTipoHabitacion(tipoHabitacion);
 		habitacion.setUsuario(usuarioActual());
+		habitacion.setInterno(interno);
 		
 		persist(habitacion);
 		

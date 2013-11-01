@@ -48,6 +48,18 @@ public class Habitacion {
 	}
 	//}}
 	
+	//{{ Interno de la habitación para llamadas con la central asterisk
+	private int interno;
+	
+	public int getInterno(){
+		return interno;
+	}
+	
+	public void setInterno(int interno) {
+		this.interno = interno;
+	}
+	//}}
+	
 	//{{Tipo de Habitacion
 	private TipoHabitacion tipoHabitacion;
 		
