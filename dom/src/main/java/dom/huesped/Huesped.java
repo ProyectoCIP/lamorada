@@ -81,6 +81,18 @@ public class Huesped {
 	}
 	//}}
 	
+	//{{celular
+		private String celular;
+		
+		@MemberOrder(sequence = "5")
+		public String getCelular() {
+			return celular;
+		}
+		public void setCelular(final String celular) {
+			this.dni = celular;
+		}
+		//}}
+	
 	//{{Estado
 	private boolean estado;
 

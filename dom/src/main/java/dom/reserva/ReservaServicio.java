@@ -1,6 +1,8 @@
 package dom.reserva;
 
 import java.util.List;
+
+
 import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
@@ -16,6 +18,7 @@ import dom.disponibilidad.Disponibilidad;
 import dom.disponibilidad.HabitacionFecha;
 import dom.huesped.Huesped;
 import dom.tarifa.TarifaServicio;
+import dom.mensajeria.*;
 
 public class ReservaServicio extends AbstractFactoryAndRepository {
 	
@@ -55,6 +58,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 			reserva.setHuesped(huesped);
 			reserva.setComentario(comentario);
 			reserva.setFecha(LocalDate.now().toDate());
+			
 			
 			for(Disponibilidad d : disponibilidad) {
 				
@@ -100,7 +104,8 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 		
 		if(sms && celular == null) {
 			return "Ingrese el número de celular para notificar";
-		}	
+		} 
+		
 		if(email && correo == null) {
 			return "Ingrese el email para notificar";
 		}
@@ -132,6 +137,15 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 	
 	public void injectTarifaServicio(TarifaServicio tFS) {
 		this.tFS = tFS;
+	}
+	
+	
+	public void enviaSMS(String celular) {
+		Reserva reserva = new Reserva();
+		if(reserva.getEstado().equals(reserva.getEstado().Cerrada)) {
+			SMS mensaje = new SMS("2995741694");			
+		}
+		
 	}
 	
 	protected String usuarioActual() {
