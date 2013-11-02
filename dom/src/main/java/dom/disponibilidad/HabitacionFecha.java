@@ -25,6 +25,7 @@ import org.apache.isis.applib.query.QueryDefault;
 import dom.reserva.Reserva;
 import dom.tarifa.Tarifa;
 import dom.tarifa.TarifaServicio;
+import dom.asterisk.Asterisk;
 import dom.enumeradores.TipoHabitacion;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
@@ -86,6 +87,12 @@ public class HabitacionFecha {
 	public void setInterno(int interno) {
 		this.interno = interno;
 	}
+	
+	public void llamar() throws Exception {
+		Asterisk pbx = new Asterisk();
+        pbx.call(Integer.toString(getInterno()));
+        container.informUser("Llamando a la habitación...");
+	}
 	//}}
 	
 	private TipoHabitacion tipoHabitacion;
@@ -108,7 +115,7 @@ public class HabitacionFecha {
 
 	public void setPax(int pax) {
 		this.pax = pax;
-	}	
+	}
 	
 	@Named("Editar")
 	@MemberOrder(name="pax",sequence="1")

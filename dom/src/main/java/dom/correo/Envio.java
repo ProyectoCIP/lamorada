@@ -62,15 +62,16 @@ public class Envio {
 						String correo,
 						LocalDate desde,
 						LocalDate hasta,
-						String mensaje
+						String mensaje,
+						String direccion
 					  ) {
 		
 		MimeMessage message = new MimeMessage(getSession());
 		
 		try {
-			message.setFrom(new InternetAddress("proyectocipifes@gmail.com"));
+			message.setFrom(new InternetAddress(correo));
 			// A quien va dirigido
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress("proyectocipifes@gmail.com"));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(direccion));
 			message.setSubject("RESERVA-PROYECTOCIP");
 			message.setText(
 					nombre+"," +

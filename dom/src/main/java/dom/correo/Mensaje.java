@@ -17,6 +17,9 @@ import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.annotation.Where;
 import org.joda.time.LocalDate;
 
+import dom.disponibilidad.Disponibilidad;
+import dom.disponibilidad.HabitacionFechaServicio;
+
 //import dom.abm.Habitacion;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
@@ -95,19 +98,15 @@ public class Mensaje {
 		this.mensaje = mensaje;
 	}
 	
-	
-	/*
-	public List<Habitacion> getListaHabitaciones() {
-		return listaHabitaciones;
-	}
-	public void setListaHabitaciones(List<Habitacion> listaHabitaciones) {
-		this.listaHabitaciones = listaHabitaciones;
-	}*/
-	
 	@Named("Consultar")
-	@Bulk
-	public void reservar() {
-		
+	public List<Disponibilidad> disponibilidad() {
+		return servicio.porFechas(new LocalDate(getDesde()), new LocalDate(getHasta()));
+	}
+	
+	private HabitacionFechaServicio servicio;
+	
+	public void injectServicio(HabitacionFechaServicio servicio) {
+		this.servicio = servicio;
 	}
 	
 	@Named("Borrar")

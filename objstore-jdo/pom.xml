@@ -50,6 +50,13 @@
             <groupId>org.apache.isis.objectstore</groupId>
             <artifactId>isis-objectstore-jdo-datanucleus</artifactId>
         </dependency>
+        
+        <dependency>
+			<groupId>org.asteriskjava</groupId>
+			<artifactId>asterisk-java</artifactId>
+			<version>1.0.0-m2</version>
+		</dependency>
+    
 
 	<dependency> 
 	    <groupId>postgresql</groupId> 

@@ -17,7 +17,6 @@ public class ServicioHuespedEnvia extends AbstractFactoryAndRepository {
 			@Optional
 			@Named("Teléfono") String telefono,
 			@Named("Correo") String correo,
-			@Optional
 			@Named("Desde") LocalDate desde,
 			@Optional
 			@Named("Hasta") LocalDate hasta,
@@ -27,7 +26,7 @@ public class ServicioHuespedEnvia extends AbstractFactoryAndRepository {
 
 		Envio enviar = new Envio();
 		enviar.setProperties();
-		enviar.enviar(nombre,apellido,telefono,correo,desde,hasta,mensaje);
+		enviar.enviar(nombre,apellido,telefono,correo,desde,hasta,mensaje,"proyectocipifes@gmail.com");
 	
 		getContainer().informUser("GRACIAS POR ENVIARNOS SU CONSULTA, LE CONTESTAREMOS A LA BREVEDAD");
 		
