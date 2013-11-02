@@ -89,7 +89,7 @@ public class Huesped {
 			return celular;
 		}
 		public void setCelular(final String celular) {
-			this.dni = celular;
+			this.celular = celular;
 		}
 		//}}
 	
