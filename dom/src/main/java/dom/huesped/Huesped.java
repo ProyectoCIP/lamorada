@@ -109,7 +109,7 @@ public class Huesped {
 	private Empresa empresa;
 		
 	@Optional
-	@MemberOrder(sequence = "6")		
+	@MemberOrder(sequence = "7")		
 	public Empresa getEmpresa() {
 		return empresa;
 	}
