@@ -40,6 +40,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 			) {
 		
 		Reserva reserva = newTransientInstance(Reserva.class);
+		
 		persistIfNotAlready(reserva);
 		
 		List<Disponibilidad> disponibilidad = listaHabitacionesReservas();
@@ -79,7 +80,8 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 					
 					hF.setReserva(reserva);
 					reserva.addToHabitacion(hF);					
-					persistIfNotAlready(hF);					
+					persistIfNotAlready(hF);	
+					enviaSMS();
 				}
 				
 				/*
@@ -139,12 +141,16 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 		this.tFS = tFS;
 	}
 	
-	
-	public void enviaSMS(String celular) {
-		Reserva reserva = new Reserva();
-		if(reserva.getEstado().equals(reserva.getEstado().Cerrada)) {
-			SMS mensaje = new SMS("2995741694");			
-		}
+	@Hidden
+	public void enviaSMS() {
+		SMS mensaje = new SMS();
+		mensaje.main(null);
+		/*Reserva reserva = new Reserva();
+		System.out.print("Entro a sms");
+		if(reserva.getEstado().Cerrada.toString() != null) {
+			System.out.print("Estado reservada");
+			SMS mensaje = new SMS(celular);			
+		}*/
 		
 	}
 	

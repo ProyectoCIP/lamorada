@@ -16,9 +16,9 @@ public class SMS {
 	private String texto;
 	private String url;
 	
-	public SMS(String celular) {
+	/*public SMS(String celular) {
 		this.celular = celular;
-	}
+	}*/
 	
 	public String getUrl() {
 		return url;
@@ -77,15 +77,15 @@ public class SMS {
 	}	
 	
 	//Método para probar el envío de SMS a celulares. Hay que sacarlo cuando se implemente en la reserva.
-	public static void main(String [] args)
+	public static void main(String[] args)
 	   {
 	      try
 	      {
-	    	  SMS sms = new SMS("2995741694");	    	  
+	    	  SMS sms = new SMS();	    	  
 	    	  
 	    	  sms.setMail("luisparadawagner@gmail.com");
-	    	  sms.setPass("Cami&juli76");
-	    	  sms.setCelular("");
+	    	  sms.setPass("Cami&juli76");	    	
+	    	  sms.setCelular("2995741694");
 	    	  sms.setRemitente("La%20Morada");
 	    	  sms.setPrefijoPais("0054");
 	    	  sms.setTexto("El mensaje a enviar");
@@ -112,7 +112,7 @@ public class SMS {
 	          {
 	             urlString += current;
 	          }
-	          System.out.println(urlString);
+	          System.out.println("URL String" + urlString);
 	       }catch(IOException e)
 	       {
 	          e.printStackTrace();

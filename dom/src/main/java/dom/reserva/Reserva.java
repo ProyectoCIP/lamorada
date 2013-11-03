@@ -307,9 +307,9 @@ public class Reserva {
 		}
 	}
 	
-	public String disableTarifaEmpresa() {
+	/*public String disableTarifaEmpresa() {
 		return (getHuesped().getEmpresa() == null) ? "Este cliente no es miembro de ninguna empresa" : null;
-	}
+	}*/
 	//}}
 	
 	//{{Accion
