@@ -100,7 +100,12 @@ public class Mensaje {
 	
 	@Named("Consultar")
 	public List<Disponibilidad> disponibilidad() {
-		return servicio.porFechas(new LocalDate(getDesde()), new LocalDate(getHasta()));
+		String hasta = getHasta().equals("") ? null : getHasta();
+		return servicio.porFechas(new LocalDate(getDesde()), new LocalDate(hasta));
+	}
+	
+	public void Responder() {
+		
 	}
 	
 	private HabitacionFechaServicio servicio;

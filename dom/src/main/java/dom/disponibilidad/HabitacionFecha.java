@@ -88,10 +88,11 @@ public class HabitacionFecha {
 		this.interno = interno;
 	}
 	
-	public void llamar() throws Exception {
+	@MemberOrder(name="interno",sequence="1")
+	public HabitacionFecha llamar() throws Exception {
 		Asterisk pbx = new Asterisk();
         pbx.call(Integer.toString(getInterno()));
-        container.informUser("Llamando a la habitación...");
+        return this;
 	}
 	//}}
 	

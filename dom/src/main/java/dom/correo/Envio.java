@@ -71,15 +71,19 @@ public class Envio {
 		try {
 			message.setFrom(new InternetAddress(correo));
 			// A quien va dirigido
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(direccion));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress("proyectocipifes@gmail.com"));
 			message.setSubject("RESERVA-PROYECTOCIP");
+			
+			String desdeString = desde.toString();
+			String hastaString = (hasta == null) ? "" : hasta.toString();
+			 
 			message.setText(
 					nombre+"," +
 					apellido+"," +
 					telefono+"," +
 					correo+"," +
-					desde.toString()+"," +
-					hasta.toString()+","+
+					desdeString+"," +
+					hastaString+","+
 					mensaje);
 		
 			Transport t = session.getTransport("smtp");

@@ -55,7 +55,6 @@ import com.google.inject.name.Names;
 import com.google.inject.util.Modules;
 import com.google.inject.util.Providers;
 
-import dom.correo.ICorreo;
 import dom.correo.Recepcion;
 
 
