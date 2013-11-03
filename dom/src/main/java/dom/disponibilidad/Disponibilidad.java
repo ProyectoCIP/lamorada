@@ -27,7 +27,7 @@ import dom.reserva.Reserva;
 public class Disponibilidad {
 	
 	public String iconName() {
-		return "habitacion";
+		return "disponibilidad";
 	}
 	
 	private String nombreHabitacion;

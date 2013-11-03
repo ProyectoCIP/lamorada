@@ -48,7 +48,19 @@ import dom.tarifa.TarifaServicio;
 public class Reserva {
 	
 	public String iconName() {
-		return "reserva";
+		if(getEstado() == EstadoReserva.Reservada) {
+			return "Reservada";	
+		}
+		if(getEstado() == EstadoReserva.CheckIN) {
+			return "CheckIN";	
+		}
+		if(getEstado() == EstadoReserva.CheckOUT) {
+			return "CheckOUT";	
+		}
+		if(getEstado() == EstadoReserva.Cerrada) {
+			return "Facturada";	
+		}
+		return null;
 	}
 	
 	//{{Numero de la reserva, autoincremental. Responsabilidad del ORM
@@ -405,7 +417,8 @@ public class Reserva {
     private float descuento;
     
     @Hidden(where=Where.ALL_TABLES)
-    @MemberOrder(name="Datos del Cierre",sequence="2")
+    @MemberOrder(name="Datos del Cierre",sequence="2")  
+    @Optional
 	public float getDescuento() {
 		return descuento;
 	}
@@ -424,6 +437,7 @@ public class Reserva {
 	
     @Hidden(where=Where.ALL_TABLES)
     @MemberOrder(name="Datos del Cierre",sequence="3")
+    @Optional
     public String getNumeroFactura() {
 		return numeroFactura;
 	}
@@ -448,6 +462,7 @@ public class Reserva {
 	private Date fechaFactura;
 
     @Hidden    
+    @Optional
 	public Date getFechaFactura() {
 		return fechaFactura;
 	}
@@ -513,8 +528,10 @@ public class Reserva {
 		
 			setEstado(EstadoReserva.Cerrada);
 
+			Date fecha = (fechaFactura == null) ? null : fechaFactura.toDate();
+			
 			setNumeroFactura(numeroFactura);
-			setFechaFactura(fechaFactura.toDate());
+			setFechaFactura(fecha);
 			setDescuento(descuento);
 			setFormaDeCierre(fP);
 			

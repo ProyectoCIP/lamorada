@@ -18,6 +18,10 @@ import dom.tarifa.TarifaServicio;
 
 @Named("Disponibilidad")
 public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
+	
+	public String iconName() {
+		return "Disponibilidad";
+	}
 		
 	@MemberOrder(sequence = "1")
 	@Named("Por Fechas")
