@@ -77,16 +77,16 @@ public class SMS {
 	}	
 	
 	//Método para probar el envío de SMS a celulares. Hay que sacarlo cuando se implemente en la reserva.
-	public static void main(String[] args)
+	public static void main()
 	   {
 	      try
 	      {
 	    	  SMS sms = new SMS();	    	  
 	    	  
-	    	  sms.setMail("luisparadawagner@gmail.com");
-	    	  sms.setPass("Cami&juli76");	    	
+	    	  sms.setMail("luchitoparada@hotmail.com");
+	    	  sms.setPass("Cami%juli76");	    	
 	    	  sms.setCelular("2995741694");
-	    	  sms.setRemitente("La%20Morada");
+	    	  sms.setRemitente("La_20Morada");
 	    	  sms.setPrefijoPais("0054");
 	    	  sms.setTexto("El mensaje a enviar");
 	    	  	    	  
