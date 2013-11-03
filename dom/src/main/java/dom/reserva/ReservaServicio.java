@@ -81,7 +81,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 					hF.setReserva(reserva);
 					reserva.addToHabitacion(hF);					
 					persistIfNotAlready(hF);	
-					enviaSMS();
+					
 				}
 				
 				/*
@@ -92,6 +92,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 				}
 			
 			}
+			enviaSMS();
 			return reserva;
 	}
 	
