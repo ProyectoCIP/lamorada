@@ -62,30 +62,34 @@ public class Envio {
 						String correo,
 						LocalDate desde,
 						LocalDate hasta,
-						String mensaje
+						String mensaje,
+						String direccion
 					  ) {
 		
 		MimeMessage message = new MimeMessage(getSession());
 		
 		try {
-			message.setFrom(new InternetAddress("proyectocipifes@gmail.com"));
+			message.setFrom(new InternetAddress(correo));
 			// A quien va dirigido
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress("proyectocipifes@gmail.com"));
 			message.setSubject("RESERVA-PROYECTOCIP");
+			
+			String desdeString = desde.toString();
+			String hastaString = (hasta == null) ? "" : hasta.toString();
+			 
 			message.setText(
 					nombre+"," +
 					apellido+"," +
 					telefono+"," +
 					correo+"," +
-					desde.toString()+"," +
-					hasta.toString()+","+
+					desdeString+"," +
+					hastaString+","+
 					mensaje);
-			
-			System.out.println("fecha desde:"+desde+"fechahasta:"+hasta+"mensaje"+mensaje);
-			
+		
 			Transport t = session.getTransport("smtp");
 			t.connect("proyectocipifes@gmail.com","qwertyuio123456");
 			t.sendMessage(message,message.getAllRecipients());
+			
 			t.close();
 		} catch (AddressException e) {
 			// TODO Auto-generated catch block

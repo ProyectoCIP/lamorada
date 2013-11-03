@@ -39,6 +39,9 @@ public class ServicioBandejaDeEntrada extends AbstractFactoryAndRepository {
 	    		mensajeTransient.setApellido(mensaje.getApellido());
 	    		mensajeTransient.setCorreo(mensaje.getCorreo());
 	    		mensajeTransient.setTelefono(mensaje.getTelefono());
+	    		mensajeTransient.setDesde(mensaje.getDesde());
+	    		mensajeTransient.setHasta(mensaje.getHasta());
+	    		mensajeTransient.setMensaje(mensaje.getMensaje());
 	    		mensajeTransient.setUsuario(usuarioActual());
 	    		mensajeTransient.setFechaActual(LocalDate.now());
 	    		persistIfNotAlready(mensajeTransient);

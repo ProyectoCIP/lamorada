@@ -17,6 +17,9 @@ import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.annotation.Where;
 import org.joda.time.LocalDate;
 
+import dom.disponibilidad.Disponibilidad;
+import dom.disponibilidad.HabitacionFechaServicio;
+
 //import dom.abm.Habitacion;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
@@ -36,34 +39,6 @@ public class Mensaje {
 	private String hasta;
 	private String mensaje;
 
-	public String getDesde() {
-		return desde;
-	}
-
-	public void setDesde(String partes) {
-		this.desde = partes;
-	}
-
-	public String getHasta() {
-		return hasta;
-	}
-
-	public void setHasta(String hasta) {
-		this.hasta = hasta;
-	}
-
-	@Hidden(where=Where.ALL_TABLES)
-	@MultiLine(numberOfLines=3)
-	public String getMensaje() {
-		return mensaje;
-	}
-
-	public void setMensaje(String mensaje) {
-		this.mensaje = mensaje;
-	}
-
-	public Mensaje () {}
-	
 	@Title
 	@Optional
 	public String getNombre() {
@@ -96,18 +71,47 @@ public class Mensaje {
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
-	/*
-	public List<Habitacion> getListaHabitaciones() {
-		return listaHabitaciones;
+
+	public String getDesde() {
+		return desde;
 	}
-	public void setListaHabitaciones(List<Habitacion> listaHabitaciones) {
-		this.listaHabitaciones = listaHabitaciones;
-	}*/
+
+	public void setDesde(String partes) {
+		this.desde = partes;
+	}
+
+	public String getHasta() {
+		return hasta;
+	}
+
+	public void setHasta(String hasta) {
+		this.hasta = hasta;
+	}
+
+	@Hidden(where=Where.ALL_TABLES)
+	@MultiLine(numberOfLines=3)
+	public String getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
 	
-	@Named("Reservar")
-	@Bulk
-	public void reservar() {
+	@Named("Consultar")
+	public List<Disponibilidad> disponibilidad() {
+		String hasta = getHasta().equals("") ? null : getHasta();
+		return servicio.porFechas(new LocalDate(getDesde()), new LocalDate(hasta));
+	}
+	
+	public void Responder() {
 		
+	}
+	
+	private HabitacionFechaServicio servicio;
+	
+	public void injectServicio(HabitacionFechaServicio servicio) {
+		this.servicio = servicio;
 	}
 	
 	@Named("Borrar")

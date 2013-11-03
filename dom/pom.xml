@@ -129,6 +129,13 @@
     		<artifactId>quartz-jobs</artifactId>
     		<version>2.2.0</version>
 	</dependency>
+	
+	<dependency>
+	<groupId>org.asteriskjava</groupId>
+	<artifactId>asterisk-java</artifactId>
+	<version>1.0.0-m2</version>
+</dependency>
+    
 
         <!--
         GMAP3: uncomment to use https://github.com/danhaywood/isis-wicket-gmap3 

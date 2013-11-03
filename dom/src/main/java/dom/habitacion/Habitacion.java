@@ -1,5 +1,7 @@
 package dom.habitacion;
 
+import java.util.List;
+
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
@@ -18,6 +20,7 @@ import org.joda.time.LocalDate;
 
 import com.google.common.base.Objects;
 
+import dom.disponibilidad.HabitacionFecha;
 import dom.enumeradores.EstadoHabitacion;
 import dom.enumeradores.TipoHabitacion;
 import dom.reserva.Reserva;
@@ -56,7 +59,23 @@ public class Habitacion {
 	}
 	
 	public void setInterno(int interno) {
+		actualizarInternos(interno);
 		this.interno = interno;
+	}
+	
+	private void actualizarInternos(int nuevoInterno) {
+		
+		List<HabitacionFecha> habitacionesReservadas = container.allMatches(HabitacionFecha.class, new Filter<HabitacionFecha>(){
+			@Override
+			public boolean accept(HabitacionFecha habitacion) {
+				// TODO Auto-generated method stub
+				return habitacion.getNombreHabitacion().equals(getNombre());
+			}				
+		});
+		
+		for(HabitacionFecha hF : habitacionesReservadas){
+			hF.setInterno(nuevoInterno);
+		}
 	}
 	//}}
 	
