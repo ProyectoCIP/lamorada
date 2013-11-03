@@ -16,6 +16,10 @@ public class SMS {
 	private String texto;
 	private String url;
 	
+	public SMS(String celular) {
+		this.celular = celular;
+	}
+	
 	public String getUrl() {
 		return url;
 	}
@@ -77,11 +81,11 @@ public class SMS {
 	   {
 	      try
 	      {
-	    	  SMS sms = new SMS();	    	  
+	    	  SMS sms = new SMS("2995741694");	    	  
 	    	  
-	    	  sms.setMail("Mail de la cuenta en afilnet");
-	    	  sms.setPass("Clave de la cuenta");
-	    	  sms.setCelular("Celular destino");
+	    	  sms.setMail("luisparadawagner@gmail.com");
+	    	  sms.setPass("Cami&juli76");
+	    	  sms.setCelular("");
 	    	  sms.setRemitente("La%20Morada");
 	    	  sms.setPrefijoPais("0054");
 	    	  sms.setTexto("El mensaje a enviar");

@@ -81,6 +81,18 @@ public class Huesped {
 	}
 	//}}
 	
+	//{{celular
+		private String celular;
+		
+		@MemberOrder(sequence = "5")
+		public String getCelular() {
+			return celular;
+		}
+		public void setCelular(final String celular) {
+			this.celular = celular;
+		}
+		//}}
+	
 	//{{Estado
 	private boolean estado;
 
@@ -97,7 +109,7 @@ public class Huesped {
 	private Empresa empresa;
 		
 	@Optional
-	@MemberOrder(sequence = "6")		
+	@MemberOrder(sequence = "7")		
 	public Empresa getEmpresa() {
 		return empresa;
 	}

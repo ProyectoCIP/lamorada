@@ -286,6 +286,7 @@ public class Reserva {
 	}	
 	//}}
 	
+		
 	//{{Si el huesped viene con empresa esta la opcion de cobrar la tarifa por convenio
 	private boolean tarifaEmpresa;
 

@@ -34,9 +34,10 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
 			@Named("Apellido") String apellido,
 			@Named("Edad") int edad,
 			@Named("Dni") String dni,
+			@Named("Celular") String celular,
 			@Optional
 			@Named("Empresa") Empresa empresa) {
-		return nHuesped(nombre, apellido, edad, dni,empresa);
+		return nHuesped(nombre, apellido, edad, dni,celular,empresa);
 	}
 	
 	@Hidden
@@ -45,12 +46,14 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
 			final String apellido,
 			final int edad,
 			final String dni,
+			final String celular,
 			final Empresa empresa) {
 		final Huesped huesped = newTransientInstance(Huesped.class);		
 		huesped.setNombre(nombre);
 		huesped.setApellido(apellido);
 		huesped.setEdad(edad);
 		huesped.setDni(dni);
+		huesped.setCelular(celular);
 		huesped.setEstado(true);
 		
 		if(empresa != null) {
