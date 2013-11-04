@@ -89,7 +89,7 @@ public class SMS {
 	    	  sms.setCelular(celular);
 	    	  sms.setRemitente("La_20Morada");
 	    	  sms.setPrefijoPais("0054");
-	    	  sms.setTexto("Elmensajeaenviar");
+	    	  sms.setTexto("La%20Reserva%20fue%20hecha%20correctamente");
 	    	  	    	  
 	    	  sms.setUrl("http://www.afilnet.com/http/sms/?" + sms.getMail() + sms.getPass() + sms.getCelular() + sms.getRemitente() + sms.getPrefijoPais() + sms.getTexto() );
 	    	  

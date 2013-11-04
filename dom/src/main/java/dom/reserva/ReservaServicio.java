@@ -2,7 +2,6 @@ package dom.reserva;
 
 import java.util.List;
 
-
 import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
@@ -16,6 +15,7 @@ import org.joda.time.LocalDate;
 import dom.consumo.Consumo;
 import dom.disponibilidad.Disponibilidad;
 import dom.disponibilidad.HabitacionFecha;
+import dom.enumeradores.EstadoReserva;
 import dom.huesped.Huesped;
 import dom.tarifa.TarifaServicio;
 import dom.mensajeria.*;
@@ -29,10 +29,10 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 			@Optional
 			@MultiLine(numberOfLines=3)
 			@Named("Comentario") String comentario,
-			@Optional
-			@Named("Notificar SMS") boolean sms,
-			@Optional
-			@Named("Celular") String celular,
+			//@Optional
+			//@Named("Notificar SMS") boolean sms,
+			//@Optional
+			//@Named("Celular") String celular,
 			@Optional
 			@Named("Notificar Em@il") boolean email,
 			@Optional
@@ -99,15 +99,15 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 	public String validateReservar(
 			Huesped huesped,
 			String comentario,
-			boolean sms,
-			String celular,
+			//boolean sms,
+			//String celular,
 			boolean email,
 			String correo
 			) {
 		
-		if(sms && celular == null) {
+		/*if(sms && celular == null) {
 			return "Ingrese el número de celular para notificar";
-		} 
+		} */
 		
 		if(email && correo == null) {
 			return "Ingrese el email para notificar";
@@ -148,7 +148,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 		//mensaje.enviarSMS();
 		Reserva reserva = new Reserva();
 		System.out.print("Entro a sms");
-		if(reserva.getEstado().Reservada != null) {
+		if(reserva.getEstado() == EstadoReserva.Reservada) {
 			System.out.print("Estado reservada");
 					mensaje.enviarSMS(celular);
 		}
