@@ -31,6 +31,7 @@ import org.joda.time.LocalDate;
 
 import com.google.common.collect.Lists;
 
+import dom.acompaniantes.Acompaniante;
 import dom.consumo.Consumo;
 import dom.disponibilidad.HabitacionFecha;
 import dom.enumeradores.EstadoReserva;
@@ -162,6 +163,66 @@ public class Reserva {
 	}
 	//}}
 	
+	//{{
+	@Persistent(mappedBy="reserva")
+	private List<Acompaniante> acompaniantes = new ArrayList<Acompaniante>();
+	
+	@Render(Type.EAGERLY)
+	public List<Acompaniante> getAcompaniantes() {
+		return acompaniantes;
+	}
+	
+	public void setAcompaniantes(List<Acompaniante> acompaniantes) {
+		this.acompaniantes = acompaniantes;
+	}
+	
+	@Named("Agregar")
+	@MemberOrder(name="acompaniantes",sequence="1")
+    public Reserva add(
+    		@Named("Nombre") String nombre,
+    		@Named("Apellido") String apellido,
+    		@Optional
+    		@Named("Edad") int edad,
+    		@Optional
+    		@Named("Relación") String relacion) {
+		/*
+		 * Se envian los datos del formulario consumo al servicio y nos lo retorna ya persistido
+		 */
+		
+		Acompaniante acompaniante = container.newTransientInstance(Acompaniante.class);
+		acompaniante.setNombre(nombre);
+		acompaniante.setApellido(apellido);
+		acompaniante.setEdad(edad);
+		acompaniante.setRelacion(relacion);
+
+		//dependencia
+		addToAcompaniantes(acompaniante);
+		container.persistIfNotAlready(acompaniante);
+		return this;
+	}
+	
+	@Named("Borrar")
+	@MemberOrder(name="acompaniantes",sequence="1")
+	public Reserva removeFromAcompaniantes(final Acompaniante acompaniante) {
+		habitaciones.remove(acompaniante);
+		container.removeIfNotAlready(acompaniante);
+		return this;
+	}	
+	
+	@Hidden
+	public void addToAcompaniantes(Acompaniante acompaniante) {
+	    if(acompaniante == null || acompaniantes.contains(acompaniante)) {
+	    	return;
+	    }
+	    acompaniante.setReserva(this);
+	    acompaniantes.add(acompaniante);
+	}
+	
+	public List<Acompaniante> choices0RemoveFromAcompaniantes() {
+		return Lists.newArrayList(getAcompaniantes());
+	}
+	//}}
+		
 	//{{Lista de habitaciones a reservar
 	@Persistent(mappedBy="reserva")
 	private List<HabitacionFecha> habitaciones = new ArrayList<HabitacionFecha>();
@@ -184,7 +245,7 @@ public class Reserva {
 		return this;
 	}
 	@Hidden
-	public void addToHabitacion(HabitacionFecha habitacion) {
+	public void addToHabitaciones(HabitacionFecha habitacion) {
 	    if(habitacion == null || habitaciones.contains(habitacion)) {
 	    	return;
 	    }
@@ -229,7 +290,7 @@ public class Reserva {
 		consumo.setPrecio(precio);
 
 		//dependencia
-		addToConsumo(consumo);
+		addToConsumos(consumo);
 		container.persistIfNotAlready(consumo);
 		return this;
 	}
@@ -245,7 +306,7 @@ public class Reserva {
     }
 
 	@Hidden
-	public void addToConsumo(Consumo consumo) {
+	public void addToConsumos(Consumo consumo) {
 	    if(consumo == null || consumos.contains(consumo)) {
 	    	return;
 	    }

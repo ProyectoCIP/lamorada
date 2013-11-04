@@ -73,7 +73,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 					//
 					
 					hF.setReserva(reserva);
-					reserva.addToHabitacion(hF);					
+					reserva.addToHabitaciones(hF);					
 					persistIfNotAlready(hF);	
 					
 				}
