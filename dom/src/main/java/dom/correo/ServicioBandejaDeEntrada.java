@@ -14,6 +14,10 @@ import com.google.common.base.Objects;
 @Named("Em@ils")
 public class ServicioBandejaDeEntrada extends AbstractFactoryAndRepository {
 	
+	public String iconName() {
+		return "email";
+	}
+	
 	@Named("Bandeja de Entrada")
 	@MemberOrder(sequence = "1")
 	public List<Mensaje> bde() {

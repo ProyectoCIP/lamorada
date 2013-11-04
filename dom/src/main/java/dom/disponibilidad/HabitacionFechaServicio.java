@@ -20,7 +20,7 @@ import dom.tarifa.TarifaServicio;
 public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 	
 	public String iconName() {
-		return "Disponibilidad";
+		return "disponibilidad";
 	}
 		
 	@MemberOrder(sequence = "1")

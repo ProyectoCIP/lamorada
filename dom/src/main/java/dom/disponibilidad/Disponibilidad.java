@@ -27,7 +27,7 @@ import dom.reserva.Reserva;
 public class Disponibilidad {
 	
 	public String iconName() {
-		return "disponibilidad";
+		return (getReserva() == null) ? "disponibilidad" : "candado";
 	}
 	
 	private String nombreHabitacion;
