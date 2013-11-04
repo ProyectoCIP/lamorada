@@ -38,7 +38,7 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
 			@Named("e-mail") String mail,
 			@Optional
 			@Named("Empresa") Empresa empresa) {
-		return nHuesped(nombre, apellido, edad, dni,celular,empresa);
+		return nHuesped(nombre, apellido, edad, dni,celular,mail,empresa);
 	}
 	
 	@Hidden

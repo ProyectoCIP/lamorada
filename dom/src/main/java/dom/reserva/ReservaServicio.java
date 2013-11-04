@@ -92,7 +92,8 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 				}
 			
 			}
-			enviaSMS(huesped.getCelular());
+		//Este método queda comentado porque se gasta el crédito.-
+			//enviaSMS(huesped.getCelular());
 			return reserva;
 	}
 	
