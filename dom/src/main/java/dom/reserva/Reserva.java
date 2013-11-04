@@ -327,8 +327,21 @@ public class Reserva {
 	//{{Accion
 	@Named("Borrar")
 	public void borrarReserva() {
+		
+		//Se eliminan todas las habitaciones reservadas
+		for(HabitacionFecha h : getHabitaciones())
+			container.removeIfNotAlready(h);
+				
+		//Se eliminan todos los consumos de esta reserva
+		for(Consumo c : getConsumos()) 
+			container.removeIfNotAlready(c);
+				
 		container.informUser("Reserva número: "+getNumero()+" a sido borrada");
 		container.removeIfNotAlready(this);
+	}
+
+	public String disableBorrarReserva() {
+		return (getEstado() == EstadoReserva.Cerrada) ? "No se puede borrar una reserva que ya esta cerrada" : null;
 	}
 	//}}
 	

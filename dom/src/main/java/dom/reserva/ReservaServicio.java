@@ -20,6 +20,7 @@ import dom.huesped.Huesped;
 import dom.tarifa.TarifaServicio;
 import dom.mensajeria.*;
 
+@Named("Reservas")
 public class ReservaServicio extends AbstractFactoryAndRepository {
 	
 	@Named("Reservar")
@@ -28,31 +29,24 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 			@Named("Huésped") Huesped huesped,
 			@Optional
 			@MultiLine(numberOfLines=3)
-			@Named("Comentario") String comentario
-			//@Optional
-			//@Named("Notificar SMS") boolean sms,
-			//@Optional
-			//@Named("Celular") String celular,
-			//@Optional
-			//@Named("Notificar Em@il") boolean email,
-			//@Optional
-			//@Named("Emai@l") String correo
+			@Named("Comentario") String comentario,
+			@Optional
+			@Named("Celular") String celular,
+			@Optional
+			@Named("Emai@l") String correo
 			) {
 		
-		Reserva reserva = newTransientInstance(Reserva.class);
+		List<Disponibilidad> disponibilidad = listaParaReservar();
 		
-		persistIfNotAlready(reserva);
-		
-		List<Disponibilidad> disponibilidad = listaHabitacionesReservas();
-		
-		return crear(reserva,disponibilidad,huesped,comentario);
+		return crear(disponibilidad,huesped,comentario);
 	}
 
 	private Reserva crear(
-			final Reserva reserva,
 			final List<Disponibilidad> disponibilidad,
 			final Huesped huesped,
 			final String comentario) {
+		
+		Reserva reserva = newTransientInstance(Reserva.class);
 		
 		if(disponibilidad.size() > 0)
 		{	
@@ -84,42 +78,36 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 					
 				}
 				
+				persistIfNotAlready(reserva);
+				
 				/*
 				 * se eliminan de la base de datos todos los rastros de la consulta
 				 */
 				getContainer().removeIfNotAlready(d);
 				
-				}
-			
 			}
+		}
+		else
+		{
+			getContainer().informUser("No hay habitaciones seleccionadas para reservar");
+			reserva = null;
+		}
 		//Este método queda comentado porque se gasta el crédito.-
 			//enviaSMS(huesped.getCelular());
 			return reserva;
 	}
-	
-	public String validateReservar(
-			Huesped huesped,
-			String comentario
-			//boolean sms,
-			//String celular,
-			//boolean email,
-			//String correo
-			) {
-		
-		/*if(sms && celular == null) {
-			return "Ingrese el número de celular para notificar";
-		} */
-		
-		/*if(email && correo == null) {
-			return "Ingrese el email para notificar";
-		}*/
-		return null;
-		
-	}
-	    
-    private List<Disponibilidad> listaHabitacionesReservas() {    	
-		return allMatches(QueryDefault.create(Disponibilidad.class, "disponibilidad"));
-    } 
+
+    private List<Disponibilidad> listaParaReservar() {
+    	return allMatches(Disponibilidad.class,new Filter<Disponibilidad>(){
+
+			@Override
+			public boolean accept(Disponibilidad d) {
+				// TODO Auto-generated method stub
+				return d.isParaReservar();
+			}
+    		
+    	});
+    }
 	
     @MemberOrder(sequence="2")
 	public List<Reserva> listaReservas() {
