@@ -14,7 +14,7 @@ import org.apache.isis.applib.filter.Filter;
 
 import com.google.common.base.Objects;
 
-import dom.contacto.ContactoVO;
+import dom.contacto.Contacto;
 import dom.enumeradores.FormaPago;
 
 @Named("Empresas")
@@ -33,7 +33,14 @@ public class EmpresaServicio extends AbstractFactoryAndRepository {
             @Named("Razón Social") String razonSocial,
             @RegEx(validation = "[0-9]")
             @Named("Tarifa") float tarifa,            
-            @Named("Forma de Pago") FormaPago fPago
+            @Named("Forma de Pago") FormaPago fPago,
+            @Named("Dirección") String direccion,
+			@Optional
+			@Named("Télefono") String telefono,
+			@Optional
+			@Named("Celular") String celular,
+			@Optional
+			@Named("E-mail") String mail
             /*,
             @Optional
             @Named("Dirección") String direccion,
@@ -44,7 +51,7 @@ public class EmpresaServicio extends AbstractFactoryAndRepository {
             ) {
     	//final ContactoVO contacto = new ContactoVO(direccion,telefono,correo);
     	final String creadoPor = usuarioActual();
-        return nEmpresa(cuit, razonSocial, tarifa, fPago, creadoPor);
+        return nEmpresa(cuit, razonSocial, tarifa, fPago, direccion, telefono, celular, mail, creadoPor);
     }
     
     @Hidden
@@ -53,6 +60,10 @@ public class EmpresaServicio extends AbstractFactoryAndRepository {
             final String razonSocial, 
             final float tarifa,
             final FormaPago fPago, 
+            final String direccion,
+            final String telefono,
+            final String celular,
+            final String mail,
             final String usuario) {
         final Empresa empresa = newTransientInstance(Empresa.class);
         empresa.setCuit(cuit);
@@ -61,6 +72,18 @@ public class EmpresaServicio extends AbstractFactoryAndRepository {
         empresa.setEstado(true);
         empresa.setFormaPago(fPago);
         empresa.setUsuario(usuario);
+        
+        Contacto contacto = newTransientInstance(Contacto.class);
+		
+		contacto.setDomicilio(direccion);
+		contacto.setTelefono(telefono);
+		contacto.setCelular(celular);
+		contacto.setEmail(mail);
+		
+		persistIfNotAlready(contacto);
+        
+		empresa.setContacto(contacto);
+        
         persistIfNotAlready(empresa);
         
         return empresa;

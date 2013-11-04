@@ -8,6 +8,7 @@ import org.apache.isis.applib.annotation.Audited;
 import org.apache.isis.applib.annotation.AutoComplete;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.annotation.Title;
@@ -16,6 +17,7 @@ import org.apache.isis.applib.filter.Filter;
 import com.google.common.base.Objects;
 
 import dom.consumo.Consumo;
+import dom.contacto.Contacto;
 import dom.empresa.Empresa;
 import dom.habitacion.Habitacion;
 
@@ -81,6 +83,7 @@ public class Huesped {
 	}
 	//}}
 	
+	/*
 	//{{celular
 		private String celular;
 		
@@ -104,6 +107,41 @@ public class Huesped {
 					this.mail = mail;
 				}
 				//}}
+				 * */
+	//{{
+	private Contacto contacto;
+	
+	public Contacto getContacto() {
+		return contacto;
+	}
+	
+	public void setContacto(Contacto contacto) {
+		this.contacto = contacto;
+	}
+	
+	
+	@Named("Nuevo")
+	@MemberOrder(name="contacto",sequence="1")
+	public Huesped crearContacto(
+			@Named("Dirección") String direccion,
+			@Named("Celular") String celular,
+			@Named("Teléfono") String telefono,
+			@Named("Email") String email) {
+		
+		Contacto contacto = container.newTransientInstance(Contacto.class);
+		
+		contacto.setDomicilio(direccion);
+		contacto.setCelular(celular);
+		contacto.setTelefono(telefono);
+		contacto.setEmail(email);
+		
+		container.persistIfNotAlready(contacto);
+		
+		setContacto(contacto);
+		
+		return this;
+	}
+	//}}
 	
 	//{{Estado
 	private boolean estado;

@@ -11,6 +11,7 @@ import org.apache.isis.applib.filter.Filter;
 
 import com.google.common.base.Objects;
 
+import dom.contacto.Contacto;
 import dom.empresa.Empresa;
 
 @Named("huesped")
@@ -34,11 +35,16 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
 			@Named("Apellido") String apellido,
 			@Named("Edad") int edad,
 			@Named("Dni") String dni,
+			@Named("Dirección") String direccion,
+			@Optional
+			@Named("Télefono") String telefono,
+			@Optional
 			@Named("Celular") String celular,
-			@Named("e-mail") String mail,
+			@Optional
+			@Named("E-mail") String mail,
 			@Optional
 			@Named("Empresa") Empresa empresa) {
-		return nHuesped(nombre, apellido, edad, dni,celular,mail,empresa);
+		return nHuesped(nombre, apellido, edad, dni,direccion,telefono,celular,mail,empresa);
 	}
 	
 	@Hidden
@@ -47,6 +53,8 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
 			final String apellido,
 			final int edad,
 			final String dni,
+			final String direccion,
+			final String telefono,
 			final String celular,
 			final String mail,
 			final Empresa empresa) {
@@ -55,9 +63,20 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
 		huesped.setApellido(apellido);
 		huesped.setEdad(edad);
 		huesped.setDni(dni);
-		huesped.setCelular(celular);
-		huesped.setMail(mail);
+		//huesped.setCelular(celular);
+		//huesped.setMail(mail);
 		huesped.setEstado(true);
+		
+		Contacto contacto = newTransientInstance(Contacto.class);
+		
+		contacto.setDomicilio(direccion);
+		contacto.setTelefono(telefono);
+		contacto.setCelular(celular);
+		contacto.setEmail(mail);
+		
+		persistIfNotAlready(contacto);
+		
+		huesped.setContacto(contacto);		
 		
 		if(empresa != null) {
 			huesped.setEmpresa(empresa);

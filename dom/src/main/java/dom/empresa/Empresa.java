@@ -26,7 +26,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
 import dom.huesped.Huesped;
-import dom.contacto.ContactoVO;
+import dom.contacto.Contacto;
 import dom.enumeradores.FormaPago;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
@@ -85,20 +85,42 @@ public class Empresa {
 	 * Datos de las distintas maneras
 	 * de contactarnos con la empresa.
 	 * Contacto -> Value Object
-	 */
+	 */	
 	
-	/*
-	@Persistent
-	private ContactoVO contacto;
+	//{{
+	private Contacto contacto;
 	
-	public ContactoVO getContacto() {
+	public Contacto getContacto() {
 		return contacto;
 	}
 	
-	public void setContacto(ContactoVO contacto) {
+	public void setContacto(Contacto contacto) {
 		this.contacto = contacto;
 	}
-	*/
+	
+	@Named("Nuevo")
+	@MemberOrder(name="contacto",sequence="1")
+	public Empresa crearContacto(
+			@Named("Dirección") String direccion,
+			@Named("Celular") String celular,
+			@Named("Teléfono") String telefono,
+			@Named("Email") String email) {
+		
+		Contacto contacto = container.newTransientInstance(Contacto.class);
+		
+		contacto.setDomicilio(direccion);
+		contacto.setCelular(celular);
+		contacto.setTelefono(telefono);
+		contacto.setEmail(email);
+		
+		container.persistIfNotAlready(contacto);
+		
+		setContacto(contacto);
+		
+		return this;
+	}	
+	//}}
+	
 	
 	/*
 	 * Forma en que la empresa le paga al hotel
