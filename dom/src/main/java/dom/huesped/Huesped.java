@@ -92,6 +92,18 @@ public class Huesped {
 			this.celular = celular;
 		}
 		//}}
+		
+		//{{mail
+				private String mail;
+				
+				@MemberOrder(sequence = "6")
+				public String getMail() {
+					return mail;
+				}
+				public void setMail(final String mail) {
+					this.mail = mail;
+				}
+				//}}
 	
 	//{{Estado
 	private boolean estado;
@@ -109,7 +121,7 @@ public class Huesped {
 	private Empresa empresa;
 		
 	@Optional
-	@MemberOrder(sequence = "7")		
+	@MemberOrder(sequence = "8")		
 	public Empresa getEmpresa() {
 		return empresa;
 	}
