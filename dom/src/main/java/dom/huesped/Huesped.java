@@ -83,32 +83,7 @@ public class Huesped {
 	}
 	//}}
 	
-	/*
-	//{{celular
-		private String celular;
-		
-		@MemberOrder(sequence = "5")
-		public String getCelular() {
-			return celular;
-		}
-		public void setCelular(final String celular) {
-			this.celular = celular;
-		}
-		//}}
-		
-		//{{mail
-				private String mail;
-				
-				@MemberOrder(sequence = "6")
-				public String getMail() {
-					return mail;
-				}
-				public void setMail(final String mail) {
-					this.mail = mail;
-				}
-				//}}
-				 * */
-	//{{
+	
 	private Contacto contacto;
 	
 	public Contacto getContacto() {
