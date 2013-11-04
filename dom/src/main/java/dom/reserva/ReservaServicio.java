@@ -92,7 +92,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 				}
 			
 			}
-			enviaSMS();
+			enviaSMS(huesped.getCelular());
 			return reserva;
 	}
 	
@@ -143,15 +143,15 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 	}
 	
 	@Hidden
-	public void enviaSMS() {
+	public void enviaSMS(String celular) {
 		SMS mensaje = new SMS();
-		mensaje.main();
-		/*Reserva reserva = new Reserva();
+		//mensaje.enviarSMS();
+		Reserva reserva = new Reserva();
 		System.out.print("Entro a sms");
-		if(reserva.getEstado().Cerrada.toString() != null) {
+		if(reserva.getEstado().Reservada != null) {
 			System.out.print("Estado reservada");
-			SMS mensaje = new SMS(celular);			
-		}*/
+					mensaje.enviarSMS(celular);
+		}
 		
 	}
 	

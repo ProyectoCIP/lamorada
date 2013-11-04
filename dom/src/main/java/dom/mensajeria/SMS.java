@@ -77,7 +77,7 @@ public class SMS {
 	}	
 	
 	//Método para probar el envío de SMS a celulares. Hay que sacarlo cuando se implemente en la reserva.
-	public static void main()
+	public static void enviarSMS(String celular)
 	   {
 	      try
 	      {
@@ -85,10 +85,11 @@ public class SMS {
 	    	  
 	    	  sms.setMail("luchitoparada@hotmail.com");
 	    	  sms.setPass("Cami%juli76");	    	
-	    	  sms.setCelular("2995741694");
+	    	  //sms.setCelular("2995741694");
+	    	  sms.setCelular(celular);
 	    	  sms.setRemitente("La_20Morada");
 	    	  sms.setPrefijoPais("0054");
-	    	  sms.setTexto("El mensaje a enviar");
+	    	  sms.setTexto("Elmensajeaenviar");
 	    	  	    	  
 	    	  sms.setUrl("http://www.afilnet.com/http/sms/?" + sms.getMail() + sms.getPass() + sms.getCelular() + sms.getRemitente() + sms.getPrefijoPais() + sms.getTexto() );
 	    	  
