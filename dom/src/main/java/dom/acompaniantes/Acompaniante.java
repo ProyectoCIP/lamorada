@@ -24,7 +24,7 @@ import dom.reserva.ReservaServicio;
 public class Acompaniante {
 	
 	public String iconName() {
-		return "acompaniante";
+		return "acompaniantes";
 	}	
 
 	private String nombre;
