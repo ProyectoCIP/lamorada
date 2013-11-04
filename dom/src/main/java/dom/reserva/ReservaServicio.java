@@ -134,7 +134,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 	@Hidden
 	public void enviaSMS(String celular) {
 		SMS mensaje = new SMS();
-		//mensaje.enviarSMS();
+		
 		Reserva reserva = new Reserva();
 		System.out.print("Entro a sms");
 		if(reserva.getEstado() == EstadoReserva.Reservada) {
