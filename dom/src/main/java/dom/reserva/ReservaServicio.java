@@ -28,15 +28,15 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 			@Named("Huésped") Huesped huesped,
 			@Optional
 			@MultiLine(numberOfLines=3)
-			@Named("Comentario") String comentario,
+			@Named("Comentario") String comentario
 			//@Optional
 			//@Named("Notificar SMS") boolean sms,
 			//@Optional
 			//@Named("Celular") String celular,
-			@Optional
-			@Named("Notificar Em@il") boolean email,
-			@Optional
-			@Named("Emai@l") String correo
+			//@Optional
+			//@Named("Notificar Em@il") boolean email,
+			//@Optional
+			//@Named("Emai@l") String correo
 			) {
 		
 		Reserva reserva = newTransientInstance(Reserva.class);
@@ -98,20 +98,20 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 	
 	public String validateReservar(
 			Huesped huesped,
-			String comentario,
+			String comentario
 			//boolean sms,
 			//String celular,
-			boolean email,
-			String correo
+			//boolean email,
+			//String correo
 			) {
 		
 		/*if(sms && celular == null) {
 			return "Ingrese el número de celular para notificar";
 		} */
 		
-		if(email && correo == null) {
+		/*if(email && correo == null) {
 			return "Ingrese el email para notificar";
-		}
+		}*/
 		return null;
 		
 	}
