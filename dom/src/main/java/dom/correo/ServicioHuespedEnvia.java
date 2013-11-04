@@ -9,6 +9,10 @@ import org.joda.time.LocalDate;
 
 @Named("Consulta")
 public class ServicioHuespedEnvia extends AbstractFactoryAndRepository {
+	
+	public String iconName() {
+		return "email";
+	}
 
 	@Named("Consultar") 
 	public void consultar(

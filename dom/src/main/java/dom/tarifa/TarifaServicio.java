@@ -11,6 +11,10 @@ import org.apache.isis.applib.query.QueryDefault;
 @Named("Tarifas")
 public class TarifaServicio extends AbstractFactoryAndRepository {
 	
+	public String iconName() {
+		return "tarifa";
+	}
+	
 	private Tarifa tarifa;
 	
 	@MemberOrder(sequence="1")

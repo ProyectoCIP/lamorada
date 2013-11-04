@@ -18,7 +18,11 @@ import dom.contacto.ContactoVO;
 import dom.enumeradores.FormaPago;
 
 @Named("Empresas")
-public class EmpresaServicio extends AbstractFactoryAndRepository{
+public class EmpresaServicio extends AbstractFactoryAndRepository {
+	
+	public String iconName() {
+		return "empresa";
+	}
 	
     @Named("Crear")
     @MemberOrder(sequence = "1")

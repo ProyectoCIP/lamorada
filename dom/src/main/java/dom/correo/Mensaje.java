@@ -38,6 +38,10 @@ public class Mensaje {
 	private String desde;
 	private String hasta;
 	private String mensaje;
+	
+	public String iconName() {
+		return "email";
+	}
 
 	@Title
 	@Optional
