@@ -50,29 +50,6 @@ public class EmpresaServicio extends AbstractFactoryAndRepository {
             @Named("Email") String correo*/
             ) {
     	//final ContactoVO contacto = new ContactoVO(direccion,telefono,correo);
-    	final String creadoPor = usuarioActual();
-        return nEmpresa(cuit, razonSocial, tarifa, fPago, direccion, telefono, celular, mail, creadoPor);
-    }
-    
-    @Hidden
-    public Empresa nEmpresa(
-            final String cuit, 
-            final String razonSocial, 
-            final float tarifa,
-            final FormaPago fPago, 
-            final String direccion,
-            final String telefono,
-            final String celular,
-            final String mail,
-            final String usuario) {
-        final Empresa empresa = newTransientInstance(Empresa.class);
-        empresa.setCuit(cuit);
-        empresa.setRazonSocial(razonSocial);
-        empresa.setTarifa(tarifa);
-        empresa.setEstado(true);
-        empresa.setFormaPago(fPago);
-        empresa.setUsuario(usuario);
-        
         Contacto contacto = newTransientInstance(Contacto.class);
 		
 		contacto.setDomicilio(direccion);
@@ -82,10 +59,30 @@ public class EmpresaServicio extends AbstractFactoryAndRepository {
 		
 		persistIfNotAlready(contacto);
         
-		empresa.setContacto(contacto);
+    	final String creadoPor = usuarioActual();
+    	
+    	return nEmpresa(cuit, razonSocial, tarifa, fPago, contacto, creadoPor);
+    }
+    
+    @Hidden
+    public Empresa nEmpresa(
+            final String cuit, 
+            final String razonSocial, 
+            final float tarifa,
+            final FormaPago fPago, 
+            final Contacto contacto,
+            final String usuario) {
+        final Empresa empresa = newTransientInstance(Empresa.class);
+        empresa.setCuit(cuit);
+        empresa.setRazonSocial(razonSocial);
+        empresa.setTarifa(tarifa);
+        empresa.setEstado(true);
+        empresa.setFormaPago(fPago);
+        empresa.setUsuario(usuario);
+        empresa.setContacto(contacto);
         
-        persistIfNotAlready(empresa);
-        
+		persistIfNotAlready(empresa);
+		
         return empresa;
     }
     

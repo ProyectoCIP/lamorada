@@ -7,6 +7,7 @@ import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Optional;
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.filter.Filter;
 
 import com.google.common.base.Objects;
@@ -44,7 +45,16 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
 			@Named("E-mail") String mail,
 			@Optional
 			@Named("Empresa") Empresa empresa) {
-		return nHuesped(nombre, apellido, edad, dni,direccion,telefono,celular,mail,empresa);
+		
+    	Contacto contacto = newTransientInstance(Contacto.class);
+		
+		contacto.setDomicilio(direccion);
+		contacto.setTelefono(telefono);
+		contacto.setCelular(celular);
+		contacto.setEmail(mail);
+		persistIfNotAlready(contacto);
+    	
+    	return nHuesped(nombre, apellido, edad, dni,contacto,empresa);
 	}
 	
 	@Hidden
@@ -53,10 +63,7 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
 			final String apellido,
 			final int edad,
 			final String dni,
-			final String direccion,
-			final String telefono,
-			final String celular,
-			final String mail,
+			final Contacto contacto,
 			final Empresa empresa) {
 		final Huesped huesped = newTransientInstance(Huesped.class);		
 		huesped.setNombre(nombre);
@@ -66,17 +73,9 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
 		//huesped.setCelular(celular);
 		//huesped.setMail(mail);
 		huesped.setEstado(true);
+		huesped.setContacto(contacto);
 		
-		Contacto contacto = newTransientInstance(Contacto.class);
-		
-		contacto.setDomicilio(direccion);
-		contacto.setTelefono(telefono);
-		contacto.setCelular(celular);
-		contacto.setEmail(mail);
-		
-		persistIfNotAlready(contacto);
-		
-		huesped.setContacto(contacto);		
+		contacto.addToContacto(huesped);
 		
 		if(empresa != null) {
 			huesped.setEmpresa(empresa);
@@ -120,6 +119,17 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
         });
     }
     
+    @Programmatic
+    public Huesped huespedContacto(final Contacto contacto) {
+    	return uniqueMatch(Huesped.class, new Filter<Huesped>() {
+			@Override
+			public boolean accept(Huesped huesped) {
+				// TODO Auto-generated method stub
+				return huesped.getContacto().equals(contacto);
+			}    		
+    	});
+    }
+    	
     protected boolean creadoPorActualUsuario(final Huesped h) {
         return Objects.equal(h.getUsuario(), usuarioActual());
     }

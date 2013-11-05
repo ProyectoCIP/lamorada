@@ -88,6 +88,7 @@ public class Empresa {
 	 */	
 	
 	//{{
+	@Persistent(mappedBy="empresa")
 	private Contacto contacto;
 	
 	public Contacto getContacto() {
