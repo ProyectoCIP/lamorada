@@ -77,7 +77,7 @@ public class SMS {
 	}	
 	
 	//Método para probar el envío de SMS a celulares. Hay que sacarlo cuando se implemente en la reserva.
-	public static void enviarSMS(String nombreHuesped,String celular, String numReserva)
+	public void enviarSMS(String nombreHuesped,String celular, String numReserva)
 	   {
 	      try
 	      {
@@ -87,7 +87,7 @@ public class SMS {
 	    	  sms.setPass("Cami%juli76");	    	
 	    	  //sms.setCelular("2995741694");
 	    	  sms.setCelular(celular);
-	    	  sms.setRemitente("La_20Morada");
+	    	  sms.setRemitente("La%20Morada");
 	    	  sms.setPrefijoPais("0054");
 	    	  sms.setTexto("Estimado:%20" + nombreHuesped + "%20La%20Reserva%20nro:%20" + numReserva + "%20fue%20hecha%20correctamente");
 	    	  	    	  

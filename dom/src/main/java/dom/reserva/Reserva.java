@@ -24,6 +24,7 @@ import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.NotPersisted;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Optional;
+import org.apache.isis.applib.annotation.RegEx;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
 import org.apache.isis.applib.annotation.Where;
@@ -264,6 +265,7 @@ public class Reserva {
 	private List<Consumo> consumos = new ArrayList<Consumo>();
 	
 	@Named("Consumiciónes/Extras")
+	@Render(Type.EAGERLY)
 	public List<Consumo> getConsumos() {
 		return consumos;
 	}
@@ -380,9 +382,9 @@ public class Reserva {
 		}
 	}
 	
-	/*public String disableTarifaEmpresa() {
+	public String disableTarifaEmpresa() {
 		return (getHuesped().getEmpresa() == null) ? "Este cliente no es miembro de ninguna empresa" : null;
-	}*/
+	}
 	//}}
 	
 	//{{Accion
@@ -525,6 +527,7 @@ public class Reserva {
 		return isCerrada() ? null : "La reserva debe estar cerrada para editar el número de factura";
 	}
 
+	@Named("Fecha Fáctura")
     @MemberOrder(name="Datos del Cierre",sequence="4")
 	public String getFechaFacturaString() {
 		if(getFechaFactura() != null) {
@@ -594,7 +597,7 @@ public class Reserva {
 	public Reserva cerrar(
 			@Named("Forma de Pago") FormaPago fP,
 			@Optional
-			@Named("Descuento") float descuento,
+			@Named("Descuento") String descuento,
 			@Optional
 			@Named("Número de Factura") String numeroFactura,
 			@Optional
@@ -607,7 +610,7 @@ public class Reserva {
 			
 			setNumeroFactura(numeroFactura);
 			setFechaFactura(fecha);
-			setDescuento(descuento);
+			setDescuento(Float.parseFloat(descuento));
 			setFormaDeCierre(fP);
 			
 			container.informUser("Cierre realizado con éxito!");
@@ -615,10 +618,9 @@ public class Reserva {
 			return this;
 	}
 	
-	
 	public String disableCerrar(
 			FormaPago fP,
-			float descuento,
+			String descuento,
 			String numeroFactura,
 			LocalDate fechaFactura
 			) {
@@ -633,7 +635,7 @@ public class Reserva {
 				return "Tiene que estar CheckOUT para realizar el Cierre";
 			}
 		}
-	}	
+	}
 	
 	@Hidden
     public boolean isCerrada() {

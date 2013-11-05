@@ -81,7 +81,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 				persistIfNotAlready(reserva);
 				
 				SMS sms = new SMS();
-				sms.enviarSMS(huesped.getContacto().getCelular());
+				sms.enviarSMS(huesped.getNombre()+" "+huesped.getApellido(),huesped.getContacto().getCelular(),Long.toString(reserva.getNumero()));
 				//Este método queda comentado porque se gasta el crédito.-
 				
 				/*
@@ -132,19 +132,6 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 	
 	public void injectTarifaServicio(TarifaServicio tFS) {
 		this.tFS = tFS;
-	}
-	
-	@Hidden
-	public void enviaSMS(String celular) {
-		SMS mensaje = new SMS();
-		
-		Reserva reserva = new Reserva();
-		System.out.print("Entro a sms");
-		if(reserva.getEstado() == EstadoReserva.Reservada) {
-			System.out.print("Estado reservada");
-					mensaje.enviarSMS(celular);
-		}
-		
 	}
 	
 	protected String usuarioActual() {
