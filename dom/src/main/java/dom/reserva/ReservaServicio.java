@@ -29,11 +29,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 			@Named("Huésped") Huesped huesped,
 			@Optional
 			@MultiLine(numberOfLines=3)
-			@Named("Comentario") String comentario,
-			@Optional
-			@Named("Celular") String celular,
-			@Optional
-			@Named("Emai@l") String correo
+			@Named("Comentario") String comentario
 			) {
 		
 		List<Disponibilidad> disponibilidad = listaParaReservar();
@@ -52,8 +48,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 		{	
 			reserva.setHuesped(huesped);
 			reserva.setComentario(comentario);
-			reserva.setFecha(LocalDate.now().toDate());
-			
+			reserva.setFecha(LocalDate.now().toDate());			
 			
 			for(Disponibilidad d : disponibilidad) {
 				
@@ -102,21 +97,60 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 
     private List<Disponibilidad> listaParaReservar() {
     	return allMatches(Disponibilidad.class,new Filter<Disponibilidad>(){
-
 			@Override
 			public boolean accept(Disponibilidad d) {
 				// TODO Auto-generated method stub
 				return d.isParaReservar();
-			}
-    		
+			}    		
     	});
     }
-	
-    @MemberOrder(sequence="2")
+
+    @Named("Todas")
+    @MemberOrder(sequence="5")
 	public List<Reserva> listaReservas() {
 		return allMatches(QueryDefault.create(Reserva.class, "reservas"));
 	}
-	
+    
+    @Named("Por Cliente")
+    @MemberOrder(sequence="2")
+	public List<Reserva> listaPorClientes(final Huesped huesped) {
+    	return allMatches(Reserva.class, new Filter<Reserva>(){
+			@Override
+			public boolean accept(Reserva r) {
+				// TODO Auto-generated method stub
+				return r.getHuesped().equals(huesped);
+			}    		
+    	});	
+    }
+    
+    @Named("Por Número")
+    @MemberOrder(sequence="3")
+    public Reserva porNumero(@Named("Número") final long numero) {
+    	return uniqueMatch(Reserva.class,new Filter<Reserva>(){
+			@Override
+			public boolean accept(Reserva r) {
+				// TODO Auto-generated method stub
+				return (r.getNumero() == numero) ? true : false;
+			}    		
+    	});
+    }
+    
+    @Named("Por Número Factura")
+    @MemberOrder(sequence="4") 
+    public Reserva porNumeroFactura(@Named("Número") final int numero) {
+    	return uniqueMatch(Reserva.class, new Filter<Reserva>() {
+			@Override
+			public boolean accept(Reserva r) {
+				// TODO Auto-generated method stub
+				if(r.getNumeroFactura() != null) {
+					return r.getNumeroFactura().equals(Integer.toString(numero)) ? true : false;
+				}
+				else
+					return false;
+			}   	 		
+    	});
+    }    
+    
 	@Hidden
 	public List<Consumo> completaConsumicion(final String nombre) {
 		return allMatches(Consumo.class, new Filter<Consumo>() {

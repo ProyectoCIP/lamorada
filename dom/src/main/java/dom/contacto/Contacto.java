@@ -1,10 +1,6 @@
 package dom.contacto;
 
-import java.util.logging.Filter;
-import java.util.logging.LogRecord;
-
 import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.DomainObjectContainer;
@@ -17,7 +13,6 @@ import org.apache.isis.applib.annotation.Optional;
 import dom.empresa.Empresa;
 import dom.huesped.Huesped;
 import dom.huesped.HuespedServicio;
-import dom.reserva.Reserva;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
@@ -35,17 +30,13 @@ public class Contacto {
 		return getDomicilio();
 	}
 	
+	//{{ Si esta relacionado con un Huesped retorna al mismo de lo contrario a la Empresa
 	public Object volver() {
 		return (getHuesped()==null) ? getEmpresa() : getHuesped();
 	}
+	//}}
 	
-	private HuespedServicio hS;
-	
-	public void injectHuespedServicio(HuespedServicio hs) {
-		this.hS = hs;
-	}
-	
-	//{{
+	//{{Dirección
 	private String domicilio;
 	
 	public String getDomicilio() {
@@ -57,7 +48,7 @@ public class Contacto {
 	}
 	//}}
 	
-	//{{
+	//{{Teléfono
 	private String telefono;
 	
 	@Optional	
@@ -70,7 +61,7 @@ public class Contacto {
 	}
 	//}}
 	
-	//{{
+	//{{Celular
 	private String celular;
 
 	@Optional
@@ -83,7 +74,7 @@ public class Contacto {
 	}	
 	//}}
 	
-	//{{
+	//{{Correo
 	private String email;
 
 	@Optional
