@@ -80,6 +80,10 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 				
 				persistIfNotAlready(reserva);
 				
+				SMS sms = new SMS();
+				sms.enviarSMS(huesped.getContacto().getCelular());
+				//Este método queda comentado porque se gasta el crédito.-
+				
 				/*
 				 * se eliminan de la base de datos todos los rastros de la consulta
 				 */
@@ -92,8 +96,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 			getContainer().informUser("No hay habitaciones seleccionadas para reservar");
 			reserva = null;
 		}
-		//Este método queda comentado porque se gasta el crédito.-
-			//enviaSMS(huesped.getCelular());
+		
 			return reserva;
 	}
 
