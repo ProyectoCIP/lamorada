@@ -17,6 +17,10 @@ import dom.enumeradores.Años;
 @Named("Estadisticas")
 public class EstadisticasServicio extends AbstractFactoryAndRepository {
 	
+	public String iconName() {
+		return "estadisticas";
+	}
+	
 	@Named("Ocupacion") 
 	public List<Ocupacion> listaOcupacion(@Named("Año:") Años años) {
 		
@@ -58,7 +62,6 @@ public class EstadisticasServicio extends AbstractFactoryAndRepository {
 		String[] fechaSeparada = formato.format(h.getFecha()).split("/");
 		for(Ocupacion o : lista) {
 			if(o.getMes().equals(nombreMes(Integer.parseInt(fechaSeparada[1])))){
-				getContainer().informUser("ACA ENTRO:"+h.getPax());
 				o.setPax(o.getPax()+h.getPax());
 			}
 		}		

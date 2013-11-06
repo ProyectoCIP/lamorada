@@ -70,8 +70,6 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
 		huesped.setApellido(apellido);
 		huesped.setEdad(edad);
 		huesped.setDni(dni);
-		//huesped.setCelular(celular);
-		//huesped.setMail(mail);
 		huesped.setEstado(true);
 		huesped.setContacto(contacto);
 		

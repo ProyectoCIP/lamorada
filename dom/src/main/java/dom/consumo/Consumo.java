@@ -25,6 +25,10 @@ import dom.reserva.ReservaServicio;
 @Audited
 public class Consumo {
 	
+	public String iconName() {
+		return "servicios";
+	}
+	
 	private String descripcion; 
 	private int cantidad;
 	private float precio; 
@@ -76,6 +80,7 @@ public class Consumo {
     
 	private String usuario;
     
+	@Hidden
     public String getUsuario() {
 		return usuario;
 	}

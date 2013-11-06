@@ -23,9 +23,9 @@ public class Tarifa {
 	public String iconName() {
 		return "tarifa";
 	}
-	
+		
 	public String title() {
-		return Integer.toString(getPax());
+		return "Personas: "+Integer.toString(getPax());
 	}
 	
 	private int pax;

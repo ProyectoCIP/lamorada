@@ -13,6 +13,10 @@ import dom.habitacion.Habitacion;
 
 public class Ocupacion {
 	
+	public String iconName() {
+		return "estadisticas";
+	}
+	
 	private String año;
 
 	@Hidden
