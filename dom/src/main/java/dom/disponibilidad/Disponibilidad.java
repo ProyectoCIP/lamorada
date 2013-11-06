@@ -105,6 +105,7 @@ public class Disponibilidad {
 			) {
 		
 		List<Disponibilidad> disponibilidad = new ArrayList<Disponibilidad>();
+		setParaReservar(true);
 		disponibilidad.add(this);
 		return rS.crear(disponibilidad, huesped, comentario);
 	}
@@ -147,7 +148,6 @@ public class Disponibilidad {
 		this.interno = interno;
 	}
 	//}}
-
 	
 	private Reserva reserva;
 	

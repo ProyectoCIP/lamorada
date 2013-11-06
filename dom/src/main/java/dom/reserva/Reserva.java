@@ -610,7 +610,9 @@ public class Reserva {
 			
 			setNumeroFactura(numeroFactura);
 			setFechaFactura(fecha);
-			setDescuento(Float.parseFloat(descuento));
+			if(descuento != null) {
+				setDescuento(Float.parseFloat(descuento));
+			}
 			setFormaDeCierre(fP);
 			
 			container.informUser("Cierre realizado con éxito!");
