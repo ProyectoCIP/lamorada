@@ -8,6 +8,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Optional;
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.filter.Filter;
 import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.LocalDate;
@@ -37,7 +38,8 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 		return crear(disponibilidad,huesped,comentario);
 	}
 
-	private Reserva crear(
+	@Programmatic
+	public Reserva crear(
 			final List<Disponibilidad> disponibilidad,
 			final Huesped huesped,
 			final String comentario) {
@@ -74,9 +76,11 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 				}
 				
 				persistIfNotAlready(reserva);
-				
-				SMS sms = new SMS();
-				sms.enviarSMS(huesped.getNombre()+" "+huesped.getApellido(),huesped.getContacto().getCelular(),Long.toString(reserva.getNumero()));
+								
+				if(huesped.getContacto().getCelular() != null) {
+					SMS sms = new SMS();
+					sms.enviarSMS(huesped.getNombre()+" "+huesped.getApellido(),huesped.getContacto().getCelular(),Long.toString(reserva.getNumero()));
+				}
 				//Este método queda comentado porque se gasta el crédito.-
 				
 				/*
