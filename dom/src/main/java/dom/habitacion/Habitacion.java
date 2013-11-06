@@ -58,12 +58,12 @@ public class Habitacion {
 		return interno;
 	}
 	
-	public void setInterno(int interno) {
+	public void setInterno(final int interno) {
 		actualizarInternos(interno);
 		this.interno = interno;
 	}
 	
-	private void actualizarInternos(int nuevoInterno) {
+	private void actualizarInternos(final int nuevoInterno) {
 		
 		List<HabitacionFecha> habitacionesReservadas = container.allMatches(HabitacionFecha.class, new Filter<HabitacionFecha>(){
 			@Override
@@ -96,7 +96,7 @@ public class Habitacion {
 	public boolean isEstado() {
 		return estado;
 	}
-	public void setEstado(boolean estado) {
+	public void setEstado(final boolean estado) {
 		this.estado = estado;
 	}	
 	//}}
@@ -108,7 +108,7 @@ public class Habitacion {
 	public EstadoHabitacion getEstado() {
 		return estadoHabitacion;
 	}
-	public void setEstado(EstadoHabitacion estadoHabitacion) {
+	public void setEstado(final EstadoHabitacion estadoHabitacion) {
 		this.estadoHabitacion = estadoHabitacion;
 	}
 	//}}	
@@ -152,7 +152,7 @@ public class Habitacion {
 	public DomainObjectContainer getContainer() {
 		return container;
 	}
-	public void setContainer(DomainObjectContainer container) {
+	public void setContainer(final DomainObjectContainer container) {
 		this.container = container;
 	}
 		

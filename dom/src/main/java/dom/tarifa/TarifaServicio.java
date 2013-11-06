@@ -43,7 +43,7 @@ public class TarifaServicio extends AbstractFactoryAndRepository {
 			
 	}
 	
-	public String validateNueva(int cantidad, float precio) {
+	public String validateNueva(final int cantidad, final float precio) {
 		return (cantidad > 4) ? "Se alojan como máximo 4 personas" : null;
 	}
 	
@@ -55,7 +55,7 @@ public class TarifaServicio extends AbstractFactoryAndRepository {
 	}
 	
 	@Programmatic
-	public Tarifa tarifa(int pax) {		
+	public Tarifa tarifa(final int pax) {		
 		
 		Tarifa t = uniqueMatch(QueryDefault.create(Tarifa.class, "traerPax", "pax", pax));
 		

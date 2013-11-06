@@ -31,9 +31,9 @@ public class HabitacionServicio extends AbstractFactoryAndRepository{
 	@Named("Crear")
 	@MemberOrder(sequence = "1")
 	public Habitacion nuevaHabitacion(			
-			@Named("Nombre") String nombre,
-			@Named("Tipo de Habitación") TipoHabitacion tipoHabitacion,
-			@Named("Interno") int interno) {
+			@Named("Nombre") final String nombre,
+			@Named("Tipo de Habitación") final TipoHabitacion tipoHabitacion,
+			@Named("Interno") final int interno) {
 		return nuevoHabitacion(nombre, tipoHabitacion, interno);
 	}
 	

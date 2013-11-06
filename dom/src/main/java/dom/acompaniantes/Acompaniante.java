@@ -34,7 +34,7 @@ public class Acompaniante {
 		return nombre;
 	}
 
-	public void setNombre(String nombre) {
+	public void setNombre(final String nombre) {
 		this.nombre = nombre;
 	}
 	
@@ -45,7 +45,7 @@ public class Acompaniante {
 		return apellido;
 	}
 
-	public void setApellido(String apellido) {
+	public void setApellido(final String apellido) {
 		this.apellido = apellido;
 	}	
 	
@@ -55,7 +55,7 @@ public class Acompaniante {
 		return edad;
 	}
 
-	public void setEdad(int edad) {
+	public void setEdad(final int edad) {
 		this.edad = edad;
 	}
 	
@@ -65,7 +65,7 @@ public class Acompaniante {
 		return relacion;
 	}
 
-	public void setRelacion(String relacion) {
+	public void setRelacion(final String relacion) {
 		this.relacion = relacion;
 	}
 	

@@ -62,7 +62,7 @@ public class HabitacionFecha {
 		return fecha;
 	}
 	
-	public void setFecha(Date fecha) {
+	public void setFecha(final Date fecha) {
 		this.fecha = fecha;
 	}
 	  
@@ -73,7 +73,7 @@ public class HabitacionFecha {
 		return nombreHabitacion;
 	}
 
-	public void setNombreHabitacion(String nombreHabitacion) {
+	public void setNombreHabitacion(final String nombreHabitacion) {
 		this.nombreHabitacion = nombreHabitacion;
 	}
 	
@@ -84,7 +84,7 @@ public class HabitacionFecha {
 		return interno;
 	}
 		
-	public void setInterno(int interno) {
+	public void setInterno(final int interno) {
 		this.interno = interno;
 	}
 	
@@ -103,7 +103,7 @@ public class HabitacionFecha {
 		return tipoHabitacion;
 	}
 	
-	public void setTipoHabitacion(TipoHabitacion tipoHabitacion) {
+	public void setTipoHabitacion(final TipoHabitacion tipoHabitacion) {
 		this.tipoHabitacion = tipoHabitacion;
 	}
 	
@@ -114,7 +114,7 @@ public class HabitacionFecha {
 		return pax;
 	}
 
-	public void setPax(int pax) {
+	public void setPax(final int pax) {
 		this.pax = pax;
 	}
 	
@@ -129,11 +129,11 @@ public class HabitacionFecha {
 		return this;
 	}
 	
-	public String validatePersonas(int personas){
+	public String validatePersonas(final int personas){
 		return mayorPaxPermitido(personas) ? null : "El número de personas es mayor al permitido";
 	}
 	
-	private boolean mayorPaxPermitido(int personas) {
+	private boolean mayorPaxPermitido(final int personas) {
 		if((getTipoHabitacion() == TipoHabitacion.Doble) && (personas > 2)) { return false;
 		}
 		if((getTipoHabitacion() == TipoHabitacion.Triple) && (personas > 3)) { return false;
@@ -153,7 +153,7 @@ public class HabitacionFecha {
 		return tarifa;
 	}
 
-	public void setTarifa(float tarifa) {
+	public void setTarifa(final float tarifa) {
 		this.tarifa = tarifa;
 	}
 	
@@ -165,7 +165,7 @@ public class HabitacionFecha {
 		return reserva;
 	}
 
-	public void setReserva(Reserva reserva) {
+	public void setReserva(final Reserva reserva) {
 		this.reserva = reserva;
 	}
 
@@ -177,7 +177,7 @@ public class HabitacionFecha {
 
 	private TarifaServicio tFS;
 	
-	public void injectTarifaServicio(TarifaServicio tFS) {
+	public void injectTarifaServicio(final TarifaServicio tFS) {
 		this.tFS = tFS;
 	}
 	

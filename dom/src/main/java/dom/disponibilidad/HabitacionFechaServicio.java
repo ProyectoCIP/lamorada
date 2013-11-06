@@ -26,9 +26,9 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 	@MemberOrder(sequence = "1")
 	@Named("Por Fechas")
 	public List<Disponibilidad> porFechas(
-	            @Named("Fecha desde:") final LocalDate desde,
+	            @Named("Fecha desde:") LocalDate desde,
 	            @Optional
-	            @Named("Fecha hasta:") final LocalDate hasta
+	            @Named("Fecha hasta:") LocalDate hasta
 	        ){
 		
 			eliminarDisponibilidad();
@@ -72,7 +72,7 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 	/*
 	 * Validacion del ingreso de fechas por el UI
 	 */
-	public String validatePorFechas(LocalDate desde, LocalDate hasta) {
+	public String validatePorFechas(final LocalDate desde, final LocalDate hasta) {
 		if(hasta == null) {
 			return null;
 		}
@@ -131,7 +131,7 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 		
 	private TarifaServicio tFS;
 		
-	public void injectTarifaServicio(TarifaServicio tFS) {
+	public void injectTarifaServicio(final TarifaServicio tFS) {
 		this.tFS = tFS;
 	}
 	    

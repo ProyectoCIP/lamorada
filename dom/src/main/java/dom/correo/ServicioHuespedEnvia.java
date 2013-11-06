@@ -16,17 +16,17 @@ public class ServicioHuespedEnvia extends AbstractFactoryAndRepository {
 
 	@Named("Consultar") 
 	public void consultar(
-			@Named("Nombre") String nombre,
-			@Named("Apellido") String apellido,
+			@Named("Nombre") final String nombre,
+			@Named("Apellido") final String apellido,
 			@Optional
-			@Named("Teléfono") String telefono,
-			@Named("Correo") String correo,
-			@Named("Desde") LocalDate desde,
+			@Named("Teléfono") final String telefono,
+			@Named("Correo") final String correo,
+			@Named("Desde") final LocalDate desde,
 			@Optional
-			@Named("Hasta") LocalDate hasta,
+			@Named("Hasta") final LocalDate hasta,
 			@MaxLength(255)
 			@MultiLine(numberOfLines=4)
-			@Named("Consulta") String mensaje) {
+			@Named("Consulta") final String mensaje) {
 
 		Envio enviar = new Envio();
 		enviar.setProperties();

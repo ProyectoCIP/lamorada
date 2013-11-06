@@ -48,7 +48,7 @@ public class Mensaje {
 	public String getNombre() {
 		return nombre;
 	}
-	public void setNombre(String nombre) {
+	public void setNombre(final String nombre) {
 		this.nombre = nombre;
 	}
 
@@ -56,7 +56,7 @@ public class Mensaje {
 	public String getApellido() {
 		return apellido;
 	}
-	public void setApellido(String apellido) {
+	public void setApellido(final String apellido) {
 		this.apellido = apellido;
 	}
 	
@@ -64,7 +64,7 @@ public class Mensaje {
 	public String getTelefono() {
 		return telefono;
 	}
-	public void setTelefono(String telefono) {
+	public void setTelefono(final String telefono) {
 		this.telefono = telefono;
 	}
 
@@ -72,7 +72,7 @@ public class Mensaje {
 	public String getCorreo() {
 		return correo;
 	}
-	public void setCorreo(String correo) {
+	public void setCorreo(final String correo) {
 		this.correo = correo;
 	}
 
@@ -88,7 +88,7 @@ public class Mensaje {
 		return hasta;
 	}
 
-	public void setHasta(String hasta) {
+	public void setHasta(final String hasta) {
 		this.hasta = hasta;
 	}
 
@@ -98,7 +98,7 @@ public class Mensaje {
 		return mensaje;
 	}
 
-	public void setMensaje(String mensaje) {
+	public void setMensaje(final String mensaje) {
 		this.mensaje = mensaje;
 	}
 	
@@ -132,7 +132,7 @@ public class Mensaje {
 		return fechaActual;
 	}
 
-	public void setFechaActual(LocalDate fechaActual) {
+	public void setFechaActual(final LocalDate fechaActual) {
 		this.fechaActual = fechaActual;
 	}
     /*

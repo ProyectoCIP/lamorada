@@ -84,7 +84,7 @@ public class Consumo {
     public String getUsuario() {
 		return usuario;
 	}
-	public void setUsuario(String usuario) {
+	public void setUsuario(final String usuario) {
 		this.usuario = usuario;
 	}
 

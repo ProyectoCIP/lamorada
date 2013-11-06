@@ -164,7 +164,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 	
 	private TarifaServicio tFS;
 	
-	public void injectTarifaServicio(TarifaServicio tFS) {
+	public void injectTarifaServicio(final TarifaServicio tFS) {
 		this.tFS = tFS;
 	}
 	

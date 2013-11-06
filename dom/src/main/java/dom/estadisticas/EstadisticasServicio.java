@@ -56,7 +56,7 @@ public class EstadisticasServicio extends AbstractFactoryAndRepository {
 		
 	}
 	
-	private void lista(List<Ocupacion> lista,HabitacionFecha h) {
+	private void lista(final List<Ocupacion> lista,final HabitacionFecha h) {
 		
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		String[] fechaSeparada = formato.format(h.getFecha()).split("/");
@@ -68,7 +68,7 @@ public class EstadisticasServicio extends AbstractFactoryAndRepository {
 		
 	}
 	
-	private int plazas(int año,int mes) {
+	private int plazas(final int año,final int mes) {
 		
 		Calendar cal = null;
 		

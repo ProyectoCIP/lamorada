@@ -41,15 +41,8 @@ public class EmpresaServicio extends AbstractFactoryAndRepository {
 			@Named("Celular") String celular,
 			@Optional
 			@Named("E-mail") String mail
-            /*,
-            @Optional
-            @Named("Dirección") String direccion,
-            @Optional
-            @Named("Télefono") String telefono,
-            @Optional
-            @Named("Email") String correo*/
             ) {
-    	//final ContactoVO contacto = new ContactoVO(direccion,telefono,correo);
+    	
         Contacto contacto = newTransientInstance(Contacto.class);
 		
 		contacto.setDomicilio(direccion);

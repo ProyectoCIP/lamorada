@@ -43,7 +43,7 @@ public class Contacto {
 		return domicilio;
 	}
 
-	public void setDomicilio(String domicilio) {
+	public void setDomicilio(final String domicilio) {
 		this.domicilio = domicilio;
 	}
 	//}}
@@ -56,7 +56,7 @@ public class Contacto {
 		return telefono;
 	}
 	
-	public void setTelefono(String telefono) {
+	public void setTelefono(final String telefono) {
 		this.telefono = telefono;
 	}
 	//}}
@@ -69,7 +69,7 @@ public class Contacto {
 		return celular;
 	}
 
-	public void setCelular(String celular) {
+	public void setCelular(final String celular) {
 		this.celular = celular;
 	}	
 	//}}
@@ -82,7 +82,7 @@ public class Contacto {
 		return email;
 	}
 		
-	public void setEmail(String email) {
+	public void setEmail(final String email) {
 		this.email = email;
 	}
 	//}}	
@@ -94,7 +94,7 @@ public class Contacto {
 		return huesped;
 	}
 	
-	public void setHuesped(Huesped huesped) {
+	public void setHuesped(final Huesped huesped) {
 		this.huesped = huesped;
 	}
 
@@ -111,7 +111,7 @@ public class Contacto {
 		return empresa;
 	}
 	
-	public void setEmpresa(Empresa empresa) {
+	public void setEmpresa(final Empresa empresa) {
 		this.empresa = empresa;
 	}
 
@@ -123,7 +123,7 @@ public class Contacto {
 	
 	private DomainObjectContainer container;
 	
-	public void injectDomainObjectContainer(DomainObjectContainer container) {
+	public void injectDomainObjectContainer(final DomainObjectContainer container) {
 		this.container = container;
 	}
 	

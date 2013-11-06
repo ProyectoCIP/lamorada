@@ -24,7 +24,7 @@ public class Ocupacion {
 		return año;
 	}
 
-	public void setAño(String año) {
+	public void setAño(final String año) {
 		this.año = año;
 	}
 
@@ -36,7 +36,7 @@ public class Ocupacion {
 		return mes;
 	}
 
-	public void setMes(String mes) {
+	public void setMes(final String mes) {
 		this.mes = mes;
 	}
 	
@@ -46,7 +46,7 @@ public class Ocupacion {
 		return pax;
 	}
 
-	public void setPax(int pax) {
+	public void setPax(final int pax) {
 		this.pax = pax;
 	}
 	
@@ -57,7 +57,7 @@ public class Ocupacion {
 		return Integer.toString(getPlazas()*plazasPorPax());
 	}
 	
-	public void setPlazasTotales(String plazasTotales) {
+	public void setPlazasTotales(final String plazasTotales) {
 		this.plazasTotales = plazasTotales;
 	}
 	
@@ -68,7 +68,7 @@ public class Ocupacion {
 		return plazas;
 	}
 
-	public void setPlazas(int plazas) {
+	public void setPlazas(final int plazas) {
 		this.plazas = plazas;
 	}
 	
@@ -79,7 +79,7 @@ public class Ocupacion {
 		return Float.toString(((getPax()*100))/(getPlazas()*plazasPorPax()))+"%";
 	}
 
-	public void setPorcentaje(String porcentaje) {
+	public void setPorcentaje(final String porcentaje) {
 		this.porcentaje = porcentaje;
 	}
 	
@@ -97,7 +97,7 @@ public class Ocupacion {
 	
 	}
 	
-	private int paxPlazas(TipoHabitacion tipo) {
+	private int paxPlazas(final TipoHabitacion tipo) {
 		
 		switch(tipo) {
 			case Doble : return 2;
@@ -110,7 +110,7 @@ public class Ocupacion {
 	
 	private DomainObjectContainer container;
 	
-	public void injectDomainObjectContainer(DomainObjectContainer container) {
+	public void injectDomainObjectContainer(final DomainObjectContainer container) {
 		this.container = container;
 	}
 

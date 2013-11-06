@@ -144,7 +144,7 @@ public class Reserva {
 		return montoSena;
 	}
 
-	public void setMontoSena(float montoSena) {
+	public void setMontoSena(final float montoSena) {
 		this.montoSena = montoSena;
 	}
 	//}}
@@ -159,7 +159,7 @@ public class Reserva {
 		return tipoSena;
 	}
 	
-	public void setTipoSena(FormaPago tipoSena) {
+	public void setTipoSena(final FormaPago tipoSena) {
 		this.tipoSena = tipoSena;
 	}
 	//}}
@@ -211,7 +211,7 @@ public class Reserva {
 	}	
 	
 	@Hidden
-	public void addToAcompaniantes(Acompaniante acompaniante) {
+	public void addToAcompaniantes(final Acompaniante acompaniante) {
 	    if(acompaniante == null || acompaniantes.contains(acompaniante)) {
 	    	return;
 	    }
@@ -233,7 +233,7 @@ public class Reserva {
 		return habitaciones;
 	}
 
-	public void setHabitaciones(List<HabitacionFecha> listaHabitaciones) {
+	public void setHabitaciones(final List<HabitacionFecha> listaHabitaciones) {
 		this.habitaciones = listaHabitaciones;
 	}
 	
@@ -246,7 +246,7 @@ public class Reserva {
 		return this;
 	}
 	@Hidden
-	public void addToHabitaciones(HabitacionFecha habitacion) {
+	public void addToHabitaciones(final HabitacionFecha habitacion) {
 	    if(habitacion == null || habitaciones.contains(habitacion)) {
 	    	return;
 	    }
@@ -308,7 +308,7 @@ public class Reserva {
     }
 
 	@Hidden
-	public void addToConsumos(Consumo consumo) {
+	public void addToConsumos(final Consumo consumo) {
 	    if(consumo == null || consumos.contains(consumo)) {
 	    	return;
 	    }
@@ -359,7 +359,7 @@ public class Reserva {
 		return tarifaEmpresa;
 	}
 
-	public void setTarifaEmpresa(boolean tarifaEmpresa) {
+	public void setTarifaEmpresa(final boolean tarifaEmpresa) {
 		this.tarifaEmpresa = tarifaEmpresa;
 	}
 	
@@ -466,7 +466,7 @@ public class Reserva {
     	return total;
     }
     
-    public void setTotal(float total) {
+    public void setTotal(final float total) {
     	this.total = total;
     }
     //}}
@@ -481,7 +481,7 @@ public class Reserva {
 		return formaDeCierre;
 	}
 
-	public void setFormaDeCierre(FormaPago formaDeCierre) {
+	public void setFormaDeCierre(final FormaPago formaDeCierre) {
 		this.formaDeCierre = formaDeCierre;
 	}
 	
@@ -500,7 +500,7 @@ public class Reserva {
 		return descuento;
 	}
 
-	public void setDescuento(float descuento) {
+	public void setDescuento(final float descuento) {
 		this.descuento = descuento;
 	}
 			
@@ -519,7 +519,7 @@ public class Reserva {
 		return numeroFactura;
 	}
 
-	public void setNumeroFactura(String numeroFactura) {
+	public void setNumeroFactura(final String numeroFactura) {
 		this.numeroFactura = numeroFactura;
 	}
 	
@@ -545,7 +545,7 @@ public class Reserva {
 		return fechaFactura;
 	}
 
-	public void setFechaFactura(Date fechaFactura) {
+	public void setFechaFactura(final Date fechaFactura) {
 		this.fechaFactura = fechaFactura;
 	}
 	

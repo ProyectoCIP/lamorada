@@ -35,11 +35,11 @@ public class Tarifa {
 		return pax;
 	}
 
-	public void setPax(int pax) {
+	public void setPax(final int pax) {
 		this.pax = pax;
 	}
 	
-	public String validatePax(int pax) {
+	public String validatePax(final int pax) {
         return (pax>4)? "Cuadruple es lo máximo":null;
     }
 	
@@ -49,7 +49,7 @@ public class Tarifa {
 		return precio;
 	}
 
-	public void setPrecio(float precio) {
+	public void setPrecio(final float precio) {
 		this.precio = precio;
 	}
 	

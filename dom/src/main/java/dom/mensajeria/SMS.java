@@ -24,7 +24,7 @@ public class SMS {
 		return url;
 	}
 	
-	public void setUrl(String url) {
+	public void setUrl(final String url) {
 		this.url = url;
 	}
 	
@@ -32,7 +32,7 @@ public class SMS {
 		return mail;
 	}
 	
-	public void setMail(String mail) {
+	public void setMail(final String mail) {
 		this.mail = "email=" + mail;
 	}
 	
@@ -40,7 +40,7 @@ public class SMS {
 		return pass;
 	}
 	
-	public void setPass(String pass) {
+	public void setPass(final String pass) {
 		this.pass = "&clave=" + pass;
 	}
 	
@@ -48,7 +48,7 @@ public class SMS {
 		return celular;
 	}
 	
-	public void setCelular(String celular) {
+	public void setCelular(final String celular) {
 		this.celular = "&movil=" + celular;
 	}
 	
@@ -56,7 +56,7 @@ public class SMS {
 		return remitente;
 	}
 	
-	public void setRemitente(String remitente) {
+	public void setRemitente(final String remitente) {
 		this.remitente = "&remite=" +  remitente;
 	}
 	
@@ -64,7 +64,7 @@ public class SMS {
 		return prefijoPais;
 	}
 	
-	public void setPrefijoPais(String prefijoPais) {
+	public void setPrefijoPais(final String prefijoPais) {
 		this.prefijoPais = "&pais=" + prefijoPais;
 	}
 	
@@ -72,12 +72,12 @@ public class SMS {
 		return texto;
 	}
 	
-	public void setTexto(String texto) {
+	public void setTexto(final String texto) {
 		this.texto = "&sms=" + texto;
 	}	
 	
 	//Método para probar el envío de SMS a celulares. Hay que sacarlo cuando se implemente en la reserva.
-	public void enviarSMS(String nombreHuesped,String celular, String numReserva)
+	public void enviarSMS(final String nombreHuesped,final String celular, final String numReserva)
 	   {
 	      try
 	      {

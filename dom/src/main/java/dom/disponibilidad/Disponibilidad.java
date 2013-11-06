@@ -38,7 +38,7 @@ public class Disponibilidad {
 		return nombreHabitacion;
 	}
 	
-	public void setNombreHabitacion(String nombreHabitacion) {
+	public void setNombreHabitacion(final String nombreHabitacion) {
 		this.nombreHabitacion = nombreHabitacion;
 	}
 	
@@ -49,7 +49,7 @@ public class Disponibilidad {
 		return paraReservar;
 	}
 	
-	public void setParaReservar(boolean paraReservar) {
+	public void setParaReservar(final boolean paraReservar) {
 		this.paraReservar = paraReservar;
 	}
 	
@@ -66,7 +66,7 @@ public class Disponibilidad {
 		return fecha;
 	}
 	
-	public void setFecha(Date date) {
+	public void setFecha(final Date date) {
 		this.fecha = date;
 	}
 	
@@ -96,7 +96,7 @@ public class Disponibilidad {
 		return tipoHabitacion;
 	}
 	
-	public void setTipoHabitacion(TipoHabitacion tipoHabitacion) {
+	public void setTipoHabitacion(final TipoHabitacion tipoHabitacion) {
 		this.tipoHabitacion = tipoHabitacion;
 	}
 	
@@ -107,7 +107,7 @@ public class Disponibilidad {
 		return tarifa;
 	}
 
-	public void setTarifa(float tarifa) {
+	public void setTarifa(final float tarifa) {
 		this.tarifa = tarifa;
 	}
 	
@@ -119,7 +119,7 @@ public class Disponibilidad {
 		return interno;
 	}
 		
-	public void setInterno(int interno) {
+	public void setInterno(final int interno) {
 		this.interno = interno;
 	}
 	//}}
@@ -132,7 +132,7 @@ public class Disponibilidad {
 		return reserva;
 	}
 
-	public void setReserva(Reserva reserva) {
+	public void setReserva(final Reserva reserva) {
 		this.reserva = reserva;
 	}
 	
