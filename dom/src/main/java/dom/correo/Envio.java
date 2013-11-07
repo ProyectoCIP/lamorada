@@ -69,23 +69,34 @@ public class Envio {
 		MimeMessage message = new MimeMessage(getSession());
 		
 		try {
-			message.setFrom(new InternetAddress(correo));
-			// A quien va dirigido
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress("proyectocipifes@gmail.com"));
-			message.setSubject("RESERVA-PROYECTOCIP");
 			
-			String desdeString = desde.toString();
-			String hastaString = (hasta == null) ? "" : hasta.toString();
-			 
-			message.setText(
-					nombre+"," +
-					apellido+"," +
-					telefono+"," +
-					correo+"," +
-					desdeString+"," +
-					hastaString+","+
-					mensaje);
-		
+			if(!nombre.equals("La Morada Petit Hotel")) {
+				message.setFrom(new InternetAddress("proyectocipifes@gmail.com"));
+				// A quien va dirigido
+				message.addRecipient(Message.RecipientType.TO, new InternetAddress("proyectocipifes@gmail.com"));
+				message.setSubject("RESERVA-PROYECTOCIP");
+				
+				String desdeString = desde.toString();
+				String hastaString = (hasta == null) ? "" : hasta.toString();
+				 
+				message.setText(
+						nombre+"," +
+						apellido+"," +
+						telefono+"," +
+						correo+"," +
+						desdeString+"," +
+						hastaString+","+
+						mensaje);
+			}
+			else {
+				message.setFrom(new InternetAddress("proyectocipifes@gmail.com"));
+				// A quien va dirigido
+				message.addRecipient(Message.RecipientType.TO, new InternetAddress(direccion));
+				message.setSubject("Consulta de Disponibilidad");
+			
+				message.setText(mensaje);			
+			}
+			
 			Transport t = session.getTransport("smtp");
 			t.connect("proyectocipifes@gmail.com","qwertyuio123456");
 			t.sendMessage(message,message.getAllRecipients());

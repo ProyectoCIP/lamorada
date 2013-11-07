@@ -108,8 +108,17 @@ public class Mensaje {
 		return servicio.porFechas(new LocalDate(getDesde()), new LocalDate(hasta));
 	}
 	
-	public void Responder() {
+	public Mensaje Responder(
+			@MultiLine(numberOfLines=6)
+			@Named("Mensaje") String mensaje) {
+
+		Envio correo = new Envio();
+		correo.setProperties();
 		
+		correo.enviar("La Morada Petit Hotel","","","",null,null,mensaje,getCorreo());
+		
+		container.informUser("Mensaje enviado!");
+		return this;
 	}
 	
 	private HabitacionFechaServicio servicio;
