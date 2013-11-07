@@ -36,8 +36,10 @@ public class EmpresaServicio extends AbstractFactoryAndRepository {
             @Named("Forma de Pago") FormaPago fPago,
             @Named("Dirección") String direccion,
 			@Optional
+			@RegEx(validation="\\d{7,10}")
 			@Named("Télefono") String telefono,
 			@Optional
+			@RegEx(validation="\\d{3,7}+-\\d{6}")
 			@Named("Celular") String celular,
 			@Optional
 			@Named("E-mail") String mail

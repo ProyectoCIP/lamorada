@@ -8,6 +8,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.annotation.Programmatic;
+import org.apache.isis.applib.annotation.RegEx;
 import org.apache.isis.applib.filter.Filter;
 
 import com.google.common.base.Objects;
@@ -38,8 +39,10 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
 			@Named("Dni") String dni,
 			@Named("Dirección") String direccion,
 			@Optional
+			@RegEx(validation="\\d{7,10}")
 			@Named("Télefono") String telefono,
 			@Optional
+			@RegEx(validation="\\d{3,7}+-\\d{6}")
 			@Named("Celular") String celular,
 			@Optional
 			@Named("E-mail") String mail,

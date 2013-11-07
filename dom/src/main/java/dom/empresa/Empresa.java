@@ -17,6 +17,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.PublishedAction;
+import org.apache.isis.applib.annotation.RegEx;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
 import org.apache.isis.applib.annotation.Title;
@@ -103,7 +104,9 @@ public class Empresa {
 	@MemberOrder(name="contacto",sequence="1")
 	public Empresa crearContacto(
 			@Named("Dirección") String direccion,
+			@RegEx(validation="\\d{3,7}+-\\d{6}")
 			@Named("Celular") String celular,
+			@RegEx(validation="\\d{7,10}")
 			@Named("Teléfono") String telefono,
 			@Named("Email") String email) {
 		
