@@ -41,9 +41,11 @@ public class Huesped {
 	
 	@Title(sequence="1.0")
 	@MemberOrder(sequence = "1")
+	@RegEx(validation="[a-zA-Z]{2,15}(\\s[a-zA-Z]{2,15})*")
 	public String getNombre() {
 		return nombre;
 	}
+	
 	public void setNombre(final String nombre) {
 		this.nombre = nombre;
 	}
@@ -54,9 +56,11 @@ public class Huesped {
 	
 	@Title(sequence="1.1")
 	@MemberOrder(sequence = "2")
+	@RegEx(validation="[a-zA-Z]{2,15}(\\s[a-zA-Z]{2,15})*")
 	public String getApellido() {
 		return apellido;
 	}
+	
 	public void setApellido(final String apellido) {
 		this.apellido = apellido;
 	}
@@ -64,12 +68,14 @@ public class Huesped {
 	
 	
 	//{{Edad
-	private int edad;
+	private String edad;
+	
 	@MemberOrder(sequence = "3")
-	public int getEdad() {
+	@RegEx(validation="\\d{1,2}")
+	public String getEdad() {
 		return edad;
 	}
-	public void setEdad(final int edad) {
+	public void setEdad(final String edad) {
 		this.edad = edad;
 	}
 	//}}
@@ -78,6 +84,7 @@ public class Huesped {
 	private String dni;
 	
 	@MemberOrder(sequence = "4")
+	@RegEx(validation="\\d{6,8}")
 	public String getDni() {
 		return dni;
 	}
@@ -103,12 +110,17 @@ public class Huesped {
 	@Named("Nuevo")
 	@MemberOrder(name="contacto",sequence="1")
 	public Huesped crearContacto(
+			@RegEx(validation="[\\w\\s]+")
 			@Named("Dirección") String direccion,
-			@RegEx(validation="\\d{3,7}+-\\d{6}")
-			@Named("Celular") String celular,
+			@Optional
 			@RegEx(validation="\\d{7,10}")
-			@Named("Teléfono") String telefono,
-			@Named("Email") String email) {
+			@Named("Télefono") String telefono,
+			@Optional
+			@RegEx(validation="\\d{3,7}(-)?\\d{6}")
+			@Named("Celular") String celular,
+			@Optional
+			@RegEx(validation="(\\w+\\.)*\\w+@(\\w+\\.)+[A-Za-z]+")
+			@Named("E-mail") String email) {
 		
 		Contacto contacto = container.newTransientInstance(Contacto.class);
 		

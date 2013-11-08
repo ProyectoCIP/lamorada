@@ -8,6 +8,7 @@ import org.apache.isis.applib.annotation.ActionSemantics;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
+import org.apache.isis.applib.annotation.RegEx;
 import org.apache.isis.applib.annotation.ActionSemantics.Of;
 import org.apache.isis.applib.filter.Filter;
 import org.asteriskjava.manager.AuthenticationFailedException;
@@ -30,7 +31,8 @@ public class HabitacionServicio extends AbstractFactoryAndRepository{
     	
 	@Named("Crear")
 	@MemberOrder(sequence = "1")
-	public Habitacion nuevaHabitacion(			
+	public Habitacion nuevaHabitacion(	
+			@RegEx(validation="[\\w\\s]+")
 			@Named("Nombre") final String nombre,
 			@Named("Tipo de Habitación") final TipoHabitacion tipoHabitacion,
 			@Named("Interno") final int interno) {

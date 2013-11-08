@@ -9,6 +9,7 @@ import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.Immutable;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Optional;
+import org.apache.isis.applib.annotation.RegEx;
 
 import dom.empresa.Empresa;
 import dom.huesped.Huesped;
@@ -39,6 +40,7 @@ public class Contacto {
 	//{{Dirección
 	private String domicilio;
 	
+	@RegEx(validation="[\\w\\s]+")
 	public String getDomicilio() {
 		return domicilio;
 	}
@@ -52,6 +54,7 @@ public class Contacto {
 	private String telefono;
 	
 	@Optional	
+	@RegEx(validation="\\d{7,10}")
 	public String getTelefono() {
 		return telefono;
 	}
@@ -65,6 +68,7 @@ public class Contacto {
 	private String celular;
 
 	@Optional
+	@RegEx(validation="\\d{3,7}(-)?\\d{6}")
 	public String getCelular() {
 		return celular;
 	}
@@ -78,6 +82,7 @@ public class Contacto {
 	private String email;
 
 	@Optional
+	@RegEx(validation="(\\w+\\.)*\\w+@(\\w+\\.)+[A-Za-z]+")
 	public String getEmail() {
 		return email;
 	}

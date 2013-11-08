@@ -180,11 +180,14 @@ public class Reserva {
 	@Named("Agregar")
 	@MemberOrder(name="acompaniantes",sequence="1")
     public Reserva add(
+    		@RegEx(validation="[a-zA-Z]{2,15}(\\s[a-zA-Z]{2,15})*")
     		@Named("Nombre") String nombre,
+    		@RegEx(validation="[a-zA-Z]{2,15}(\\s[a-zA-Z]{2,15})*")
     		@Named("Apellido") String apellido,
     		@Optional
     		@Named("Edad") int edad,
     		@Optional
+    		@RegEx(validation="[a-zA-Z]{2,15}(\\s[a-zA-Z]{2,15})*")
     		@Named("Relación") String relacion) {
 		/*
 		 * Se envian los datos del formulario consumo al servicio y nos lo retorna ya persistido
@@ -279,6 +282,7 @@ public class Reserva {
 	@Named("Agregar")
 	@MemberOrder(name="consumos",sequence="1")
     public Reserva add(
+    		@RegEx(validation="[\\w\\s]+")
     		@Named("Descripcion") String descripcion,
     		@Named("Cantidad") int cantidad,
     		@Named("Precio") float precio) {

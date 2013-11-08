@@ -13,6 +13,7 @@ import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.ObjectType;
+import org.apache.isis.applib.annotation.RegEx;
 import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.filter.Filter;
@@ -43,6 +44,7 @@ public class Habitacion {
 	
 	@Title
 	@MemberOrder(sequence = "1")
+	@RegEx(validation="[\\w\\s]+")
 	public String getNombre() {
 		return nombre;
 	}

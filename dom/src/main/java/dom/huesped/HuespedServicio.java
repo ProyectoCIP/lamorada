@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.annotation.Hidden;
+import org.apache.isis.applib.annotation.MaxLength;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Optional;
@@ -32,19 +33,27 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
     
     @Named("Crear")
 	@MemberOrder(sequence = "1")
-	public Huesped nuevoHuesped(			
+	public Huesped nuevoHuesped(	
+			@MaxLength(value=30)
+			@RegEx(validation="[a-zA-Z]{2,15}(\\s[a-zA-Z]{2,15})*")
 			@Named("Nombre") String nombre,
+			@MaxLength(value=30)
+			@RegEx(validation="[a-zA-Z]{2,15}(\\s[a-zA-Z]{2,15})*")
 			@Named("Apellido") String apellido,
-			@Named("Edad") int edad,
+			@RegEx(validation="\\d{1,2}")
+			@Named("Edad") String edad,
+			@RegEx(validation="\\d{6,8}")
 			@Named("Dni") String dni,
+			@RegEx(validation="[\\w\\s]+")
 			@Named("Dirección") String direccion,
 			@Optional
 			@RegEx(validation="\\d{7,10}")
 			@Named("Télefono") String telefono,
 			@Optional
-			@RegEx(validation="\\d{3,7}+-\\d{6}")
+			@RegEx(validation="\\d{3,7}(-)?\\d{6}")
 			@Named("Celular") String celular,
 			@Optional
+			@RegEx(validation="(\\w+\\.)*\\w+@(\\w+\\.)+[A-Za-z]+")
 			@Named("E-mail") String mail,
 			@Optional
 			@Named("Empresa") Empresa empresa) {
@@ -64,7 +73,7 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
 	public Huesped nHuesped(
 			final String nombre,						
 			final String apellido,
-			final int edad,
+			final String edad,
 			final String dni,
 			final Contacto contacto,
 			final Empresa empresa) {

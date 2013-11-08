@@ -27,21 +27,22 @@ public class EmpresaServicio extends AbstractFactoryAndRepository {
     @Named("Crear")
     @MemberOrder(sequence = "1")
     public Empresa nuevaEmpresa(
-            @RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*") // words, spaces and selected punctuation
+    		@RegEx(validation="\\d{2}-\\d{8}-\\d{1,2}")
             @Named("CUIT") String cuit, 
-            @RegEx(validation = "\\w[@&:\\-\\,\\.\\+ \\w]*") // words, spaces and selected punctuation
-            @Named("Razón Social") String razonSocial,
-            @RegEx(validation = "[0-9]")
+            @RegEx(validation="[\\w\\s]+")
+    		@Named("Razón Social") String razonSocial,
             @Named("Tarifa") float tarifa,            
             @Named("Forma de Pago") FormaPago fPago,
+            @RegEx(validation="[\\w\\s]+")
             @Named("Dirección") String direccion,
 			@Optional
 			@RegEx(validation="\\d{7,10}")
 			@Named("Télefono") String telefono,
 			@Optional
-			@RegEx(validation="\\d{3,7}+-\\d{6}")
+			@RegEx(validation="\\d{3,7}(-)?\\d{6}")
 			@Named("Celular") String celular,
 			@Optional
+			@RegEx(validation="(\\w+\\.)*\\w+@(\\w+\\.)+[A-Za-z]+")
 			@Named("E-mail") String mail
             ) {
     	

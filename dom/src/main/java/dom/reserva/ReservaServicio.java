@@ -13,6 +13,7 @@ import org.apache.isis.applib.filter.Filter;
 import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.LocalDate;
 
+import dom.acompaniantes.Acompaniante;
 import dom.consumo.Consumo;
 import dom.disponibilidad.Disponibilidad;
 import dom.disponibilidad.HabitacionFecha;
@@ -162,6 +163,17 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 			public boolean accept(final Consumo c) {
 				// TODO Auto-generated method stub
 				return c.getDescripcion().contains(nombre);
+			}			
+		});
+	}
+	
+	@Hidden
+	public List<Acompaniante> completaAcompaniantes(final String apellido) {
+		return allMatches(Acompaniante.class, new Filter<Acompaniante>() {
+			@Override
+			public boolean accept(final Acompaniante a) {
+				// TODO Auto-generated method stub
+				return a.getApellido().contains(apellido);
 			}			
 		});
 	}

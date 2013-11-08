@@ -8,6 +8,7 @@ import org.apache.isis.applib.annotation.Audited;
 import org.apache.isis.applib.annotation.AutoComplete;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.ObjectType;
+import org.apache.isis.applib.annotation.RegEx;
 import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.annotation.Where;
 
@@ -30,6 +31,7 @@ public class Acompaniante {
 	private String nombre;
 	
 	@Title(sequence="1.0")
+	@RegEx(validation="[a-zA-Z]{2,15}(\\s[a-zA-Z]{2,15})*")
 	public String getNombre() {
 		return nombre;
 	}
@@ -41,6 +43,7 @@ public class Acompaniante {
 	private String apellido;
 
 	@Title(sequence="1.1")
+	@RegEx(validation="[a-zA-Z]{2,15}(\\s[a-zA-Z]{2,15})*")
 	public String getApellido() {
 		return apellido;
 	}

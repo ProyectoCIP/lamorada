@@ -10,6 +10,7 @@ import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.NotPersisted;
 import org.apache.isis.applib.annotation.ObjectType;
+import org.apache.isis.applib.annotation.RegEx;
 import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.annotation.Where;
 
@@ -34,6 +35,7 @@ public class Consumo {
 	private float precio; 
 	
 	@Title 
+	@RegEx(validation="[\\w\\s]+")
 	public String getDescripcion() {
 		return descripcion;
 	}

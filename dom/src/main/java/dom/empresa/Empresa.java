@@ -48,6 +48,8 @@ public class Empresa {
 	private String razonSocial;
 
 	@Title
+	//Letras, números y espacios
+	@RegEx(validation="[\\w\\s]+")
 	public String getRazonSocial() {
 		return razonSocial;
 	}
@@ -60,7 +62,8 @@ public class Empresa {
 	 * Cuit de la empresa
 	 */
 	private String cuit;
-
+	//2 dígitos, un guión, 8 dígitos, otro guión y puede ser 1 o 2 dígitos
+	@RegEx(validation="\\d{2}-\\d{8}-\\d{1,2}")
 	public String getCuit() {
 		return cuit;
 	}
@@ -74,6 +77,7 @@ public class Empresa {
 	 */
 	private float tarifa;	
 
+	@RegEx(validation="\\d+\\.\\d{2}")
 	public float getTarifa() {
 		return tarifa;
 	}
@@ -103,11 +107,13 @@ public class Empresa {
 	@Named("Nuevo")
 	@MemberOrder(name="contacto",sequence="1")
 	public Empresa crearContacto(
+			@RegEx(validation="[\\w\\s]+")
 			@Named("Dirección") String direccion,
-			@RegEx(validation="\\d{3,7}+-\\d{6}")
+			@RegEx(validation="\\d{3,7}(-)?\\d{6}")
 			@Named("Celular") String celular,
 			@RegEx(validation="\\d{7,10}")
 			@Named("Teléfono") String telefono,
+			@RegEx(validation="(\\w+\\.)*\\w+@(\\w+\\.)+[A-Za-z]+")
 			@Named("Email") String email) {
 		
 		Contacto contacto = container.newTransientInstance(Contacto.class);
