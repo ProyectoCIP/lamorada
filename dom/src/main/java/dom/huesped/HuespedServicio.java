@@ -35,10 +35,10 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
 	@MemberOrder(sequence = "1")
 	public Huesped nuevoHuesped(	
 			@MaxLength(value=30)
-			@RegEx(validation="[a-zA-Z]{2,15}(\\s[a-zA-Z]{2,15})*")
+			@RegEx(validation="[a-zA-Záéíóú]{2,15}(\\s[a-zA-Záéíóú]{2,15})*")
 			@Named("Nombre") String nombre,
 			@MaxLength(value=30)
-			@RegEx(validation="[a-zA-Z]{2,15}(\\s[a-zA-Z]{2,15})*")
+			@RegEx(validation="[a-zA-Záéíóú]{2,15}(\\s[a-zA-Záéíóú]{2,15})*")
 			@Named("Apellido") String apellido,
 			@RegEx(validation="\\d{1,2}")
 			@Named("Edad") String edad,

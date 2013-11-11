@@ -41,7 +41,7 @@ public class Huesped {
 	
 	@Title(sequence="1.0")
 	@MemberOrder(sequence = "1")
-	@RegEx(validation="[a-zA-Z]{2,15}(\\s[a-zA-Z]{2,15})*")
+	@RegEx(validation="[a-zA-Záéíóú]{2,15}(\\s[a-zA-Záéíóú]{2,15})*")
 	public String getNombre() {
 		return nombre;
 	}
@@ -56,7 +56,7 @@ public class Huesped {
 	
 	@Title(sequence="1.1")
 	@MemberOrder(sequence = "2")
-	@RegEx(validation="[a-zA-Z]{2,15}(\\s[a-zA-Z]{2,15})*")
+	@RegEx(validation="[a-zA-Záéíóú]{2,15}(\\s[a-zA-Záéíóú]{2,15})*")
 	public String getApellido() {
 		return apellido;
 	}
