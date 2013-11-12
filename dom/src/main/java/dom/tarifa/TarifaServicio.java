@@ -1,5 +1,6 @@
 package dom.tarifa;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.isis.applib.AbstractFactoryAndRepository;
@@ -21,7 +22,7 @@ public class TarifaServicio extends AbstractFactoryAndRepository {
 	@Named("Nueva")
 	public Tarifa nueva(
 			@Named("Cantidad de Personas") int cantidad,
-			@Named("Precio") float precio
+			@Named("Precio") BigDecimal precio
 			) {
 				
 			QueryDefault<Tarifa> query = QueryDefault.create(Tarifa.class,"traerPax","pax",cantidad);
@@ -43,7 +44,7 @@ public class TarifaServicio extends AbstractFactoryAndRepository {
 			
 	}
 	
-	public String validateNueva(final int cantidad, final float precio) {
+	public String validateNueva(final int cantidad, final BigDecimal precio) {
 		return (cantidad > 4) ? "Se alojan como máximo 4 personas" : null;
 	}
 	
@@ -62,7 +63,7 @@ public class TarifaServicio extends AbstractFactoryAndRepository {
 		if(t == null)
 		{
 			t = newTransientInstance(Tarifa.class);
-			t.setPrecio(0);
+			t.setPrecio(new BigDecimal(0));
 		}
 		
 		return t;

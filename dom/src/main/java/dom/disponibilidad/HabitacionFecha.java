@@ -1,5 +1,6 @@
 package dom.disponibilidad;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -26,6 +27,7 @@ import dom.reserva.Reserva;
 import dom.tarifa.Tarifa;
 import dom.tarifa.TarifaServicio;
 import dom.asterisk.Asterisk;
+import dom.enumeradores.EstadoHabitacion;
 import dom.enumeradores.TipoHabitacion;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
@@ -42,8 +44,25 @@ import dom.enumeradores.TipoHabitacion;
 public class HabitacionFecha {
 	
 	public String iconName() {
-		return "habitacion";
+		if (getEstado() == EstadoHabitacion.BLOQUEADA) { 
+			return "bloqueada";
+		}
+		else {
+			return (getReserva() == null) ? "disponibilidad" : "candado";
+		}
 	}
+
+	//{{Estado : Disponible / Bloqueada
+	private EstadoHabitacion estadoHabitacion;
+		
+	@Hidden(where=Where.ALL_TABLES)
+	public EstadoHabitacion getEstado() {
+		return estadoHabitacion;
+	}
+	public void setEstado(final EstadoHabitacion estadoHabitacion) {
+		this.estadoHabitacion = estadoHabitacion;
+	}
+	//}}	
 
 	public String title() {
 		return getNombreHabitacion();
@@ -147,13 +166,13 @@ public class HabitacionFecha {
 	 * si se cambia el costo del pax en general
 	 */
 	
-	private float tarifa;
+	private BigDecimal tarifa;
 	
-	public float getTarifa() {
+	public BigDecimal getTarifa() {
 		return tarifa;
 	}
 
-	public void setTarifa(final float tarifa) {
+	public void setTarifa(final BigDecimal tarifa) {
 		this.tarifa = tarifa;
 	}
 	

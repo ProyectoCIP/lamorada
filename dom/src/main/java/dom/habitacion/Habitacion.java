@@ -103,18 +103,6 @@ public class Habitacion {
 	}	
 	//}}
 	
-	//{{Estado : Disponible / Bloqueada
-	private EstadoHabitacion estadoHabitacion;
-	
-	@Hidden(where=Where.ALL_TABLES)
-	public EstadoHabitacion getEstado() {
-		return estadoHabitacion;
-	}
-	public void setEstado(final EstadoHabitacion estadoHabitacion) {
-		this.estadoHabitacion = estadoHabitacion;
-	}
-	//}}	
-	
 	//{{Usuario actual
 	private String usuario;
 

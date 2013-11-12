@@ -13,6 +13,8 @@ import org.apache.isis.applib.filter.Filter;
 import org.apache.isis.applib.query.QueryDefault;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
+
+import dom.enumeradores.EstadoHabitacion;
 import dom.habitacion.Habitacion;
 import dom.tarifa.TarifaServicio;
 
@@ -50,11 +52,13 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 	    					d.setNombreHabitacion(hf.getNombreHabitacion());
 	    					d.setReserva(hf.getReserva());
 	    					d.setTarifa(hf.getTarifa());
+	    					d.setEstado(hf.getEstado());
 	    				}
 	    				else {
 	    					d.setNombreHabitacion(habitacion.getNombre());
 	    					d.setTipoHabitacion(habitacion.getTipoHabitacion());
 	    					d.setInterno(habitacion.getInterno());
+	    					d.setEstado(EstadoHabitacion.DISPONIBLE);
 	    				}
 	    				
 	    				d.setFecha(fechaAuxiliar.toDate());
@@ -93,8 +97,9 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 			getContainer().removeIfNotAlready(borrar);
 	
 	}
-		
-	private HabitacionFecha existeReserva(final LocalDate fecha,final String nombre) {
+	
+	@Programmatic
+	public HabitacionFecha existeReserva(final LocalDate fecha,final String nombre) {
 			
 		return uniqueMatch(HabitacionFecha.class, new Filter<HabitacionFecha>(){
 

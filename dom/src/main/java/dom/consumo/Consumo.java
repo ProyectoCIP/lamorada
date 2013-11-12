@@ -1,5 +1,7 @@
 package dom.consumo;
 
+import java.math.BigDecimal;
+
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
@@ -17,6 +19,12 @@ import org.apache.isis.applib.annotation.Where;
 import dom.reserva.Reserva;
 import dom.reserva.ReservaServicio;
 
+/**
+ * El consumo de servicios extras que puede tener una reserva (frigobar, lavanderia, etc..)
+ * 
+ * @author ProyectoCIP
+ * @see dom.reserva.Reserva
+ */
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
@@ -26,14 +34,22 @@ import dom.reserva.ReservaServicio;
 @Audited
 public class Consumo {
 	
+	/**
+	 * 
+	 * @return Retorna el nombre del icono que va a ser usado en el viewer
+	 */
 	public String iconName() {
 		return "servicios";
 	}
 	
 	private String descripcion; 
 	private int cantidad;
-	private float precio; 
+	private BigDecimal precio; 
 	
+	/**
+	 * 
+	 * @return Devuelve la descripcion del producto consumido
+	 */
 	@Title 
 	@RegEx(validation="[\\w\\s]+")
 	public String getDescripcion() {
@@ -43,6 +59,12 @@ public class Consumo {
 		this.descripcion = descripcion;
 	}
 	
+	
+
+	/**
+	 * 
+	 * @return Devuelve la cantidad del producto consumido
+	 */
 	public int getCantidad() {
 		return cantidad;
 	}
@@ -50,20 +72,36 @@ public class Consumo {
 		this.cantidad = cantidad;
 	}
 
-	public float getPrecio() {
+
+	/**
+	 * 
+	 * @return Devuelve el precio del producto
+	 */
+	public BigDecimal getPrecio() {
 		return precio;
 	}
-	public void setPrecio(final float precio) {
+	public void setPrecio(final BigDecimal precio) {
 		this.precio = precio;
 	}
 	
+
+	/**
+	 * 
+	 * @return Genera la cuenta entre la cantidad consumida y el precio del producto
+	 */
 	@Named("Total")
 	@NotPersisted 
-	public float getPrecioTotal() {
-		return getCantidad()*getPrecio(); 
+	public BigDecimal getPrecioTotal() {
+		return getPrecio().multiply(new BigDecimal(getCantidad())); 
 	}
 	
 	private Reserva reserva;
+	
+
+	/**
+	 * 
+	 * @return Es la reserva donde a la cual se le registra este consumo.
+	 */
 	
 	@Hidden(where=Where.ALL_TABLES)
 	public Reserva getReserva() {

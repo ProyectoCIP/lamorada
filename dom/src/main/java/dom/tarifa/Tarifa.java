@@ -1,5 +1,7 @@
 package dom.tarifa;
 
+import java.math.BigDecimal;
+
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
@@ -43,13 +45,13 @@ public class Tarifa {
         return (pax>4)? "Cuadruple es lo máximo":null;
     }
 	
-	private float precio;
+	private BigDecimal precio;
 
-	public float getPrecio() {
+	public BigDecimal getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(final float precio) {
+	public void setPrecio(final BigDecimal precio) {
 		this.precio = precio;
 	}
 	

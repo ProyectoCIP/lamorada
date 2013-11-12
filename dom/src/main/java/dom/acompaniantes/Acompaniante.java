@@ -15,6 +15,14 @@ import org.apache.isis.applib.annotation.Where;
 import dom.reserva.Reserva;
 import dom.reserva.ReservaServicio;
 
+/**
+ * 
+ * Los acompa&ntilde;antes que puede tener el huesped
+ * que registra la reserva.
+ * 
+ * @author ProyectoCIP
+ * @see dom.reserva.Reserva
+ */
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
@@ -24,12 +32,22 @@ import dom.reserva.ReservaServicio;
 @Audited
 public class Acompaniante {
 	
+	/**
+	 * 
+	 * @return Retorno el nombre del icono que va a ser usado en el viewer
+	 */
 	public String iconName() {
 		return "acompaniantes";
 	}	
 
 	private String nombre;
 	
+	/**
+	 * 
+	 * Es la primer parte del titulo que toma el objeto en el viewer
+	 * 
+	 * @return El nombre del Acompa&ntilde;ante 
+	 */
 	@Title(sequence="1.0")
 	@RegEx(validation="[a-zA-Z]{2,15}(\\s[a-zA-Z]{2,15})*")
 	public String getNombre() {
@@ -41,7 +59,13 @@ public class Acompaniante {
 	}
 	
 	private String apellido;
-
+	
+	/**
+	 * 
+	 * Es la segunda parte del titulo que toma el objeto en el viewer
+	 * 
+	 * @return El apellido del Acompa&ntilde;ante
+	 */
 	@Title(sequence="1.1")
 	@RegEx(validation="[a-zA-Z]{2,15}(\\s[a-zA-Z]{2,15})*")
 	public String getApellido() {
@@ -54,6 +78,10 @@ public class Acompaniante {
 	
 	private int edad;
 	
+	/**
+	 * 
+	 * @return La edad del Acompa&ntilde;ante
+	 */
 	public int getEdad() {
 		return edad;
 	}
@@ -64,6 +92,10 @@ public class Acompaniante {
 	
 	private String relacion;
 	
+	/**
+	 * 
+	 * @return Es la relaci&oacute;n que el acompa&ntilde;ante tiene con el huesped (Esposa, Hijo, etc)
+	 */
 	public String getRelacion() {
 		return relacion;
 	}
@@ -74,10 +106,15 @@ public class Acompaniante {
 	
 	private Reserva reserva;
 	
+	/**
+	 * 
+	 * @return Es la reserva en la que se registro ese acompa&ntilde;ante
+	 */
 	@Hidden(where=Where.ALL_TABLES)
 	public Reserva getReserva() {
 		return reserva;
 	}
+	
 	public void setReserva(final Reserva reserva) {
 		this.reserva = reserva;
 	}

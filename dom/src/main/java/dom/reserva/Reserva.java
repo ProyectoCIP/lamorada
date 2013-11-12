@@ -1,5 +1,6 @@
 package dom.reserva;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,6 +41,13 @@ import dom.enumeradores.FormaPago;
 import dom.huesped.Huesped;
 import dom.tarifa.TarifaServicio;
 
+/**
+ * La reserva
+ * 
+ * 
+ * @author ProyectoCIP
+ * 
+ */
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.APPLICATION)
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
 @javax.jdo.annotations.Query(name="reservas", language="JDOQL",value="SELECT FROM dom.reserva.Reserva order by numero desc")
@@ -285,7 +293,7 @@ public class Reserva {
     		@RegEx(validation="[\\w\\s]+")
     		@Named("Descripcion") String descripcion,
     		@Named("Cantidad") int cantidad,
-    		@Named("Precio") float precio) {
+    		@Named("Precio") BigDecimal precio) {
 		/*
 		 * Se envian los datos del formulario consumo al servicio y nos lo retorna ya persistido
 		 */
@@ -439,38 +447,40 @@ public class Reserva {
     }//}}
  
     //{{ Muestra el total a pagar (tiene en cuenta consumos, descuentos...)
-    private float total;
+    private BigDecimal total;
     
     @Disabled
     @NotPersisted
     @MemberOrder(name="Datos del Cierre",sequence="4")
-    public float getTotal() {
+    public BigDecimal getTotal() {
     	
-    	float total = 0;
+    	BigDecimal total = new BigDecimal(0);
     	
     	/*
     	 * El precio de las habitaciones
     	 */
     	for(HabitacionFecha h : getHabitaciones()) {
-    		total += h.getTarifa();
+    		total.add(h.getTarifa());
     	}
     	
     	/*
     	 * El precio de las consumiciones
     	 */
     	for(Consumo c : getConsumos()) {
-    		total += c.getPrecioTotal();
+    		total.add(c.getPrecioTotal());
     	}
     	
     	/*
     	 * Descuentos
     	 */    	
-    	total -= getDescuento();
+    	if(getDescuento() != null) {
+        	total.subtract(getDescuento());
+    	}
     	
     	return total;
     }
     
-    public void setTotal(final float total) {
+    public void setTotal(final BigDecimal total) {
     	this.total = total;
     }
     //}}
@@ -495,16 +505,16 @@ public class Reserva {
 	//}}
     
 	// {{ Descuento	
-    private float descuento;
+    private BigDecimal descuento;
     
     @Hidden(where=Where.ALL_TABLES)
     @MemberOrder(name="Datos del Cierre",sequence="2")  
     @Optional
-	public float getDescuento() {
+	public BigDecimal getDescuento() {
 		return descuento;
 	}
 
-	public void setDescuento(final float descuento) {
+	public void setDescuento(final BigDecimal descuento) {
 		this.descuento = descuento;
 	}
 			
@@ -601,7 +611,7 @@ public class Reserva {
 	public Reserva cerrar(
 			@Named("Forma de Pago") FormaPago fP,
 			@Optional
-			@Named("Descuento") String descuento,
+			@Named("Descuento") BigDecimal descuento,
 			@Optional
 			@Named("Número de Factura") String numeroFactura,
 			@Optional
@@ -614,9 +624,9 @@ public class Reserva {
 			
 			setNumeroFactura(numeroFactura);
 			setFechaFactura(fecha);
-			if(descuento != null) {
-				setDescuento(Float.parseFloat(descuento));
-			}
+			//if(descuento != null) {
+			setDescuento(descuento);
+			//}
 			setFormaDeCierre(fP);
 			
 			container.informUser("Cierre realizado con éxito!");
@@ -626,7 +636,7 @@ public class Reserva {
 	
 	public String disableCerrar(
 			FormaPago fP,
-			String descuento,
+			BigDecimal descuento,
 			String numeroFactura,
 			LocalDate fechaFactura
 			) {

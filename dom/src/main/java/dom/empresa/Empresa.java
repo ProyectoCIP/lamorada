@@ -1,6 +1,7 @@
 package dom.empresa;
 
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,14 +76,14 @@ public class Empresa {
 	/*
 	 * Tarifa especial por convenio
 	 */
-	private float tarifa;	
+	private BigDecimal tarifa;	
 
 	@RegEx(validation="\\d+\\.\\d{2}")
-	public float getTarifa() {
+	public BigDecimal getTarifa() {
 		return tarifa;
 	}
 
-	public void setTarifa(float tarifa) {
+	public void setTarifa(BigDecimal tarifa) {
 		this.tarifa = tarifa;
 	}
 		

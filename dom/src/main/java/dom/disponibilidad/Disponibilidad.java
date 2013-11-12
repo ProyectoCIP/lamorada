@@ -1,5 +1,6 @@
 package dom.disponibilidad;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,7 +20,10 @@ import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.annotation.Where;
+import org.joda.time.LocalDate;
 
+import dom.enumeradores.EstadoHabitacion;
+import dom.enumeradores.EstadoReserva;
 import dom.enumeradores.TipoHabitacion;
 import dom.huesped.Huesped;
 import dom.reserva.Reserva;
@@ -34,8 +38,80 @@ import dom.reserva.ReservaServicio;
 public class Disponibilidad {
 	
 	public String iconName() {
-		return (getReserva() == null) ? "disponibilidad" : "candado";
+		if (getEstado() == EstadoHabitacion.BLOQUEADA) { 
+			return "bloqueada";
+		}
+		else {
+			return (getReserva() == null) ? "disponibilidad" : "candado";
+		}
 	}
+	
+	//{{Estado : Disponible / Bloqueada
+	private EstadoHabitacion estadoHabitacion;
+		
+	@Hidden
+	public EstadoHabitacion getEstado() {
+		return estadoHabitacion;
+	}
+	public void setEstado(final EstadoHabitacion estadoHabitacion) {
+		this.estadoHabitacion = estadoHabitacion;
+	}
+	
+	@Bulk
+	@MemberOrder(name="estadoHabitacion",sequence="1")
+	public Disponibilidad desbloquear() {
+		if(getEstado() == EstadoHabitacion.BLOQUEADA) {
+			this.estadoHabitacion = EstadoHabitacion.DISPONIBLE;
+		}
+		return this;
+	}
+	
+	@Bulk
+	@MemberOrder(name="estadoHabitacion",sequence="1")
+	public Disponibilidad bloquear() {
+		if(getEstado() == EstadoHabitacion.DISPONIBLE) {
+			this.estadoHabitacion = EstadoHabitacion.BLOQUEADA;
+			
+			HabitacionFecha hF = hFS.existeReserva(new LocalDate(getFecha()), getNombreHabitacion());
+			
+			if(hF == null) {
+				hF = container.newTransientInstance(HabitacionFecha.class);
+				hF.setEstado(EstadoHabitacion.BLOQUEADA);
+				hF.setFecha(getFecha());
+				hF.setNombreHabitacion(getNombreHabitacion());
+				hF.setInterno(getInterno());
+				hF.setPax(0);
+				hF.setTipoHabitacion(getTipoHabitacion());
+				hF.setTarifa(new BigDecimal(0));
+				container.persistIfNotAlready(hF);
+			}
+			else {
+				hF.setEstado(EstadoHabitacion.BLOQUEADA);
+			}
+				 
+		}
+		
+		return this;
+	}
+	
+	public String disableBloquear() {
+		if(getEstado() != EstadoHabitacion.BLOQUEADA) {
+			return (getReserva() != null) ? "No se puede bloquear una habitación reservada" : null;
+		}
+		else {
+			return "Ya se encuentra bloqueada!";
+		}
+	}
+	public String disableDesbloquear() {
+		if(getEstado() != EstadoHabitacion.DISPONIBLE) {
+			return (getReserva() != null) ? "Esta habitación ya está reservada" : null;
+		}
+		else {
+			return "Ya se encuentra disponible!";
+		}
+	}
+	//}}
+	
 	
 	private String nombreHabitacion;
 
@@ -82,18 +158,25 @@ public class Disponibilidad {
 	@MemberOrder(name="paraReservar",sequence="1")
 	public Disponibilidad reservar() {
 		
-		if(getReserva() == null) {			
-			if(isParaReservar())
-				setParaReservar(false);
-			else
-				setParaReservar(true);			
+		if(getEstado() == EstadoHabitacion.DISPONIBLE) {
+			if(getReserva() == null) {			
+				if(isParaReservar())
+					setParaReservar(false);
+				else
+					setParaReservar(true);			
+			}
 		}
 		
 		return this;
 	}
 	
 	public String disableReservar() {
-        return paraReservar ? "Ya esta seleccionada!" : null;
+		if(getEstado() != EstadoHabitacion.BLOQUEADA) {	
+			return paraReservar ? "Ya esta seleccionada!" : null;
+		}
+		else {
+			return "No se puede reservar una habitación que está bloqueada";
+		}
 	}
 	
 	@Named("Reservar") 
@@ -111,7 +194,13 @@ public class Disponibilidad {
 	}
 	
 	public String disableReservarDisponible(final Huesped huesped,final String comentario) {
-		return (getReserva() != null) ? "Ya está reservada" : null;
+
+		if(getEstado() != EstadoHabitacion.BLOQUEADA) {	
+			return (getReserva() != null) ? "Ya está reservada" : null;
+		}
+		else {
+			return "No se puede reservar una habitación que está bloqueada";
+		}
 	}	
 	
 	private TipoHabitacion tipoHabitacion;
@@ -125,14 +214,14 @@ public class Disponibilidad {
 		this.tipoHabitacion = tipoHabitacion;
 	}
 	
-	private float tarifa;
+	private BigDecimal tarifa;
 	
 	@Hidden(where=Where.OBJECT_FORMS)
-	public float getTarifa() {
+	public BigDecimal getTarifa() {
 		return tarifa;
 	}
 
-	public void setTarifa(final float tarifa) {
+	public void setTarifa(final BigDecimal tarifa) {
 		this.tarifa = tarifa;
 	}
 	
@@ -171,6 +260,12 @@ public class Disponibilidad {
 	
 	public void injectReservaServicio(final ReservaServicio rS) {
 		this.rS = rS;
+	}
+	
+	private HabitacionFechaServicio hFS;
+	
+	public void injectHabitacionFechaServicio(final HabitacionFechaServicio hFS) {
+		this.hFS = hFS;
 	}
 
 }

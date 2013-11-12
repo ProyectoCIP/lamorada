@@ -17,6 +17,7 @@ import dom.acompaniantes.Acompaniante;
 import dom.consumo.Consumo;
 import dom.disponibilidad.Disponibilidad;
 import dom.disponibilidad.HabitacionFecha;
+import dom.enumeradores.EstadoHabitacion;
 import dom.enumeradores.EstadoReserva;
 import dom.huesped.Huesped;
 import dom.tarifa.TarifaServicio;
@@ -62,6 +63,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 					hF.setNombreHabitacion(d.getNombreHabitacion());
 					hF.setTipoHabitacion(d.getTipoHabitacion());
 					hF.setInterno(d.getInterno());
+					hF.setEstado(EstadoHabitacion.DISPONIBLE);
 					/*
 					 * Se persiste la tarifa minima de la habitacion (1 persona),
 					 * luego se puede setear desde la reserva la cantidad de personas

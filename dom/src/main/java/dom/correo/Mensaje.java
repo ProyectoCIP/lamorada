@@ -8,6 +8,7 @@ import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Audited;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.Immutable;
+import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.MultiLine;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Bulk;
@@ -20,15 +21,13 @@ import org.joda.time.LocalDate;
 import dom.disponibilidad.Disponibilidad;
 import dom.disponibilidad.HabitacionFechaServicio;
 
-//import dom.abm.Habitacion;
-
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
 @ObjectType("MENSAJE")
 @Audited
 @Immutable
-public class Mensaje {
+public class Mensaje implements Comparable<Mensaje> {
 	
 	private String nombre;
 	private String apellido;
@@ -43,8 +42,9 @@ public class Mensaje {
 		return "email";
 	}
 
-	@Title
+	@Title(sequence="1.0")
 	@Optional
+	@MemberOrder(sequence="1")
 	public String getNombre() {
 		return nombre;
 	}
@@ -53,6 +53,7 @@ public class Mensaje {
 	}
 
 	@Optional
+	@MemberOrder(sequence="2")
 	public String getApellido() {
 		return apellido;
 	}
@@ -60,6 +61,7 @@ public class Mensaje {
 		this.apellido = apellido;
 	}
 	
+	@MemberOrder(sequence="4")
 	@Optional
 	public String getTelefono() {
 		return telefono;
@@ -68,14 +70,19 @@ public class Mensaje {
 		this.telefono = telefono;
 	}
 
+	@Title(sequence="1.2")
 	@Optional
+	@MemberOrder(sequence="3")
 	public String getCorreo() {
 		return correo;
 	}
+	
 	public void setCorreo(final String correo) {
 		this.correo = correo;
 	}
 
+	
+	@MemberOrder(sequence="6")
 	public String getDesde() {
 		return desde;
 	}
@@ -84,6 +91,7 @@ public class Mensaje {
 		this.desde = partes;
 	}
 
+	@MemberOrder(sequence="7")
 	public String getHasta() {
 		return hasta;
 	}
@@ -92,6 +100,7 @@ public class Mensaje {
 		this.hasta = hasta;
 	}
 
+	@MemberOrder(sequence="8")
 	@Hidden(where=Where.ALL_TABLES)
 	@MultiLine(numberOfLines=3)
 	public String getMensaje() {
@@ -137,6 +146,8 @@ public class Mensaje {
 		return bde.listaMensajesPersistidos();
 	}
 
+	@Named("Fecha del Mensaje")
+	@MemberOrder(sequence="5")
 	public LocalDate getFechaActual() {
 		return fechaActual;
 	}
@@ -171,5 +182,11 @@ public class Mensaje {
     public void injectServicioBandejaDeEntrada(final ServicioBandejaDeEntrada bde) {
         this.bde = bde;
     }
+
+	@Override
+	public int compareTo(Mensaje mensaje) {
+		// TODO Auto-generated method stub
+		return this.fechaActual.compareTo(mensaje.getFechaActual());
+	}
     
 }

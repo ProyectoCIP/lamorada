@@ -15,6 +15,18 @@ import dom.empresa.Empresa;
 import dom.huesped.Huesped;
 import dom.huesped.HuespedServicio;
 
+/**
+ * 
+ * Son los datos que nos permiten tener las diferentes formas de contacto con el huesped y las empresas
+ * 
+ * 
+ * @author ProyectoCIP
+ * @see dom.huesped.Huesped
+ * @see dom.huesped.HuespedServicio
+ * @see dom.empresa.Empresa
+ * @see dom.empresa.EmpresaServicio
+ * 
+ */
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
@@ -23,15 +35,27 @@ import dom.huesped.HuespedServicio;
 @Immutable
 public class Contacto {
 	
+	/**
+	 * 
+	 * @return Retorno el nombre del icono que va a ser usado en el viewer
+	 */
 	public String iconName() {
 		return "direccion";
 	}
 	
+	/**
+	 * 
+	 * 
+	 * @return Es el titulo que toma el objeto en el viewer
+	 */
 	public String title() {
 		return getDomicilio();
 	}
 	
-	//{{ Si esta relacionado con un Huesped retorna al mismo de lo contrario a la Empresa
+	/**
+	 * 
+	 * @return Si esta relacionado con un Huesped retorna al mismo de lo contrario a la Empresa
+	 */
 	public Object volver() {
 		return (getHuesped()==null) ? getEmpresa() : getHuesped();
 	}
@@ -39,6 +63,11 @@ public class Contacto {
 	
 	//{{Dirección
 	private String domicilio;
+	
+	/**
+	 * 
+	 * @return Retorna el domicilio
+	 */
 	
 	@RegEx(validation="[\\w\\s]+")
 	public String getDomicilio() {
@@ -52,6 +81,12 @@ public class Contacto {
 	
 	//{{Teléfono
 	private String telefono;
+	
+	
+	/**
+	 * 
+	 * @return Retorna el telefono
+	 */
 	
 	@Optional	
 	@RegEx(validation="\\d{7,10}")
@@ -67,6 +102,11 @@ public class Contacto {
 	//{{Celular
 	private String celular;
 
+	/**
+	 * 
+	 * @return Retorna el celular 
+	 */
+
 	@Optional
 	@RegEx(validation="\\d{3,7}(-)?\\d{6}")
 	public String getCelular() {
@@ -80,6 +120,11 @@ public class Contacto {
 	
 	//{{Correo
 	private String email;
+	
+	/**
+	 * 
+	 * @return Retorna el email 
+	 */
 
 	@Optional
 	@RegEx(validation="(\\w+\\.)*\\w+@(\\w+\\.)+[A-Za-z]+")
@@ -94,6 +139,11 @@ public class Contacto {
 	
 	private Huesped huesped;
 	
+	/**
+	 * 
+	 * @return El huesped al cual le pertenecen dichos datos
+	 */
+	
 	@Hidden
 	public Huesped getHuesped() {
 		return huesped;
@@ -102,7 +152,11 @@ public class Contacto {
 	public void setHuesped(final Huesped huesped) {
 		this.huesped = huesped;
 	}
-
+	
+	/**
+	 * 
+	 * @param huesped Agrega el objeto contacto al huesped 
+	 */
 	@Hidden
 	public void addToContacto(Huesped huesped) {
     	huesped.setContacto(this);
@@ -111,6 +165,11 @@ public class Contacto {
 		
 	private Empresa empresa;
 	
+	
+	/**
+	 * 
+	 * @return La empresa a la cual le pertenecen dichos datos
+	 */
 	@Hidden
 	public Empresa getEmpresa() {
 		return empresa;
@@ -120,6 +179,10 @@ public class Contacto {
 		this.empresa = empresa;
 	}
 
+	/**
+	 * 
+	 * @param empresa Agrega el objeto contacto a la empresa 
+	 */
 	@Hidden
 	public void addToEmpresa(Empresa empresa) {
     	empresa.setContacto(this);

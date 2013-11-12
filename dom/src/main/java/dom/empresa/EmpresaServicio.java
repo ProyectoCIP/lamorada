@@ -1,5 +1,6 @@
 package dom.empresa;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.apache.isis.applib.AbstractFactoryAndRepository;
@@ -31,7 +32,7 @@ public class EmpresaServicio extends AbstractFactoryAndRepository {
             @Named("CUIT") String cuit, 
             @RegEx(validation="[\\w\\s]+")
     		@Named("Razón Social") String razonSocial,
-            @Named("Tarifa") float tarifa,            
+            @Named("Tarifa") BigDecimal tarifa,            
             @Named("Forma de Pago") FormaPago fPago,
             @RegEx(validation="[\\w\\s]+")
             @Named("Dirección") String direccion,
@@ -64,7 +65,7 @@ public class EmpresaServicio extends AbstractFactoryAndRepository {
     public Empresa nEmpresa(
             final String cuit, 
             final String razonSocial, 
-            final float tarifa,
+            final BigDecimal tarifa,
             final FormaPago fPago, 
             final Contacto contacto,
             final String usuario) {
