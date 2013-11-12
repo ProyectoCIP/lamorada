@@ -17,7 +17,7 @@ import org.asteriskjava.manager.event.PeerlistCompleteEvent;
 import org.asteriskjava.manager.response.ManagerResponse;
 
 /**
- * Esta clase permite conectar con la central PBX Asterisk y poder realizar llamdas a través de internet.
+ * Esta clase permite conectar con la central PBX Asterisk y poder realizar llamdas a través de internet.-
  * @author ProyectoCIP
  *
  */
@@ -26,7 +26,7 @@ public class Asterisk extends AbstractManagerEventListener
     private ManagerConnection managerConnection;
 
     /**
-     * Realiza la conexión en el estado INITIAL con la IP, usuario y password de una cuenta existente en Asterisk
+     * Realiza la conexión en el estado INITIAL con la IP, usuario y password de una cuenta existente en Asterisk.-
      * @throws IOException
      */
     public Asterisk() throws IOException
@@ -36,29 +36,25 @@ public class Asterisk extends AbstractManagerEventListener
         this.managerConnection = factory.createManagerConnection();
     }
 
-    
+    /**
+     * Método que registra los eventos de las llamadas, se loguea en una cuenta creada en Asterisk, hace un listado de los usuarios conectados
+     * espera 60 segundos para registrar eventos y se desloguea.-
+     * @throws Exception
+     */
     public void run() throws Exception{
-        // register for events
-        managerConnection.addEventListener(this);
-
-        // connect to Asterisk and log in
+        
+        managerConnection.addEventListener(this);        
         managerConnection.login();
-
-        // request channel state
         managerConnection.sendAction(new StatusAction());
-        listarUsuarios();    
-        
-        
-        // wait 10 seconds for events to come in         
-        Thread.sleep(600000);
-        
-        
-        // and finally log off and disconnect
+        listarUsuarios();         
+        Thread.sleep(600000);       
         managerConnection.logoff();
-    }
-
-    // Método para detectar el tipo de evento PeerStatusEvent
-    // Salta cuando un usuario cambia su estado (conectado/desconectado)
+    }    
+    
+    /**
+     * Método que detecta tipos de eventos PeerStatusEvent y se activa cuando un usuario cambia su estado
+     * de Conectado/Desconectado.-
+     */
     protected void handleEvent(PeerStatusEvent event){
         String usuario=event.getPeer()+": ";
         if(event.getPeerStatus().compareTo("Registered")==0)
@@ -68,6 +64,9 @@ public class Asterisk extends AbstractManagerEventListener
         System.out.println(usuario);
     }
 
+    /**
+     * Método que detecta e informa en que estado está la llamada de un usuario determinado.-
+     */
     protected void handleEvent(ExtensionStatusEvent event){
         String usuario=event.getExten()+": ";
         Integer estado=event.getStatus();
@@ -94,7 +93,9 @@ public class Asterisk extends AbstractManagerEventListener
         System.out.println(usuario);
     }
 
-
+    /**
+     * Método que detecta eventos como el tipo de canal, el usuario y su estado.-
+     */
     protected void handleEvent(PeerEntryEvent event){
         String tipoCanal=event.getChannelType();
         String usuario=event.getObjectName();
@@ -102,19 +103,32 @@ public class Asterisk extends AbstractManagerEventListener
         System.out.println(tipoCanal+"/"+usuario+": "+estado);
     }
 
+    /**
+     * Métod que informa la cantidad de usuarios.
+     */
     protected void handleEvent(PeerlistCompleteEvent event){
         Integer numUsuarios=event.getListItems();
         System.out.println("Usuarios mostrados: "+numUsuarios);
     }
 
-    // Método que permite inicializar la lista de usuarios
-    public void listarUsuarios() throws Exception{
-        // Generamos la accion que devolverá eventos con los usuarios
+    /**
+     * Método que permite inicializar la lista de usuarios y los eventos de cada uno.-
+     * @throws Exception
+     */
+    public void listarUsuarios() throws Exception{        
         SipPeersAction accion=new SipPeersAction();
-        managerConnection.sendAction(accion);
-        
+        managerConnection.sendAction(accion);        
     }
 
+    /**
+     * Método que recibe por parámetro el número de teléfono de destino y realiza la llamada. Setea datos como el contexto, canal, extensión, etc.
+     * Una vez que se realiza la llamda se espera 30 segundos para que el destinatario conteste y luego se desloguea.
+     * @param destino
+     * @throws IOException
+     * @throws AuthenticationFailedException
+     * @throws TimeoutException
+     * @throws InterruptedException
+     */
     public void call(final String destino) throws IOException, AuthenticationFailedException, TimeoutException, InterruptedException {
         OriginateAction originateAction;
         ManagerResponse originateResponse;
@@ -126,12 +140,10 @@ public class Asterisk extends AbstractManagerEventListener
         originateAction.setCallerId("Recepción");
         originateAction.setExten("80");
         originateAction.setPriority(Integer.valueOf(1)); 
-        originateAction.setAsync(Boolean.TRUE); 
-       
-        // send the originate action and wait for a maximum of 30 seconds for Asterisk to send a reply
-        originateResponse = managerConnection.sendAction(originateAction, 5000);
+        originateAction.setAsync(Boolean.TRUE);       
         
-        // and finally log off and disconnect
+        originateResponse = managerConnection.sendAction(originateAction, 5000);        
+        
         managerConnection.logoff();
     }   
 }
