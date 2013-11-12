@@ -16,10 +16,19 @@ import org.asteriskjava.manager.event.PeerStatusEvent;
 import org.asteriskjava.manager.event.PeerlistCompleteEvent;
 import org.asteriskjava.manager.response.ManagerResponse;
 
+/**
+ * Esta clase permite conectar con la central PBX Asterisk y poder realizar llamdas a través de internet.
+ * @author ProyectoCIP
+ *
+ */
 public class Asterisk extends AbstractManagerEventListener
 {
     private ManagerConnection managerConnection;
 
+    /**
+     * Realiza la conexión en el estado INITIAL con la IP, usuario y password de una cuenta existente en Asterisk
+     * @throws IOException
+     */
     public Asterisk() throws IOException
     {
         ManagerConnectionFactory factory = new ManagerConnectionFactory(
@@ -27,6 +36,7 @@ public class Asterisk extends AbstractManagerEventListener
         this.managerConnection = factory.createManagerConnection();
     }
 
+    
     public void run() throws Exception{
         // register for events
         managerConnection.addEventListener(this);
