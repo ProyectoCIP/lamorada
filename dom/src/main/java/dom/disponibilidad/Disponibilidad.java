@@ -27,6 +27,24 @@ import dom.huesped.Huesped;
 import dom.reserva.Reserva;
 import dom.reserva.ReservaServicio;
 
+/**
+ * 
+ * Es una copia de un objeto HabitacionFecha.
+ * Sirve para mostrar el mapa de disponibilidad de las habitaciones 
+ * en una fecha o un rango de fechas ingresadas por el usuario.
+ * Los objetos de esta clase se persisten cuando se hace la consulta y luego se borran.
+ * El propósito de esto es para mostrar las habitaciones reservadas 
+ * y las que no, se rellenan con estos objetos. 
+ * Es por eso que es innecesario mantenerlos persistidos.
+ * 
+ * @author ProyectoCIP
+ * @see dom.reserva.Reserva
+ * @see dom.reserva.ReservaServicio
+ * @see dom.huesped.Huesped
+ * @see dom.enumeradores.EstadoHabitacion
+ * @see dom.enumeradores.TipoHabitacion
+ *
+ */
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
@@ -35,6 +53,12 @@ import dom.reserva.ReservaServicio;
 @Audited
 public class Disponibilidad {
 	
+	/**
+	 * 
+	 * El ícono cambia dependiendo de si está Disponible, Bloqueada o Reservada
+	 * 
+	 * @return Retorna el nombre del ícono que va a ser usado en el viewer
+	 */
 	public String iconName() {
 		if (getEstado() == EstadoHabitacion.BLOQUEADA) { 
 			return "bloqueada";
@@ -47,6 +71,10 @@ public class Disponibilidad {
 	//{{Estado : Disponible / Bloqueada
 	private EstadoHabitacion estadoHabitacion;
 		
+	/**
+	 * 
+	 * @return Retorna el estado de la habitación que puede ser Disponible o Bloqueada
+	 */
 	@Hidden
 	public EstadoHabitacion getEstado() {
 		return estadoHabitacion;
@@ -54,7 +82,13 @@ public class Disponibilidad {
 	public void setEstado(final EstadoHabitacion estadoHabitacion) {
 		this.estadoHabitacion = estadoHabitacion;
 	}
-	
+
+	/**
+	 * 
+	 * "@Bulk" para los métodos que se aplican a la lista de objetos seleccionados 
+	 * 
+	 * @return Retorna el objeto DISPONIBLE
+	 */
 	@Bulk
 	@MemberOrder(name="estadoHabitacion",sequence="2")
 	public Disponibilidad desbloquear() {
@@ -64,6 +98,15 @@ public class Disponibilidad {
 		return this;
 	}
 	
+	/**
+	 * 
+	 * Si la habitación que se muestra en el mapa de disponibilidad
+	 * aún no esta persistida, entonces es necesario guardar el objeto HabitaciónFecha en el repositorio.
+	 * 
+	 * "@Bulk" para los metodos que se aplican a la lista de objetos seleccionados 
+	 * 
+	 * @return Retorna el objeto BLOQUEADO
+	 */
 	@Bulk
 	@MemberOrder(name="estadoHabitacion",sequence="3")
 	public Disponibilidad bloquear() {
@@ -92,6 +135,12 @@ public class Disponibilidad {
 		return this;
 	}
 	
+	/**
+	 * 
+	 * Desactiva el método bloquear si se cumple la condición
+	 * 
+	 * @return Si cumple con la condición devuelve la cadena que se muestra en el viewer
+	 */
 	public String disableBloquear() {
 		if(getEstado() != EstadoHabitacion.BLOQUEADA) {
 			return (getReserva() != null) ? "No se puede bloquear una habitación reservada" : null;
@@ -100,6 +149,13 @@ public class Disponibilidad {
 			return "Ya se encuentra bloqueada!";
 		}
 	}
+	
+	/**
+	 * 
+	 * Desactiva el método desbloquear si se cumple la condición
+	 * 
+	 * @return Si cumple con la condición devuelve la cadena que se muestra en el viewer
+	 */
 	public String disableDesbloquear() {
 		if(getEstado() != EstadoHabitacion.DISPONIBLE) {
 			return (getReserva() != null) ? "Esta habitación ya está reservada" : null;
@@ -113,6 +169,10 @@ public class Disponibilidad {
 	
 	private String nombreHabitacion;
 
+	/**
+	 * 
+	 * @return Es el título que toma el objeto en el viewer
+	 */
 	@Title
 	@Hidden
 	public String getNombreHabitacion() {
@@ -125,6 +185,10 @@ public class Disponibilidad {
 	
 	private boolean paraReservar;
 	
+	/**
+	 * 
+	 * @return Retorna si o no el objeto está seleccionado para su posterior reserva
+	 */
 	@Named("Seleccionada")
 	public boolean isParaReservar() {
 		return paraReservar;
@@ -134,6 +198,10 @@ public class Disponibilidad {
 		this.paraReservar = paraReservar;
 	}
 	
+	/**
+	 * 
+	 * @return Retorna la fecha formateada que se muestra en el viewer de la forma "dd/MM/yyyy"
+	 */
 	@Named("Fecha")
 	public String getFechaString() {
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -142,6 +210,10 @@ public class Disponibilidad {
 	
 	private Date fecha;
 	
+	/**
+	 * 
+	 * @return Retorna la fecha de consulta por el usuario
+	 */
 	@Hidden
 	public Date getFecha() {
 		return fecha;
@@ -151,6 +223,15 @@ public class Disponibilidad {
 		this.fecha = date;
 	}
 	
+	/**
+	 * 
+	 * Si la habitación que se muestra en el mapa de disponibilidad
+	 * está disponible y no está reservada, aplica la selección para su posterior reserva.
+	 * 
+	 * "@Bulk" para los métodos que se aplican a la lista de objetos seleccionados 
+	 * 
+	 * @return Retorna el objeto BLOQUEADO
+	 */
 	@Named("Seleccionar")
 	@Bulk
 	@MemberOrder(name="paraReservar",sequence="1")
@@ -168,6 +249,12 @@ public class Disponibilidad {
 		return this;
 	}
 	
+	/**
+	 * 
+	 * Desactiva el método reservar si la habitación está bloqueada o ya está seleccionada
+	 * 
+	 * @return Si cumple con la condición devuelve la cadena que se muestra en el viewer
+	 */
 	public String disableReservar() {
 		if(getEstado() != EstadoHabitacion.BLOQUEADA) {	
 			return paraReservar ? "Ya esta seleccionada!" : null;
@@ -177,6 +264,13 @@ public class Disponibilidad {
 		}
 	}
 	
+	/**
+	 * 
+	 * Si se accede a uno y solo uno objeto Disponibilidad en el mapa de disponibilidad
+	 * se puede reservar directamente este día y está habitación.
+	 * 
+	 * @return Retorna la reserva creada con los nuevos datos
+	 */
 	@Named("Reservar") 
 	public Reserva reservarDisponible(
 			@Named("Huésped") Huesped huesped,
@@ -191,6 +285,12 @@ public class Disponibilidad {
 		return rS.crear(disponibilidad, huesped, comentario);
 	}
 	
+	/**
+	 * 
+	 * Desactiva el método reservar si la habitación está bloqueada o ya está reservada
+	 * 
+	 * @return Si cumple con la condición devuelve la cadena que se muestra en el viewer
+	 */
 	public String disableReservarDisponible(final Huesped huesped,final String comentario) {
 
 		if(getEstado() != EstadoHabitacion.BLOQUEADA) {	
@@ -203,6 +303,10 @@ public class Disponibilidad {
 	
 	private TipoHabitacion tipoHabitacion;
 	
+	/**
+	 * 
+	 * @return Retorna el tipo de habitación (Doble, Triple, Cuadruple)
+	 */
 	@Hidden
 	public TipoHabitacion getTipoHabitacion() {
 		return tipoHabitacion;
@@ -214,6 +318,10 @@ public class Disponibilidad {
 	
 	private BigDecimal tarifa;
 	
+	/**
+	 * 
+	 * @return Retorna la tarifa que se va a cobrar por reservar esta habitación
+	 */
 	@Hidden(where=Where.OBJECT_FORMS)
 	public BigDecimal getTarifa() {
 		return tarifa;
@@ -223,9 +331,13 @@ public class Disponibilidad {
 		this.tarifa = tarifa;
 	}
 	
-	//{{ Interno de la habitación para llamadas con la central asterisk
+	
 	private int interno;
-		
+	
+	/**
+	 * 
+	 * @return Retorna el número Interno de la habitación que se registro en la central telefónica
+	 */
 	@Hidden
 	public int getInterno(){
 		return interno;
@@ -238,6 +350,10 @@ public class Disponibilidad {
 	
 	private Reserva reserva;
 	
+	/**
+	 * 
+	 * @return Retorna el objeto reserva en el que esta habitación esta registrada
+	 */
 	@Named("Estado")
 	@Hidden(where=Where.OBJECT_FORMS)
 	public Reserva getReserva() {

@@ -35,7 +35,7 @@ public class Acompaniante {
 	
 	/**
 	 * 
-	 * @return Retorno el nombre del icono que va a ser usado en el viewer
+	 * @return Retorna el nombre del icono que va a ser usado en el viewer
 	 */
 	public String iconName() {
 		return "acompaniantes";
