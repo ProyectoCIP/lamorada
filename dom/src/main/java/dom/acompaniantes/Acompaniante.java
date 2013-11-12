@@ -6,12 +6,15 @@ import javax.jdo.annotations.VersionStrategy;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Audited;
 import org.apache.isis.applib.annotation.AutoComplete;
+import org.apache.isis.applib.annotation.Bulk;
 import org.apache.isis.applib.annotation.Hidden;
+import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.RegEx;
 import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.annotation.Where;
 
+import dom.habitacion.Habitacion;
 import dom.reserva.Reserva;
 import dom.reserva.ReservaServicio;
 
@@ -104,11 +107,24 @@ public class Acompaniante {
 		this.relacion = relacion;
 	}
 	
+	/**
+	 * 
+	 * Borra el acompa&ntilde;ante del repositorio
+	 * 
+	 * @return Retorna null cuando se usa este m&eacute;todo
+	 */
+	@Named("Borrar")
+	@Bulk
+	public Acompaniante borrar() {		
+		container.removeIfNotAlready(this);
+		return this;
+	}
+	
 	private Reserva reserva;
 	
 	/**
 	 * 
-	 * @return Es la reserva en la que se registro ese acompa&ntilde;ante
+	 * @return Es la reserva en la que se registr&oacute; ese acompa&ntilde;ante
 	 */
 	@Hidden(where=Where.ALL_TABLES)
 	public Reserva getReserva() {

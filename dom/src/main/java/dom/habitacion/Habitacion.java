@@ -124,12 +124,10 @@ public class Habitacion {
         };
     }
 	
-	@Named("Borrar Habitación")
+	@Named("Borrar")
 	@Bulk
 	public Habitacion borrar() {		
-		if(isEstado()) {
-			setEstado(false);
-		}
+		container.removeIfNotAlready(this);
 		return this;
 	}
 	

@@ -17,7 +17,7 @@ import com.google.common.base.Objects;
 import dom.contacto.Contacto;
 import dom.empresa.Empresa;
 
-@Named("huesped")
+@Named("Huesped")
 public class HuespedServicio extends AbstractFactoryAndRepository{
 
 	// {{ Id, iconName

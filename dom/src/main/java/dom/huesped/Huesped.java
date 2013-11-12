@@ -1,5 +1,7 @@
 package dom.huesped;
 
+import java.util.List;
+
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
@@ -7,6 +9,7 @@ import javax.jdo.annotations.VersionStrategy;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Audited;
 import org.apache.isis.applib.annotation.AutoComplete;
+import org.apache.isis.applib.annotation.Bulk;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
@@ -147,7 +150,14 @@ public class Huesped {
 	public void setEstado(final boolean estado) {
 		this.estado = estado;
 	}
-	//}}	
+	//}}
+	
+	@Named("Borrar")
+	@Bulk
+	public List<Huesped> borrar() {		
+		container.removeIfNotAlready(this);
+		return huespedServicio.listaHuespedes();
+	}
 	
 	//{{Empresa
 	private Empresa empresa;
@@ -175,6 +185,12 @@ public class Huesped {
 	public void setContainer(DomainObjectContainer container) {
 		this.container = container;
 	}   
+	
+	private HuespedServicio huespedServicio;
+	
+	public void injectHuespedServicio(HuespedServicio huespedServicio) {
+		this.huespedServicio = huespedServicio;
+	}
 	
 	
 	//{{Usuario actual
