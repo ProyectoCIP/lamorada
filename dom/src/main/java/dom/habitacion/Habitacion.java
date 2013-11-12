@@ -126,9 +126,9 @@ public class Habitacion {
 	
 	@Named("Borrar")
 	@Bulk
-	public Habitacion borrar() {		
+	public List<Habitacion> borrar() {		
 		container.removeIfNotAlready(this);
-		return this;
+		return habitacionServicio.Listahabitacion();
 	}
 	
 	private DomainObjectContainer container;
@@ -142,6 +142,12 @@ public class Habitacion {
 	}
 	public void setContainer(final DomainObjectContainer container) {
 		this.container = container;
+	}
+	
+	private HabitacionServicio habitacionServicio;
+	
+	public void injectHabitacionServicio(HabitacionServicio habitacionServicio) {
+		this.habitacionServicio = habitacionServicio;
 	}
 		
 }

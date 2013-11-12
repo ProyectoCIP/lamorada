@@ -2,12 +2,7 @@ package dom.disponibilidad;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
-import java.util.logging.Filter;
-import java.util.logging.LogRecord;
-
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 import org.apache.isis.applib.DomainObjectContainer;
@@ -17,14 +12,10 @@ import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
-import org.apache.isis.applib.annotation.NotPersisted;
 import org.apache.isis.applib.annotation.ObjectType;
-import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Where;
-import org.apache.isis.applib.query.QueryDefault;
 
 import dom.reserva.Reserva;
-import dom.tarifa.Tarifa;
 import dom.tarifa.TarifaServicio;
 import dom.asterisk.Asterisk;
 import dom.enumeradores.EstadoHabitacion;

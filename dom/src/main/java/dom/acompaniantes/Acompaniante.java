@@ -13,8 +13,6 @@ import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.RegEx;
 import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.annotation.Where;
-
-import dom.habitacion.Habitacion;
 import dom.reserva.Reserva;
 import dom.reserva.ReservaServicio;
 

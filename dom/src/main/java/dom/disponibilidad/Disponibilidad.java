@@ -11,7 +11,6 @@ import javax.jdo.annotations.VersionStrategy;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Audited;
 import org.apache.isis.applib.annotation.Bulk;
-import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.MultiLine;
@@ -23,7 +22,6 @@ import org.apache.isis.applib.annotation.Where;
 import org.joda.time.LocalDate;
 
 import dom.enumeradores.EstadoHabitacion;
-import dom.enumeradores.EstadoReserva;
 import dom.enumeradores.TipoHabitacion;
 import dom.huesped.Huesped;
 import dom.reserva.Reserva;
@@ -58,7 +56,7 @@ public class Disponibilidad {
 	}
 	
 	@Bulk
-	@MemberOrder(name="estadoHabitacion",sequence="1")
+	@MemberOrder(name="estadoHabitacion",sequence="2")
 	public Disponibilidad desbloquear() {
 		if(getEstado() == EstadoHabitacion.BLOQUEADA) {
 			this.estadoHabitacion = EstadoHabitacion.DISPONIBLE;
@@ -67,7 +65,7 @@ public class Disponibilidad {
 	}
 	
 	@Bulk
-	@MemberOrder(name="estadoHabitacion",sequence="1")
+	@MemberOrder(name="estadoHabitacion",sequence="3")
 	public Disponibilidad bloquear() {
 		if(getEstado() == EstadoHabitacion.DISPONIBLE) {
 			this.estadoHabitacion = EstadoHabitacion.BLOQUEADA;
@@ -205,7 +203,7 @@ public class Disponibilidad {
 	
 	private TipoHabitacion tipoHabitacion;
 	
-	//@Hidden(where=Where.STANDALONE_TABLES)
+	@Hidden
 	public TipoHabitacion getTipoHabitacion() {
 		return tipoHabitacion;
 	}
@@ -241,6 +239,7 @@ public class Disponibilidad {
 	private Reserva reserva;
 	
 	@Named("Estado")
+	@Hidden(where=Where.OBJECT_FORMS)
 	public Reserva getReserva() {
 		return reserva;
 	}
