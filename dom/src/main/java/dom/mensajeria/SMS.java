@@ -14,69 +14,129 @@ public class SMS {
 	private String remitente;
 	private String prefijoPais;
 	private String texto;
-	private String url;
+	private String url;	
 	
-	/*public SMS(String celular) {
-		this.celular = celular;
-	}*/
-	
+	/**
+	 * Retorna la URL completa por donde se envía el SMS.
+	 * @return
+	 */
 	public String getUrl() {
 		return url;
 	}
 	
+	/**
+	 * Setea la URL con los datos necesarios para poder enviar el SMS
+	 * @param url
+	 */	 
 	public void setUrl(final String url) {
 		this.url = url;
 	}
 	
+	/**
+	 * Retorna el email de la cuenta en el proveedor del servicio SMS.
+	 * @return
+	 */
 	public String getMail() {
 		return mail;
 	}
 	
+	/**
+	 * Setea el email que sirve para poder ingresar a la cuenta en el proveedor del servicio SMS.-.
+	 * @param mail
+	 */
 	public void setMail(final String mail) {
 		this.mail = "email=" + mail;
 	}
 	
+	/**
+	 * Retorna la clave de la cuenta abierta en el servicio SMS.
+	 * @return
+	 */
 	public String getPass() {
 		return pass;
 	}
 	
+	/**
+	 * Setea la clave que se necesita para ingresar a la cuenta del servicio SMS.	 * 
+	 * @param pass
+	 */
 	public void setPass(final String pass) {
 		this.pass = "&clave=" + pass;
 	}
 	
+	/**
+	 * Retorna el celular de destino. Ej.: 29957556677 (Celular de Neuquén)
+	 * @return
+	 */
 	public String getCelular() {
 		return celular;
 	}
 	
+	/**
+	 * Setea el celular de destino. Ej.: 29957556677 (Celular de Neuquén)
+	 * @param celular
+	 */
 	public void setCelular(final String celular) {
 		this.celular = "&movil=" + celular;
 	}
 	
+	/**
+	 * Retorna el remitente del SMS.
+	 * @return
+	 */
 	public String getRemitente() {
 		return remitente;
 	}
 	
+	/**
+	 * Setea el remitente del SMS.
+	 * @param remitente
+	 */
 	public void setRemitente(final String remitente) {
 		this.remitente = "&remite=" +  remitente;
 	}
 	
+	/**
+	 * Retorna el prefijo del país donde se enviará el SMS. Ej.:  0054 (Argentina)
+	 * @return
+	 */
 	public String getPrefijoPais() {
 		return prefijoPais;
 	}
 	
+	/**
+	 * Setea el prefijo del país donde se enviará el SMS. Ej.:  0054 (Argentina)
+	 * @param prefijoPais
+	 */
 	public void setPrefijoPais(final String prefijoPais) {
 		this.prefijoPais = "&pais=" + prefijoPais;
 	}
 	
+	/**
+	 * Retorna el texto del mensaje a enviar.
+	 * @return
+	 */
 	public String getTexto() {
 		return texto;
 	}
 	
+	/**
+	 * Setea el texto del mensaje a enviar.
+	 * @param texto
+	 */
 	public void setTexto(final String texto) {
 		this.texto = "&sms=" + texto;
 	}	
 	
 	//Método para probar el envío de SMS a celulares. Hay que sacarlo cuando se implemente en la reserva.
+	
+	/**
+	 * Método que arma la URL completa con todos los datos de la cuenta del proveedor del servicio, los datos del destinatario y el remitente. Abre una conexión HTTP y envía 
+	 * el SMS al destinatario.
+	 * @param nombreHuesped
+	 * @param celular
+	 * @param numReserva
+	 */
 	public void enviarSMS(final String nombreHuesped,final String celular, final String numReserva)
 	   {
 	      try
