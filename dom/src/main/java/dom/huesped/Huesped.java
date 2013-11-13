@@ -35,6 +35,10 @@ import dom.habitacion.Habitacion;
 @Audited
 public class Huesped {
 	
+	/**
+	 * Muestra el ícon del huesped
+	 * @return el nombre del ícon que se va a usar en el viewer.
+	 */
 	public String iconName() {
 		return "huesped";
 	}
@@ -42,6 +46,10 @@ public class Huesped {
 	//{{Nombre
 	private String nombre;
 	
+	/**
+	 * Retorna el nombre del huesped creado.
+	 * @return el nombre del huesped.
+	 */
 	@Title(sequence="1.0")
 	@MemberOrder(sequence = "1")
 	@RegEx(validation="[a-zA-Záéíóú]{2,15}(\\s[a-zA-Záéíóú]{2,15})*")
@@ -49,6 +57,10 @@ public class Huesped {
 		return nombre;
 	}
 	
+	/**
+	 * Setea el nombre del huesped
+	 * @param nombre
+	 */
 	public void setNombre(final String nombre) {
 		this.nombre = nombre;
 	}
@@ -57,6 +69,10 @@ public class Huesped {
 	//{{Apellido
 	private String apellido;
 	
+	/**
+	 * Retorna el apellido del huesped.
+	 * @return el apellido del huesped
+	 */
 	@Title(sequence="1.1")
 	@MemberOrder(sequence = "2")
 	@RegEx(validation="[a-zA-Záéíóú]{2,15}(\\s[a-zA-Záéíóú]{2,15})*")
@@ -64,6 +80,10 @@ public class Huesped {
 		return apellido;
 	}
 	
+	/**
+	 * Setea el apellido del huesped.
+	 * @param apellido
+	 */
 	public void setApellido(final String apellido) {
 		this.apellido = apellido;
 	}
@@ -73,11 +93,20 @@ public class Huesped {
 	//{{Edad
 	private String edad;
 	
+	/**
+	 * Retorna la edad del huesped.
+	 * @return la edad del huesped
+	 */
 	@MemberOrder(sequence = "3")
 	@RegEx(validation="\\d{1,2}")
 	public String getEdad() {
 		return edad;
 	}
+	
+	/**
+	 * Setea la edad del huesped.
+	 * @param edad
+	 */
 	public void setEdad(final String edad) {
 		this.edad = edad;
 	}
@@ -86,11 +115,20 @@ public class Huesped {
 	//{{dni
 	private String dni;
 	
+	/**
+	 * Retorna el número de DNI del huesped.
+	 * @return el DNI del huesped
+	 */
 	@MemberOrder(sequence = "4")
 	@RegEx(validation="\\d{6,8}")
 	public String getDni() {
 		return dni;
 	}
+	
+	/**
+	 * Setea el DNI del huesped.
+	 * @param dni
+	 */
 	public void setDni(final String dni) {
 		this.dni = dni;
 	}
@@ -101,15 +139,30 @@ public class Huesped {
 	@Persistent(mappedBy="huesped")
 	private Contacto contacto;
 	
+	/**
+	 * Retorna los datos de contacto del huesped, como la dirección, mail, teléfono y celular.
+	 * @return
+	 */
 	public Contacto getContacto() {
 		return contacto;
 	}
 	
+	/**
+	 * Método que setea los datos de contacto del huesped, como la dirección, mail, teléfono y celular.
+	 * @param contacto
+	 */
 	public void setContacto(final Contacto contacto) {
 		this.contacto = contacto;
 	}
 	
-	
+	/**
+	 * Metodo que crea los datos de contacto del huesped. Recibe como parámetros la dirección, el mail, teléfono y celular.
+	 * @param direccion
+	 * @param telefono
+	 * @param celular
+	 * @param email
+	 * @return
+	 */
 	@Named("Nuevo")
 	@MemberOrder(name="contacto",sequence="1")
 	public Huesped crearContacto(
@@ -143,15 +196,28 @@ public class Huesped {
 	//{{Estado
 	private boolean estado;
 
+	/**
+	 * Retorna el estado en el sistema del huesped.
+	 * @return el estado del huesped
+	 */
 	@Hidden
 	public boolean isEstado() {
 		return estado;
 	}
+	
+	/**
+	 * Setea el estado del huesped en el sistema.
+	 * @param estado
+	 */
 	public void setEstado(final boolean estado) {
 		this.estado = estado;
 	}
 	//}}
 	
+	/**
+	 * Muestra todos los huéspedes creados en el sistema.
+	 * @return los huéspedes
+	 */
 	@Named("Borrar")
 	@Bulk
 	public List<Huesped> borrar() {		
@@ -159,15 +225,24 @@ public class Huesped {
 		return huespedServicio.listaHuespedes();
 	}
 	
+	
 	//{{Empresa
 	private Empresa empresa;
 		
+	/**
+	 * Retorna la empresa a la cual pertenece el huesped. Si el huesped no pertenece a ninguna empresa no muestra nada.
+	 * @return
+	 */
 	@Optional
 	@MemberOrder(sequence = "8")		
 	public Empresa getEmpresa() {
 		return empresa;
 	}
 		
+	/**
+	 * Setea la empresa a la cual pertenece el huesped en caso de ser necesario.
+	 * @param empresa
+	 */
 	public void setEmpresa(final Empresa empresa) {
 		this.empresa = empresa;
 	}
