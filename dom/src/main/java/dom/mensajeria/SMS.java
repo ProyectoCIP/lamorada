@@ -18,7 +18,7 @@ public class SMS {
 	
 	/**
 	 * Retorna la URL completa por donde se envía el SMS.
-	 * @return
+	 * @return la url con los datos para enviar el SMS
 	 */
 	public String getUrl() {
 		return url;
@@ -26,7 +26,7 @@ public class SMS {
 	
 	/**
 	 * Setea la URL con los datos necesarios para poder enviar el SMS
-	 * @param url
+	 * @param url con lso datos del SMS a enviar
 	 */	 
 	public void setUrl(final String url) {
 		this.url = url;
@@ -34,7 +34,7 @@ public class SMS {
 	
 	/**
 	 * Retorna el email de la cuenta en el proveedor del servicio SMS.
-	 * @return
+	 * @return el mail de la cuenta en el proveedor del servicio.
 	 */
 	public String getMail() {
 		return mail;
@@ -42,7 +42,7 @@ public class SMS {
 	
 	/**
 	 * Setea el email que sirve para poder ingresar a la cuenta en el proveedor del servicio SMS.-.
-	 * @param mail
+	 * @param mail de la cuenta en el proveedor del servicio.
 	 */
 	public void setMail(final String mail) {
 		this.mail = "email=" + mail;
@@ -50,7 +50,7 @@ public class SMS {
 	
 	/**
 	 * Retorna la clave de la cuenta abierta en el servicio SMS.
-	 * @return
+	 * @return la clave de la cuenta en el proveedor del servicio.
 	 */
 	public String getPass() {
 		return pass;
@@ -58,7 +58,7 @@ public class SMS {
 	
 	/**
 	 * Setea la clave que se necesita para ingresar a la cuenta del servicio SMS.	 * 
-	 * @param pass
+	 * @param pass - la clave de la cuenta en el proveedor del servicio.
 	 */
 	public void setPass(final String pass) {
 		this.pass = "&clave=" + pass;
@@ -66,7 +66,7 @@ public class SMS {
 	
 	/**
 	 * Retorna el celular de destino. Ej.: 29957556677 (Celular de Neuquén)
-	 * @return
+	 * @return el celular del destinatario.
 	 */
 	public String getCelular() {
 		return celular;
@@ -74,7 +74,7 @@ public class SMS {
 	
 	/**
 	 * Setea el celular de destino. Ej.: 29957556677 (Celular de Neuquén)
-	 * @param celular
+	 * @param celular - el celular del destinatario.
 	 */
 	public void setCelular(final String celular) {
 		this.celular = "&movil=" + celular;
@@ -82,7 +82,7 @@ public class SMS {
 	
 	/**
 	 * Retorna el remitente del SMS.
-	 * @return
+	 * @return el remitente.
 	 */
 	public String getRemitente() {
 		return remitente;
@@ -98,7 +98,7 @@ public class SMS {
 	
 	/**
 	 * Retorna el prefijo del país donde se enviará el SMS. Ej.:  0054 (Argentina)
-	 * @return
+	 * @return el prefijo del país donde se enviará el SMS
 	 */
 	public String getPrefijoPais() {
 		return prefijoPais;
@@ -114,7 +114,7 @@ public class SMS {
 	
 	/**
 	 * Retorna el texto del mensaje a enviar.
-	 * @return
+	 * @return el texto del SMS
 	 */
 	public String getTexto() {
 		return texto;
@@ -133,9 +133,9 @@ public class SMS {
 	/**
 	 * Método que arma la URL completa con todos los datos de la cuenta del proveedor del servicio, los datos del destinatario y el remitente. Abre una conexión HTTP y envía 
 	 * el SMS al destinatario.
-	 * @param nombreHuesped
-	 * @param celular
-	 * @param numReserva
+	 * @param nombreHuesped - el nombre y apellido del huesped que recibirá el SMS
+	 * @param celular - el celular del huesped.
+	 * @param numReserva el número de reserva del huesped.
 	 */
 	public void enviarSMS(final String nombreHuesped,final String celular, final String numReserva)
 	   {
