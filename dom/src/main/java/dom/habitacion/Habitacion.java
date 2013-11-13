@@ -103,27 +103,6 @@ public class Habitacion {
 	}	
 	//}}
 	
-	//{{Usuario actual
-	private String usuario;
-
-    @Hidden
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(final String usuario) {
-        this.usuario = usuario;
-    }//}}
-	
-	public static Filter<Habitacion> creadoPor(final String usuarioActual) {
-        return new Filter<Habitacion>() {
-            @Override
-            public boolean accept(final Habitacion habitacion) {
-                return Objects.equal(habitacion.getUsuario(), usuarioActual);
-            }
-        };
-    }
-	
 	@Named("Borrar")
 	@Bulk
 	public List<Habitacion> borrar() {		
@@ -149,5 +128,26 @@ public class Habitacion {
 	public void injectHabitacionServicio(HabitacionServicio habitacionServicio) {
 		this.habitacionServicio = habitacionServicio;
 	}
+	
+	//{{Usuario actual
+		private String usuario;
+
+	    @Hidden
+	    public String getUsuario() {
+	        return usuario;
+	    }
+
+	    public void setUsuario(final String usuario) {
+	        this.usuario = usuario;
+	    }//}}
+		
+		public static Filter<Habitacion> creadoPor(final String usuarioActual) {
+	        return new Filter<Habitacion>() {
+	            @Override
+	            public boolean accept(final Habitacion habitacion) {
+	                return Objects.equal(habitacion.getUsuario(), usuarioActual);
+	            }
+	        };
+	    }
 		
 }

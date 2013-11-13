@@ -29,8 +29,10 @@ import org.apache.isis.applib.annotation.RegEx;
 import org.apache.isis.applib.annotation.Render;
 import org.apache.isis.applib.annotation.Render.Type;
 import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.filter.Filter;
 import org.joda.time.LocalDate;
 
+import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 
 import dom.acompaniantes.Acompaniante;
@@ -38,6 +40,7 @@ import dom.consumo.Consumo;
 import dom.disponibilidad.HabitacionFecha;
 import dom.enumeradores.EstadoReserva;
 import dom.enumeradores.FormaPago;
+import dom.habitacion.Habitacion;
 import dom.huesped.Huesped;
 import dom.tarifa.TarifaServicio;
 
@@ -206,6 +209,7 @@ public class Reserva {
 		acompaniante.setApellido(apellido);
 		acompaniante.setEdad(edad);
 		acompaniante.setRelacion(relacion);
+		acompaniante.setUsuario(container.getUser().getName());
 
 		//dependencia
 		addToAcompaniantes(acompaniante);
@@ -302,6 +306,7 @@ public class Reserva {
 		consumo.setDescripcion(descripcion);
 		consumo.setCantidad(cantidad);
 		consumo.setPrecio(precio);
+		consumo.setUsuario(container.getUser().getName());
 
 		//dependencia
 		addToConsumos(consumo);
@@ -433,18 +438,6 @@ public class Reserva {
 		this.reservaServicio = reservaServicio;
 	}
 	//}}
-
-	//{{Usuario actual
-	private String usuario;
-
-    @Hidden
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(final String usuario) {
-        this.usuario = usuario;
-    }//}}
  
     //{{ Muestra el total a pagar (tiene en cuenta consumos, descuentos...)
     private BigDecimal total;
@@ -663,6 +656,27 @@ public class Reserva {
 	public void injectTarifaServicio(TarifaServicio tFS) {
 		this.tFS = tFS;
 	}
+	
+	//{{Usuario actual
+		private String usuario;
+
+	    @Hidden
+	    public String getUsuario() {
+	        return usuario;
+	    }
+
+	    public void setUsuario(final String usuario) {
+	        this.usuario = usuario;
+	    }//}}
+		
+		public static Filter<Reserva> creadoPor(final String usuarioActual) {
+	        return new Filter<Reserva>() {
+	            @Override
+	            public boolean accept(final Reserva reserva) {
+	                return Objects.equal(reserva.getUsuario(), usuarioActual);
+	            }
+	        };
+	    }
 	
 	
 }

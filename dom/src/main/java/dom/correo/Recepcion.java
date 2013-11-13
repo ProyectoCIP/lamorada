@@ -18,7 +18,7 @@ import org.apache.isis.applib.DomainObjectContainer;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 
-public class Recepcion implements Job {
+public class Recepcion {
 
 	private Session session;
 	private Properties propiedades = new Properties();
@@ -98,12 +98,9 @@ public class Recepcion implements Job {
 			       actual.setDesde(partes[4]);
 			       actual.setHasta(partes[5]);
 			       actual.setMensaje(partes[6]);
+			       actual.setUsuario(container.getUser().getName());
 			       
-			       getListaMensajes().add(actual);
-			       
-			       //perstir aca y ver si se puede mejorar
-			       //container.persistIfNotAlready(actual);
-			       
+			       getListaMensajes().add(actual);		       
 			       
 			    }
 			   
@@ -120,19 +117,10 @@ public class Recepcion implements Job {
 			e.printStackTrace();
 		}
 	}
-	
-	public void enviar(){}
-	
-	private int cantidadMails;
-
-	public int getCantidadMails() {
-		return cantidadMails;
-	}
-
-	public void setCantidadMails(int cantidadMails) {
-		this.cantidadMails = cantidadMails;
-	}
-	
+		
+	/*
+	 * Si es necesario utilizar Quartz para revisar la bandeja de entrada cada x tiempo
+	 * 
     public void execute(JobExecutionContext context) {
 		// TODO Auto-generated method stub
 		    	
@@ -163,6 +151,7 @@ public class Recepcion implements Job {
 			}
 		   
 	}
+	*/
 
     private DomainObjectContainer container;
     

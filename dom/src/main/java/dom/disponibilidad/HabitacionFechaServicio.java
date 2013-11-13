@@ -139,5 +139,9 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 	public void injectTarifaServicio(final TarifaServicio tFS) {
 		this.tFS = tFS;
 	}
+	
+	protected String usuarioActual() {
+        return getContainer().getUser().getName();
+    }	
 	    
 }

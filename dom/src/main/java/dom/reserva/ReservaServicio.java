@@ -52,7 +52,8 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 		{	
 			reserva.setHuesped(huesped);
 			reserva.setComentario(comentario);
-			reserva.setFecha(LocalDate.now().toDate());			
+			reserva.setFecha(LocalDate.now().toDate());
+			reserva.setUsuario(usuarioActual());
 			
 			for(Disponibilidad d : disponibilidad) {
 				
@@ -72,6 +73,7 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 					hF.setTarifa(tFS.tarifa(1).getPrecio());
 					//
 					
+					hF.setUsuario(usuarioActual());
 					hF.setReserva(reserva);
 					reserva.addToHabitaciones(hF);					
 					persistIfNotAlready(hF);	

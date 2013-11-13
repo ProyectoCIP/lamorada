@@ -10,7 +10,11 @@ import org.apache.isis.applib.annotation.Immutable;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.annotation.RegEx;
+import org.apache.isis.applib.filter.Filter;
 
+import com.google.common.base.Objects;
+
+import dom.disponibilidad.HabitacionFecha;
 import dom.empresa.Empresa;
 import dom.huesped.Huesped;
 import dom.huesped.HuespedServicio;
@@ -193,5 +197,26 @@ public class Contacto {
 	public void injectDomainObjectContainer(final DomainObjectContainer container) {
 		this.container = container;
 	}
+	
+	//{{Usuario actual
+		private String usuario;
+
+		@Hidden
+		public String getUsuario() {
+		    return usuario;
+		}
+
+		public void setUsuario(final String usuario) {
+		    this.usuario = usuario;
+		}//}}
+			
+		public static Filter<Contacto> creadoPor(final String usuarioActual) {
+		    return new Filter<Contacto>() {
+		        @Override
+		        public boolean accept(final Contacto contacto) {
+		            return Objects.equal(contacto.getUsuario(), usuarioActual);
+		        }
+		    };
+		}	
 	
 }

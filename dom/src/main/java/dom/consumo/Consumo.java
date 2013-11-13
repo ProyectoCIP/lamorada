@@ -15,7 +15,11 @@ import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.RegEx;
 import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.filter.Filter;
 
+import com.google.common.base.Objects;
+
+import dom.disponibilidad.HabitacionFecha;
 import dom.reserva.Reserva;
 import dom.reserva.ReservaServicio;
 
@@ -118,14 +122,25 @@ public class Consumo {
         this.container = container;
     }
     
-	private String usuario;
-    
-	@Hidden
-    public String getUsuario() {
-		return usuario;
-	}
-	public void setUsuario(final String usuario) {
-		this.usuario = usuario;
-	}
+  //{{Usuario actual
+  	private String usuario;
+
+  	@Hidden
+  	public String getUsuario() {
+  	    return usuario;
+  	}
+
+  	public void setUsuario(final String usuario) {
+  	    this.usuario = usuario;
+  	}//}}
+  		
+  	public static Filter<Consumo> creadoPor(final String usuarioActual) {
+  	    return new Filter<Consumo>() {
+  	        @Override
+  	        public boolean accept(final Consumo consumo) {
+  	            return Objects.equal(consumo.getUsuario(), usuarioActual);
+  	        }
+  	    };
+  	}	
 
 }

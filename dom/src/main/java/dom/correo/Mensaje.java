@@ -16,9 +16,13 @@ import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Optional;
 import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.filter.Filter;
 import org.joda.time.LocalDate;
 
+import com.google.common.base.Objects;
+
 import dom.disponibilidad.Disponibilidad;
+import dom.disponibilidad.HabitacionFecha;
 import dom.disponibilidad.HabitacionFechaServicio;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
@@ -155,19 +159,6 @@ public class Mensaje implements Comparable<Mensaje> {
 	public void setFechaActual(final LocalDate fechaActual) {
 		this.fechaActual = fechaActual;
 	}
-    /*
-     * Usuario actual logeado
-     */
-    private String usuario;
-
-    @Hidden
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(final String usuario) {
-        this.usuario = usuario;
-    }
     
     // {{ injected: DomainObjectContainer
     private DomainObjectContainer container;
@@ -188,5 +179,25 @@ public class Mensaje implements Comparable<Mensaje> {
 		// TODO Auto-generated method stub
 		return this.fechaActual.compareTo(mensaje.getFechaActual());
 	}
-    
+    	
+	//{{Usuario actual
+	private String usuario;
+
+	@Hidden
+	public String getUsuario() {
+	    return usuario;
+	}
+
+	public void setUsuario(final String usuario) {
+	    this.usuario = usuario;
+	}//}}
+			
+	public static Filter<Mensaje> creadoPor(final String usuarioActual) {
+	    return new Filter<Mensaje>() {
+	        @Override
+	        public boolean accept(final Mensaje mensaje) {
+	            return Objects.equal(mensaje.getUsuario(), usuarioActual);
+	        }
+	    };
+	}	
 }

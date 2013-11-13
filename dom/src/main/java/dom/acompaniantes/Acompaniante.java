@@ -13,6 +13,11 @@ import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.RegEx;
 import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.filter.Filter;
+
+import com.google.common.base.Objects;
+
+import dom.disponibilidad.HabitacionFecha;
 import dom.reserva.Reserva;
 import dom.reserva.ReservaServicio;
 
@@ -139,5 +144,26 @@ public class Acompaniante {
     public void injectDomainObjectContainer(final DomainObjectContainer container) {
         this.container = container;
     }
+    
+  //{{Usuario actual
+  	private String usuario;
+
+  	@Hidden
+  	public String getUsuario() {
+  	    return usuario;
+  	}
+
+  	public void setUsuario(final String usuario) {
+  	    this.usuario = usuario;
+  	}//}}
+  		
+  	public static Filter<Acompaniante> creadoPor(final String usuarioActual) {
+  	    return new Filter<Acompaniante>() {
+  	        @Override
+  	        public boolean accept(final Acompaniante acompaniante) {
+  	            return Objects.equal(acompaniante.getUsuario(), usuarioActual);
+  	        }
+  	    };
+  	}	
 	
 }

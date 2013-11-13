@@ -37,6 +37,7 @@ public class TarifaServicio extends AbstractFactoryAndRepository {
 				tarifa = newTransientInstance(Tarifa.class);
 				tarifa.setPax(cantidad);
 				tarifa.setPrecio(precio);
+				tarifa.setUsuario(usuarioActual());
 				persistIfNotAlready(tarifa);
 			}
 			
@@ -69,4 +70,7 @@ public class TarifaServicio extends AbstractFactoryAndRepository {
 		return t;
 	}
 
+	protected String usuarioActual() {
+        return getContainer().getUser().getName();
+    }	
 }

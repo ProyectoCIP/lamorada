@@ -14,12 +14,16 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.filter.Filter;
+
+import com.google.common.base.Objects;
 
 import dom.reserva.Reserva;
 import dom.tarifa.TarifaServicio;
 import dom.asterisk.Asterisk;
 import dom.enumeradores.EstadoHabitacion;
 import dom.enumeradores.TipoHabitacion;
+import dom.huesped.Huesped;
 
 /**
  * 
@@ -56,7 +60,6 @@ public class HabitacionFecha {
 		}
 	}
 
-	//{{Estado : Disponible / Bloqueada
 	private EstadoHabitacion estadoHabitacion;
 		
 	/**
@@ -266,4 +269,24 @@ public class HabitacionFecha {
 		this.tFS = tFS;
 	}
 	
+	//{{Usuario actual
+	private String usuario;
+
+	@Hidden
+	public String getUsuario() {
+	    return usuario;
+	}
+
+	public void setUsuario(final String usuario) {
+	    this.usuario = usuario;
+	}//}}
+		
+	public static Filter<HabitacionFecha> creadoPor(final String usuarioActual) {
+	    return new Filter<HabitacionFecha>() {
+	        @Override
+	        public boolean accept(final HabitacionFecha habitacionFecha) {
+	            return Objects.equal(habitacionFecha.getUsuario(), usuarioActual);
+	        }
+	    };
+	}	
 }

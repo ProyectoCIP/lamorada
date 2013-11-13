@@ -29,6 +29,7 @@ import com.google.common.collect.Lists;
 
 import dom.huesped.Huesped;
 import dom.contacto.Contacto;
+import dom.disponibilidad.HabitacionFecha;
 import dom.enumeradores.FormaPago;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
@@ -123,6 +124,7 @@ public class Empresa {
 		contacto.setCelular(celular);
 		contacto.setTelefono(telefono);
 		contacto.setEmail(email);
+		contacto.setUsuario(container.getUser().getName());
 		
 		container.persistIfNotAlready(contacto);
 		
@@ -163,16 +165,7 @@ public class Empresa {
 	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
-	
-    public static Filter<Empresa> creadoPor(final String usuarioActual) {
-        return new Filter<Empresa>() {
-            @Override
-            public boolean accept(final Empresa empresa) {
-                return Objects.equal(empresa.getUsuario(), usuarioActual);
-            }
-        };
-    }   
-    
+   
     @Named("Borrar")
     @Bulk
     @MemberOrder(name="accionesEmpresa", sequence = "1")
@@ -182,22 +175,8 @@ public class Empresa {
     	
     	return empresaServicio.listaEmpresas();
     }
-
-    /*
-     * Usuario actual logeado
-     */
-    private String usuario;
-
-    @Hidden
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(final String usuario) {
-        this.usuario = usuario;
-    }
 	
- // {{ injected: DomainObjectContainer
+    //{{ injected: DomainObjectContainer
     private DomainObjectContainer container;
 
     public void injectDomainObjectContainer(final DomainObjectContainer container) {
@@ -262,5 +241,26 @@ public class Empresa {
     	huesped.setEmpresa(this);
     	huespedes.add(huesped);
     }
+    
+    //{{Usuario actual
+  	private String usuario;
+
+  	@Hidden
+  	public String getUsuario() {
+  	    return usuario;
+  	}
+
+  	public void setUsuario(final String usuario) {
+  	    this.usuario = usuario;
+  	}//}}
+  		
+  	public static Filter<Empresa> creadoPor(final String usuarioActual) {
+  	    return new Filter<Empresa>() {
+  	        @Override
+  	        public boolean accept(final Empresa empresa) {
+  	            return Objects.equal(empresa.getUsuario(), usuarioActual);
+  	        }
+  	    };
+  	}	
 	
 }

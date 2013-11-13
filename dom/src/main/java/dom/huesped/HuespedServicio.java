@@ -84,6 +84,7 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
 		huesped.setDni(dni);
 		huesped.setEstado(true);
 		huesped.setContacto(contacto);
+		huesped.setUsuario(usuarioActual());
 		
 		contacto.addToContacto(huesped);
 		

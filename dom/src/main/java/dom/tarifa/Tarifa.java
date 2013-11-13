@@ -10,6 +10,11 @@ import org.apache.isis.applib.annotation.Audited;
 import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.filter.Filter;
+
+import com.google.common.base.Objects;
+
+import dom.habitacion.Habitacion;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
@@ -69,4 +74,24 @@ public class Tarifa {
 	}
 	//}}
 	
+	//{{Usuario actual
+		private String usuario;
+
+	    @Hidden
+	    public String getUsuario() {
+	        return usuario;
+	    }
+
+	    public void setUsuario(final String usuario) {
+	        this.usuario = usuario;
+	    }//}}
+		
+		public static Filter<Tarifa> creadoPor(final String usuarioActual) {
+	        return new Filter<Tarifa>() {
+	            @Override
+	            public boolean accept(final Tarifa tarifa) {
+	                return Objects.equal(tarifa.getUsuario(), usuarioActual);
+	            }
+	        };
+	    }
 }

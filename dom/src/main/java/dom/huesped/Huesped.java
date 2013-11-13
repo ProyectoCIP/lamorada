@@ -184,6 +184,7 @@ public class Huesped {
 		contacto.setCelular(celular);
 		contacto.setTelefono(telefono);
 		contacto.setEmail(email);
+		contacto.setUsuario(container.getUser().getName());
 		
 		container.persistIfNotAlready(contacto);
 		
