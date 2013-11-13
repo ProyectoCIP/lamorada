@@ -21,6 +21,13 @@ import dom.asterisk.Asterisk;
 import dom.enumeradores.EstadoHabitacion;
 import dom.enumeradores.TipoHabitacion;
 
+/**
+ * 
+ * Es el objeto que relaciona la Habitación con la fecha en la que se reserva/bloquea
+ * 
+ * @author ProyectoCIP
+ *
+ */
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
@@ -34,6 +41,12 @@ import dom.enumeradores.TipoHabitacion;
 @Audited
 public class HabitacionFecha {
 	
+	/**
+	 * 
+	 * El ícono cambia dependiendo de si está Disponible, Bloqueada o Reservada
+	 * 
+	 * @return Retorna el nombre del ícono que va a ser usado en el viewer
+	 */
 	public String iconName() {
 		if (getEstado() == EstadoHabitacion.BLOQUEADA) { 
 			return "bloqueada";
@@ -46,6 +59,10 @@ public class HabitacionFecha {
 	//{{Estado : Disponible / Bloqueada
 	private EstadoHabitacion estadoHabitacion;
 		
+	/**
+	 * 
+	 * @return Retorna el estado de la habitación que puede ser Disponible o Bloqueada
+	 */
 	@Hidden(where=Where.ALL_TABLES)
 	public EstadoHabitacion getEstado() {
 		return estadoHabitacion;
@@ -53,12 +70,20 @@ public class HabitacionFecha {
 	public void setEstado(final EstadoHabitacion estadoHabitacion) {
 		this.estadoHabitacion = estadoHabitacion;
 	}
-	//}}	
+		
 
+	/**
+	 * 
+	 * @return Es el título que toma el objeto en el viewer
+	 */
 	public String title() {
 		return getNombreHabitacion();
 	}
 	
+	/**
+	 * 
+	 * @return Retorna la fecha formateada que se muestra en el viewer de la forma "dd/MM/yyyy"
+	 */
 	@Named("Fecha")
 	public String getFechaString() {
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -67,6 +92,10 @@ public class HabitacionFecha {
 	
 	private Date fecha;
 	
+	/**
+	 * 
+	 * @return Retorna la fecha de consulta por el usuario
+	 */
 	@Hidden
 	public Date getFecha() {
 		return fecha;
@@ -78,6 +107,10 @@ public class HabitacionFecha {
 	  
 	private String nombreHabitacion;
 	
+	/**
+	 * 
+	 * @return Retorna el nombre de la habitación
+	 */
 	@Hidden
 	public String getNombreHabitacion() {
 		return nombreHabitacion;
@@ -90,6 +123,10 @@ public class HabitacionFecha {
 	//{{ Interno de la habitación para llamadas con la central asterisk
 	private int interno;
 	
+	/**
+	 * 
+	 * @return Retorna el número Interno de la habitación que se registro en la central telefónica
+	 */
 	public int getInterno(){
 		return interno;
 	}
@@ -98,16 +135,25 @@ public class HabitacionFecha {
 		this.interno = interno;
 	}
 	
+	/**
+	 * 
+	 * @return Retorna la habitación para volver al formulario objeto que dibuja el viewer
+	 * @throws Exception
+	 */
 	@MemberOrder(name="interno",sequence="1")
 	public HabitacionFecha llamar() throws Exception {
 		Asterisk pbx = new Asterisk();
         pbx.call(Integer.toString(getInterno()));
         return this;
 	}
-	//}}
+	
 	
 	private TipoHabitacion tipoHabitacion;
 	
+	/**
+	 * 
+	 * @return Retorna el tipo de habitación (Doble, Triple, Cuadruple)
+	 */
 	@Hidden(where=Where.OBJECT_FORMS)
 	public TipoHabitacion getTipoHabitacion() {
 		return tipoHabitacion;
@@ -119,6 +165,10 @@ public class HabitacionFecha {
 	
 	private int pax;
 	
+	/**
+	 * 
+	 * @return Retorna la cantidad de personas que ocupan la habitación
+	 */
 	@Named("Personas")
 	public int getPax() {
 		return pax;
@@ -128,6 +178,14 @@ public class HabitacionFecha {
 		this.pax = pax;
 	}
 	
+	/**
+	 * 
+	 * Se ingresa el número de personas, busca en el repositorio
+	 * la tarifa correspondiente a ese número y lo edita.
+	 * 
+	 * @param personas La nueva cantidad de personas que van a ocupar la habitación
+	 * @return Retorna la habitación modificada con el nuevo número de pax
+	 */
 	@Named("Editar")
 	@MemberOrder(name="pax",sequence="1")
 	public HabitacionFecha personas(@Named("Cantidad de Personas") int personas) {
@@ -139,10 +197,20 @@ public class HabitacionFecha {
 		return this;
 	}
 	
+	/**
+	 * 
+	 * @param personas La nueva cantidad de personas que van a ocupar la habitación
+	 * @return Si se cumple la condición retorna la cadena que se muestra en el viewer
+	 */
 	public String validatePersonas(final int personas){
 		return mayorPaxPermitido(personas) ? null : "El número de personas es mayor al permitido";
 	}
 	
+	/**
+	 * 
+	 * @param personas La nueva cantidad de personas que van a ocupar la habitación
+	 * @return Si el número de personas excede el máximo permitido en esa habitación retorna false
+	 */
 	private boolean mayorPaxPermitido(final int personas) {
 		if((getTipoHabitacion() == TipoHabitacion.Doble) && (personas > 2)) { return false;
 		}
@@ -154,11 +222,15 @@ public class HabitacionFecha {
 	}
 	/*
 	 * Se guarda la tarifa de la habitación en esa fecha para que no cambie 
-	 * si se cambia el costo del pax en general
+	 * si se cambia el costo del pax en un futuro
 	 */
 	
 	private BigDecimal tarifa;
 	
+	/**
+	 * 
+	 * @return La tarifa que se cobra por reservar esta habitación
+	 */
 	public BigDecimal getTarifa() {
 		return tarifa;
 	}
@@ -169,6 +241,10 @@ public class HabitacionFecha {
 	
 	private Reserva reserva;
 	
+	/**
+	 * 
+	 * @return Retorna el objeto reserva en el que esta habitación esta registrada
+	 */
 	@Named("Estado")
 	@Disabled
 	public Reserva getReserva() {
@@ -183,7 +259,6 @@ public class HabitacionFecha {
 	
 	public void injectDomainObjectContainer(final DomainObjectContainer container) {
 	}
-	//}}
 
 	private TarifaServicio tFS;
 	

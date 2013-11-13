@@ -85,7 +85,7 @@ public class Disponibilidad {
 
 	/**
 	 * 
-	 * "@Bulk" para los métodos que se aplican a la lista de objetos seleccionados 
+	 * Para los métodos que se aplican a la lista de objetos seleccionados 
 	 * 
 	 * @return Retorna el objeto DISPONIBLE
 	 */
@@ -103,7 +103,7 @@ public class Disponibilidad {
 	 * Si la habitación que se muestra en el mapa de disponibilidad
 	 * aún no esta persistida, entonces es necesario guardar el objeto HabitaciónFecha en el repositorio.
 	 * 
-	 * "@Bulk" para los metodos que se aplican a la lista de objetos seleccionados 
+	 * Para los metodos que se aplican a la lista de objetos seleccionados 
 	 * 
 	 * @return Retorna el objeto BLOQUEADO
 	 */
@@ -228,7 +228,7 @@ public class Disponibilidad {
 	 * Si la habitación que se muestra en el mapa de disponibilidad
 	 * está disponible y no está reservada, aplica la selección para su posterior reserva.
 	 * 
-	 * "@Bulk" para los métodos que se aplican a la lista de objetos seleccionados 
+	 * Para los métodos que se aplican a la lista de objetos seleccionados 
 	 * 
 	 * @return Retorna el objeto BLOQUEADO
 	 */
@@ -346,7 +346,6 @@ public class Disponibilidad {
 	public void setInterno(final int interno) {
 		this.interno = interno;
 	}
-	//}}
 	
 	private Reserva reserva;
 	
