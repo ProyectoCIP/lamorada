@@ -9,15 +9,29 @@ import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.query.QueryDefault;
 
+/**
+ * Crea tarifas nuevas de acuerdo a la cantidad de personas ingresadas y puede listar las tarifas ingresadas en el sistema.
+ * @author ProyectoCip
+ *
+ */
 @Named("Tarifas")
 public class TarifaServicio extends AbstractFactoryAndRepository {
 	
+	/*
+	 * Retorna el nombre del icono de la tarifa.
+	 */
 	public String iconName() {
 		return "tarifa";
 	}
 	
 	private Tarifa tarifa;
 	
+	/**
+	 * El método puede crear tarifas de acuerdo a la cantidad de huéspedes, valida que no se ingresen mas de 4 huéspedes.
+	 * @param cantidad
+	 * @param precio
+	 * @return
+	 */
 	@MemberOrder(sequence="1")
 	@Named("Nueva")
 	public Tarifa nueva(
@@ -45,10 +59,20 @@ public class TarifaServicio extends AbstractFactoryAndRepository {
 			
 	}
 	
+	/**
+	 * El método valida que no se ingresen mas de cuatro huéspedes, ya que es la capacidad máxima de las habitaciones.
+	 * @param cantidad
+	 * @param precio
+	 * @return
+	 */
 	public String validateNueva(final int cantidad, final BigDecimal precio) {
 		return (cantidad > 4) ? "Se alojan como máximo 4 personas" : null;
 	}
 	
+	/**
+	 * Muestra un listado con las tarifas y sus correspondiente cantidad de huéspedes.
+	 * @return
+	 */
 	@MemberOrder(sequence="2")
 	@Named("Listar")
 	public List<Tarifa> listarTarifa() {
@@ -56,6 +80,11 @@ public class TarifaServicio extends AbstractFactoryAndRepository {
 	    return allMatches(query);
 	}
 	
+	/**
+	 * Este método valida que no se repita la tarifa ingresad previamente.
+	 * @param pax
+	 * @return
+	 */
 	@Programmatic
 	public Tarifa tarifa(final int pax) {		
 		
