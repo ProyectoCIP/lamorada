@@ -21,16 +21,36 @@ import dom.empresa.Empresa;
 public class HuespedServicio extends AbstractFactoryAndRepository{
 
 	// {{ Id, iconName
+	/**
+	 * Método que retorna el Id de cada huesped.
+	 */
     @Override
     public String getId() {
         return "Huesped";
     }
 
+    /**
+     * Retorna el nombre del icon Huesped que va a ser usado en el viewer.
+     * @return
+     */
     public String iconName() {
         return "Huesped";
     }
     // }}
     
+    /**
+     * Método para crear un Huesped y lo asocia a una empresa en caso de que sea necesario.
+     * @param nombre
+     * @param apellido
+     * @param edad
+     * @param dni
+     * @param direccion
+     * @param telefono
+     * @param celular
+     * @param mail
+     * @param empresa
+     * @return
+     */
     @Named("Crear")
 	@MemberOrder(sequence = "1")
 	public Huesped nuevoHuesped(	
@@ -102,6 +122,10 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
 	 * Repositorio: trae los huespedes cargados en el sistema que estan habilitados
 	 */
 	
+	/**
+	 * Lista todos los huéspedes cargados al sistema.
+	 * @return
+	 */
 	@Named("Listar")
 	@MemberOrder(sequence="2")
 	public List<Huesped> listaHuespedes() {
@@ -130,6 +154,11 @@ public class HuespedServicio extends AbstractFactoryAndRepository{
         });
     }
     
+    /**
+     * Crea los datos de contacto del huésped.
+     * @param contacto
+     * @return
+     */
     @Programmatic
     public Huesped huespedContacto(final Contacto contacto) {
     	return uniqueMatch(Huesped.class, new Filter<Huesped>() {
