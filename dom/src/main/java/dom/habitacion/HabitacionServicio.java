@@ -23,12 +23,23 @@ import dom.habitacion.Habitacion;
 @Named("Habitacion")
 public class HabitacionServicio extends AbstractFactoryAndRepository{
 
+	/**
+	 * Retorna el nombre del icono de la habitación.
+	 * @return
+	 */
 	// {{iconName
     public String iconName() {
         return "habitacion";
     }
     // }}
     	
+    /**
+     * Método que sirve para crear habitaciones en el sistema.
+     * @param nombre
+     * @param tipoHabitacion
+     * @param interno
+     * @return
+     */
 	@Named("Crear")
 	@MemberOrder(sequence = "1")
 	public Habitacion nuevaHabitacion(	
@@ -55,6 +66,10 @@ public class HabitacionServicio extends AbstractFactoryAndRepository{
 		return habitacion;
 	}
 	
+	/**
+	 * Método que lista todas las habitaciones creadas en el sistema con sus respectivos datos.
+	 * @return
+	 */
 	@Named("Listar")
     @ActionSemantics(Of.SAFE)
     @MemberOrder(sequence = "2")
@@ -63,7 +78,8 @@ public class HabitacionServicio extends AbstractFactoryAndRepository{
         final List<Habitacion> listaHabitacion = allMatches(Habitacion.class, Habitacion.creadoPor(usuario));
         return listaHabitacion;
     }
-	/*
+	/**
+	 * 
      * Método para llenar el DropDownList de habitacion, con la posibilidad de que te autocompleta las coincidencias al ir tipeando
      */
     @Hidden
