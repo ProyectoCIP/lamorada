@@ -36,7 +36,7 @@ import dom.reserva.Reserva;
 public class Habitacion {
 	
 	/**
-	 * Retorna el nombre del icon para la habitación.
+	 * Retorna el nombre del icono para la habitación.
 	 * @return
 	 */
 	public String iconName() {

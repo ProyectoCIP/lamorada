@@ -27,35 +27,64 @@ import dom.habitacion.Habitacion;
 @Audited
 public class Tarifa {
 	
+	/**
+	 * Muestra el nombre del icono de la tarifa.
+	 * @return
+	 */
 	public String iconName() {
 		return "tarifa";
 	}
 		
+	/**
+	 * Retorna la leyenda Personas y la cantidad de persona que corresponden a la tarifa ingresada.
+	 * @return
+	 */
 	public String title() {
 		return "Personas: "+Integer.toString(getPax());
 	}
 	
 	private int pax;
 	
+	/**
+	 * Retorna la cantidad de huéspedes ingresados.
+	 * @return
+	 */
 	@Hidden(where=Where.ALL_TABLES)
 	public int getPax() {
 		return pax;
 	}
 
+	/**
+	 * Setea la cantidad de personas de acuerdo al precio ingresado.
+	 * @param pax
+	 */
 	public void setPax(final int pax) {
 		this.pax = pax;
 	}
 	
+	/**
+	 * Valida que no se ingresen mas de cuatro huéspedes.
+	 * @param pax
+	 * @return
+	 */
 	public String validatePax(final int pax) {
         return (pax>4)? "Cuadruple es lo máximo":null;
     }
 	
 	private BigDecimal precio;
 
+	/**
+	 * Retorna el precio que corresponde a la cantidad de huéspedes ingresados.
+	 * @return
+	 */
 	public BigDecimal getPrecio() {
 		return precio;
 	}
 
+	/**
+	 * Setea el precio de acuerdo a la cantidad de Huéspedes ingresados.
+	 * @param precio
+	 */
 	public void setPrecio(final BigDecimal precio) {
 		this.precio = precio;
 	}
