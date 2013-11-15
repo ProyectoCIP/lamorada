@@ -11,7 +11,7 @@ import org.apache.isis.applib.query.QueryDefault;
 
 /**
  * Crea tarifas nuevas de acuerdo a la cantidad de personas ingresadas y puede listar las tarifas ingresadas en el sistema.
- * @author ProyectoCip
+ * @author ProyectoCIP
  *
  */
 @Named("Tarifas")
@@ -81,7 +81,7 @@ public class TarifaServicio extends AbstractFactoryAndRepository {
 	}
 	
 	/**
-	 * Este método valida que no se repita la tarifa ingresad previamente.
+	 * Este método valida que no se repita la tarifa ingresada previamente.
 	 * @param pax
 	 * @return
 	 */

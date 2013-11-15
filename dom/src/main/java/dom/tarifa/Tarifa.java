@@ -16,6 +16,13 @@ import com.google.common.base.Objects;
 
 import dom.habitacion.Habitacion;
 
+/**
+ * 
+ * La tarifa que se cobra por cantidad de personas 
+ * 
+ * @author ProyectoCIP
+ *
+ */
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")

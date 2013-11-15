@@ -14,22 +14,53 @@ import org.apache.isis.applib.query.QueryDefault;
 import dom.disponibilidad.HabitacionFecha;
 import dom.enumeradores.Años;
 
+/**
+ * 
+ * @see dom.estadisticas.Ocupacion
+ * @see dom.disponibilidad.HabitacionFecha
+ * @see dom.enumeradores.Años
+ * 
+ * @author ProyectoCIP
+ *
+ */
 @Named("Estadisticas")
 public class EstadisticasServicio extends AbstractFactoryAndRepository {
 	
+	/**
+	 * 
+	 * @return Retorna el nombre del ícono que va a ser usado en el viewer
+	 */
 	public String iconName() {
 		return "estadisticas";
 	}
 	
+	/**
+	 * 
+	 * @param años El a&ntilde;o del cual se quiere saber el porcentaje de ocupaci&oacute;n
+	 * @return Retorna la lista de todos los meses con sus respectivos percentajes
+	 */
 	@Named("Ocupacion") 
 	public List<Ocupacion> listaOcupacion(@Named("Año:") Años años) {
 		
+		/*
+		 * Sacamos el primer dígito del parametro porque es una letra
+		 */
 		String año = años.toString();
 		año = año.substring(1);
 		
+		/*
+		 * La lista que se retorna
+		 */
 		List<Ocupacion> listadoOcupacion = new ArrayList<Ocupacion>();
 		
+		/*
+		 * Los 12 meses del año
+		 */
 		for(int i = 1; i < 13; i++) {
+			
+			/*
+			 * De entrada completamos todo el año con los valores nulos
+			 */
 			Ocupacion ocupacion = newTransientInstance(Ocupacion.class);
 			ocupacion.setAño(año);
 			ocupacion.setMes(nombreMes(i));
@@ -40,14 +71,23 @@ public class EstadisticasServicio extends AbstractFactoryAndRepository {
 			
 		}
 		
+		/*
+		 * Desde el primer día del año hasta el último
+		 */
 		Calendar cal = Calendar.getInstance();
 		cal.set(Integer.parseInt(año), 01, 01);
 		Date inicio = cal.getTime();
 		cal.set(Integer.parseInt(año), 12, 31);
 		Date fin = cal.getTime();
 		
+		/*
+		 * Buscamos todas las habitaciones reservadas del año
+		 */
 		List<HabitacionFecha> listadoHabitacionesOcupadas = allMatches(QueryDefault.create(HabitacionFecha.class, "traerOcupacion", "inicio", inicio, "fin", fin));
 		
+		/*
+		 * Por cada habitación reservada 
+		 */
 		for(HabitacionFecha h : listadoHabitacionesOcupadas) {
 			lista(listadoOcupacion,h);
 		}
@@ -56,18 +96,37 @@ public class EstadisticasServicio extends AbstractFactoryAndRepository {
 		
 	}
 	
+	/**
+	 * 
+	 * @param lista La lista de ocupación que se muestra en el viewer
+	 * @param h Cada habitación reservada en el a&ntilde;o
+	 */
 	private void lista(final List<Ocupacion> lista,final HabitacionFecha h) {
 		
+		/*
+		 * Se convierte la fecha en dormato dd/MM/yyyy para 
+		 * posteriormente separarla en partes y quedarme con la segunda posición del array
+		 * que es donde está el mes
+		 */
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		String[] fechaSeparada = formato.format(h.getFecha()).split("/");
+		
+		/*
+		 * En el mes que corresponde acumulamos la cantidad de personas de esta habitación 
+		 */
 		for(Ocupacion o : lista) {
 			if(o.getMes().equals(nombreMes(Integer.parseInt(fechaSeparada[1])))){
 				o.setPax(o.getPax()+h.getPax());
 			}
 		}		
-		
 	}
 	
+	/**
+	 * 
+	 * @param año El año
+	 * @param mes El mes
+	 * @return Retorna la cantidad de días que tiene ese mes en ese año
+	 */
 	private int plazas(final int año,final int mes) {
 		
 		Calendar cal = null;
@@ -90,6 +149,11 @@ public class EstadisticasServicio extends AbstractFactoryAndRepository {
 		return cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 	}
 	
+	/**
+	 * 
+	 * @param mes El mes
+	 * @return Retorna el nombre del mes
+	 */
 	private String nombreMes(int mes) {
 			
 		switch(mes) {

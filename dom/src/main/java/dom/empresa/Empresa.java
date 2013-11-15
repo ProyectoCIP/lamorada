@@ -34,7 +34,7 @@ import dom.enumeradores.FormaPago;
 
 /**
  * Crea una nueva empresa la cual puede ser relacionada a uno o varios huéspedes.
- * @author luis
+ * @author ProyectoCIP
  * @see dom.huesped.Huesped
  * @see dom.contacto.Contacto
  * @see dom.enumeradores.FormaPago

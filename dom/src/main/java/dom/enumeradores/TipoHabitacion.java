@@ -2,7 +2,7 @@ package dom.enumeradores;
 
 /**
  * Enumerador con las posibles tipo de habitación: Doble, Triple y Cuádruple.
- * @author luis
+ * @author ProyectoCIP
  *
  */
 public enum TipoHabitacion {

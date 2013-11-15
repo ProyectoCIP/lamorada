@@ -23,7 +23,6 @@ import dom.tarifa.TarifaServicio;
 import dom.asterisk.Asterisk;
 import dom.enumeradores.EstadoHabitacion;
 import dom.enumeradores.TipoHabitacion;
-import dom.huesped.Huesped;
 
 /**
  * 
@@ -258,6 +257,7 @@ public class HabitacionFecha {
 		this.reserva = reserva;
 	}
 
+	@SuppressWarnings("unused")
 	private DomainObjectContainer container;
 	
 	public void injectDomainObjectContainer(final DomainObjectContainer container) {

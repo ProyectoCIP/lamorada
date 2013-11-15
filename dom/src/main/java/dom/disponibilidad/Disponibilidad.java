@@ -68,7 +68,6 @@ public class Disponibilidad {
 		}
 	}
 	
-	//{{Estado : Disponible / Bloqueada
 	private EstadoHabitacion estadoHabitacion;
 		
 	/**
