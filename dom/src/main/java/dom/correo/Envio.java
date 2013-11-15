@@ -1,6 +1,5 @@
 package dom.correo;
 
-import java.util.List;
 import java.util.Properties;
 
 import javax.mail.*;

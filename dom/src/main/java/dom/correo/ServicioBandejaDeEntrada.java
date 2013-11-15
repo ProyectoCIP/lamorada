@@ -11,13 +11,26 @@ import org.joda.time.LocalDate;
 
 import com.google.common.base.Objects;
 
+/**
+ * Menú de la bandeja de entrada
+ * @author ProyectoCIP
+ *
+ */
 @Named("Em@ils")
 public class ServicioBandejaDeEntrada extends AbstractFactoryAndRepository {
 	
+	 /**
+     * 
+     * @return Retorna el nombre del icon ServicioBandejaDeEntrada que va a ser usado en el viewer.
+     */
 	public String iconName() {
 		return "email";
 	}
 	
+	/**
+	 * 
+	 * @return Retorna la lista de correos persistidos y los nuevos
+	 */
 	@Named("Bandeja de Entrada")
 	@MemberOrder(sequence = "1")
 	public List<Mensaje> bde() {
@@ -56,8 +69,9 @@ public class ServicioBandejaDeEntrada extends AbstractFactoryAndRepository {
 		return listaMensajesPersistidos();
 	}
 	
-	/*
-	 * Repositorio: trae los emails guardados por el usuario registrado
+	/**
+	 * 
+	 * @return Retorna los emails guardados por el usuario registrado
 	 */
 	@Programmatic
     public List<Mensaje> listaMensajesPersistidos() {
@@ -71,16 +85,7 @@ public class ServicioBandejaDeEntrada extends AbstractFactoryAndRepository {
 	           		}
 	           }
 	    	);    
-    }
-	
-	@MemberOrder(sequence = "2")
-	@Named("Enviar") 
-	public void enviarCorreo() {
-		/*Envio enviar = new Envio();
-		enviar.setProperties();
-		enviar.enviar();*/
-	}
-	
+    }	
 	
 	protected boolean creadoPorActualUsuario(final Mensaje m) {
 	    return Objects.equal(m.getUsuario(), usuarioActual());

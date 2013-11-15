@@ -9,15 +9,23 @@ import java.util.Properties;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.NoSuchProviderException;
+//import javax.mail.NoSuchProviderException;
 import javax.mail.Session;
 import javax.mail.Store;
-import javax.swing.JOptionPane;
+//import javax.swing.JOptionPane;
 
 import org.apache.isis.applib.DomainObjectContainer;
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
+//import org.quartz.Job;
+//import org.quartz.JobExecutionContext;
 
+/**
+ * 
+ * Clase que descarga todos los correos de la bandeja de entrada 
+ * y los convierte en objetos de dominio
+ * 
+ * @author ProyectoCIP
+ *
+ */
 public class Recepcion {
 
 	private Session session;
@@ -26,25 +34,44 @@ public class Recepcion {
 	private Message [] mensajes;
 	private List<Mensaje> listaMensajes = new ArrayList<Mensaje>();
 	
+	/**
+	 * 
+	 * @return Retorna la lista con los correos electrónicos nuevos
+	 */
 	public List<Mensaje> getListaMensajes() {
 		return listaMensajes;
 	}
 	
+	/**
+	 * Setea la lista de correos electrónicos nuevos
+	 * @param listaMensajes 
+	 */
 	public void setListaMensajes(List<Mensaje> listaMensajes) {
 		this.listaMensajes = listaMensajes;
 	}
 	
+	/**
+	 * A la sesión actual le aplica las propiedades de conexión
+	 * @param propiedades 
+	 */
 	public void setSession(Properties propiedades) {
 		// TODO Auto-generated method stub
 		session = Session.getInstance(propiedades);
 		session.setDebug(true);
 	}
 
+	/**
+	 * 
+	 * @return Retorna la sesión actual
+	 */
 	public Session getSession() {
 		// TODO Auto-generated method stub
 		return session;
 	}
 
+	/**
+	 * Setea las propiedades para crear la sesión de usuario
+	 */
 	public void setProperties() {
 		// TODO Auto-generated method stub
 		// Deshabilitamos TLS
@@ -61,11 +88,21 @@ public class Recepcion {
 		setSession(propiedades);
 	}
 
+	/**
+	 * 
+	 * @return Retorna las propiedades para crear la sesión de usuario
+	 */
 	public Properties getProperties() {
 		// TODO Auto-generated method stub
 		return propiedades;
 	}
 
+	/**
+	 * 
+	 * Se encarga de conectarse al buzon del correo y bajar todos los correos,
+	 * filtra por asunto y setea el futuro objeto de dominio (Correo).
+	 * 
+	 */
 	public void accion() {
 		
 		try {

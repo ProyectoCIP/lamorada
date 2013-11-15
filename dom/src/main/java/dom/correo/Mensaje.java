@@ -22,9 +22,18 @@ import org.joda.time.LocalDate;
 import com.google.common.base.Objects;
 
 import dom.disponibilidad.Disponibilidad;
-import dom.disponibilidad.HabitacionFecha;
 import dom.disponibilidad.HabitacionFechaServicio;
 
+/**
+ * 
+ * Es el objeto que se muestra en el viewer con toda la información del correo electrónico
+ * 
+ * @see dom.disponibilidad.Disponibilidad
+ * @see dom.disponibilidad.HabitacionFechaServicio
+ * 
+ * @author ProyectoCIP
+ *
+ */
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
@@ -46,34 +55,69 @@ public class Mensaje implements Comparable<Mensaje> {
 		return "email";
 	}
 
+	/**
+	 * 
+	 * Es la primer parte del título que toma el objeto en el viewer
+	 * 
+	 * @return El nombre del remitente
+	 */
 	@Title(sequence="1.0")
 	@Optional
 	@MemberOrder(sequence="1")
 	public String getNombre() {
 		return nombre;
 	}
+	
+	/**
+	 * Setea el nombre del remitente
+	 * @param nombre 
+	 */
 	public void setNombre(final String nombre) {
 		this.nombre = nombre;
 	}
 
+	/**
+	 * 
+	 * @return  Retorna el apellido del remitente
+	 */
 	@Optional
 	@MemberOrder(sequence="2")
 	public String getApellido() {
 		return apellido;
 	}
+	
+	/**
+	 * Setea el apellido del remitente
+	 * @param apellido 
+	 */
 	public void setApellido(final String apellido) {
 		this.apellido = apellido;
 	}
 	
+	/**
+	 * 
+	 * @return Retorna el télefono del remitente
+	 */
 	@MemberOrder(sequence="4")
 	@Optional
 	public String getTelefono() {
 		return telefono;
 	}
+	
+	/**
+	 * Setea el télefono del remitente
+	 * @param telefono
+	 */
 	public void setTelefono(final String telefono) {
 		this.telefono = telefono;
 	}
 
+	/**
+	 * 
+	 * Es la segunda parte del título que toma el objeto en el viewer
+	 * 
+	 * @return El nombre del remitente
+	 */	
 	@Title(sequence="1.2")
 	@Optional
 	@MemberOrder(sequence="3")
@@ -81,29 +125,53 @@ public class Mensaje implements Comparable<Mensaje> {
 		return correo;
 	}
 	
+	/**
+	 * Setea el correo 
+	 * @param correo
+	 */
 	public void setCorreo(final String correo) {
 		this.correo = correo;
 	}
 
-	
+	/**
+	 * 
+	 * @return Retorna la primer fecha consultada por el remitente
+	 */
 	@MemberOrder(sequence="6")
 	public String getDesde() {
 		return desde;
 	}
 
+	/**
+	 * Setea la primer fecha consultada por el remitente
+	 * @param partes
+	 */
 	public void setDesde(String partes) {
 		this.desde = partes;
 	}
 
+	/**
+	 * 
+	 * @return Retorna la segunda fecha consultada por el remitente
+	 */
+	@Optional
 	@MemberOrder(sequence="7")
 	public String getHasta() {
 		return hasta;
 	}
 
+	/**
+	 * Setea la primer fecha consultada por el remitente
+	 * @param hasta 
+	 */
 	public void setHasta(final String hasta) {
 		this.hasta = hasta;
 	}
 
+	/**
+	 * 
+	 * @return Retorna el mensaje/consulta que hizo el remitente
+	 */
 	@MemberOrder(sequence="8")
 	@Hidden(where=Where.ALL_TABLES)
 	@MultiLine(numberOfLines=3)
@@ -111,16 +179,29 @@ public class Mensaje implements Comparable<Mensaje> {
 		return mensaje;
 	}
 
+	/**
+	 * Setea el mensaje/consulta que hizo el remitente
+	 * @param mensaje
+	 */
 	public void setMensaje(final String mensaje) {
 		this.mensaje = mensaje;
 	}
 	
+	/**
+	 * 
+	 * @return Retorna el mapa de disponibilidad correspondiente a la fecha que hizo el usuario
+	 */
 	@Named("Consultar")
 	public List<Disponibilidad> disponibilidad() {
 		String hasta = getHasta().equals("") ? null : getHasta();
 		return servicio.porFechas(new LocalDate(getDesde()), new LocalDate(hasta));
 	}
 	
+	/**
+	 * La posibilidad de responder a la consulta/correo directamente desde el mismo
+	 * @param mensaje El mensaje que escribe el recepcionista al usuario
+	 * @return Retorna el mensaje original del remitente
+	 */
 	public Mensaje Responder(
 			@MultiLine(numberOfLines=6)
 			@Named("Mensaje") String mensaje) {
@@ -140,6 +221,10 @@ public class Mensaje implements Comparable<Mensaje> {
 		this.servicio = servicio;
 	}
 	
+	/**
+	 * Permite borrar la consulta/correo
+	 * @return Retorna la lista de mensajes/bandeja de entrada
+	 */
 	@Named("Borrar")
 	@Bulk
 	public List<Mensaje> borrar() {
@@ -150,12 +235,20 @@ public class Mensaje implements Comparable<Mensaje> {
 		return bde.listaMensajesPersistidos();
 	}
 
+	/**
+	 * 
+	 * @return Retorna la fecha del día en que llegó la consulta/correo
+	 */
 	@Named("Fecha del Mensaje")
 	@MemberOrder(sequence="5")
 	public LocalDate getFechaActual() {
 		return fechaActual;
 	}
 
+	/**
+	 * Setea la fecha del día en que llegó la consulta/correo
+	 * @param fechaActual
+	 */
 	public void setFechaActual(final LocalDate fechaActual) {
 		this.fechaActual = fechaActual;
 	}
@@ -174,12 +267,15 @@ public class Mensaje implements Comparable<Mensaje> {
         this.bde = bde;
     }
 
+    /**
+     * Ordena los emails por fecha de ingreso
+     */
 	@Override
 	public int compareTo(Mensaje mensaje) {
 		// TODO Auto-generated method stub
 		return this.fechaActual.compareTo(mensaje.getFechaActual());
 	}
-    	
+
 	//{{Usuario actual
 	private String usuario;
 
