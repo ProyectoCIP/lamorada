@@ -1,8 +1,12 @@
+@charset: "ISO-8859-9";
+
 /* Javadoc style sheet */
 /*
 Overall document style
 */
-body {
+
+
+body {	
     background-color:#ffffff;
     color:#353833;
     font-family:Arial, Helvetica, sans-serif;

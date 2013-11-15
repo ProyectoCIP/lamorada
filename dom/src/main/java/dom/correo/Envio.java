@@ -10,11 +10,20 @@ import javax.mail.internet.MimeMessage;
 
 import org.joda.time.LocalDate;
 
+/**
+ * Envía un mail al posible huésped informando fechas, disponibilidad, etc.
+ * @author ProyectoCIP
+ *
+ */
 public class Envio {
 
 	private Session session;
 	private Properties propiedades = new Properties();
 	
+	/**
+	 * Setea la sesion que se crea para poder enviar el mail.
+	 * @param propiedades
+	 */
 	public void setSession(Properties propiedades) {
 		
 		session = Session.getInstance(propiedades);
@@ -25,11 +34,18 @@ public class Envio {
 		session.setDebug(true);
 	}
 
+	/**
+	 * Retorna la sesion creada.
+	 * @return
+	 */
 	public Session getSession() {
 		// TODO Auto-generated method stub
 		return session;
 	}
 	
+	/**
+	 * Setea propiedades como puerto, host de correo, datos de usuario, etc, para poder enviar el mail al destinatario.
+	 */
 	public void setProperties() {		
 		
 		// Nombre del host de correo, es smtp.gmail.com
@@ -51,10 +67,25 @@ public class Envio {
 
 	}
 	
+	/**
+	 * Retorna las propiedades seteadas para poder enviar el mail.
+	 * @return
+	 */
 	public Properties getProperties() {
 		return propiedades;
 	}
 	
+	/**
+	 * Envía el mail al posible huésped.
+	 * @param nombre
+	 * @param apellido
+	 * @param telefono
+	 * @param correo
+	 * @param desde
+	 * @param hasta
+	 * @param mensaje
+	 * @param direccion
+	 */
 	public void enviar(
 						String nombre,
 						String apellido,
@@ -109,8 +140,6 @@ public class Envio {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	
+	}	
 
 }
