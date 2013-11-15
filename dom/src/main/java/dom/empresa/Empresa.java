@@ -32,6 +32,13 @@ import dom.contacto.Contacto;
 import dom.disponibilidad.HabitacionFecha;
 import dom.enumeradores.FormaPago;
 
+/**
+ * Crea una nueva empresa la cual puede ser relacionada a uno o varios huéspedes.
+ * @author luis
+ * @see dom.huesped.Huesped
+ * @see dom.contacto.Contacto
+ * @see dom.enumeradores.FormaPago
+ */
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)
 @javax.jdo.annotations.Version(strategy=VersionStrategy.VERSION_NUMBER, column="VERSION")
@@ -40,6 +47,10 @@ import dom.enumeradores.FormaPago;
 @Audited
 public class Empresa {
 		
+	/**
+	 * Retorna el nombre del ícono que va a ser usado en el viewer
+	 * @return
+	 */	
 	public String iconName() {
 		return "empresa";
 	}
@@ -49,6 +60,10 @@ public class Empresa {
 	 */
 	private String razonSocial;
 
+	/**
+	 * Retorna el nombre o Razón Social de la empresa creada.
+	 * @return
+	 */
 	@Title
 	//Letras, números y espacios
 	@RegEx(validation="[\\w\\s]+")
@@ -56,6 +71,10 @@ public class Empresa {
 		return razonSocial;
 	}
 
+	/**
+	 * Setea el nombre o Razón Social de la empresa.
+	 * @param razonSocial
+	 */
 	public void setRazonSocial(String razonSocial) {
 		this.razonSocial = razonSocial;
 	}
@@ -65,25 +84,39 @@ public class Empresa {
 	 */
 	private String cuit;
 	//2 dígitos, un guión, 8 dígitos, otro guión y puede ser 1 o 2 dígitos
+	/**
+	 * Retorna el CUIT de la empresa.
+	 * @return
+	 */
 	@RegEx(validation="\\d{2}-\\d{8}-\\d{1,2}")
 	public String getCuit() {
 		return cuit;
 	}
 
+	/**
+	 * Setea el CUIT de la empresa.
+	 * @param cuit
+	 */
 	public void setCuit(String cuit) {
 		this.cuit = cuit;
 	}
 	
-	/*
-	 * Tarifa especial por convenio
-	 */
+	
 	private BigDecimal tarifa;	
 
+	/**
+	 *Retorna la Tarifa especial por convenio. 
+	 * @return
+	 */
 	@RegEx(validation="\\d+\\.\\d{2}")
 	public BigDecimal getTarifa() {
 		return tarifa;
 	}
 
+	/**
+	 * Setea la torifa especial por convenio.
+	 * @param tarifa
+	 */
 	public void setTarifa(BigDecimal tarifa) {
 		this.tarifa = tarifa;
 	}
@@ -98,14 +131,30 @@ public class Empresa {
 	@Persistent(mappedBy="empresa")
 	private Contacto contacto;
 	
+	/**
+	 * Retorna las distintas formas de contactarnos con la empresa.
+	 * @return
+	 */
 	public Contacto getContacto() {
 		return contacto;
 	}
 	
+	/**
+	 * Setea los datos para poder contactarnos con la empresa.
+	 * @param contacto
+	 */
 	public void setContacto(Contacto contacto) {
 		this.contacto = contacto;
 	}
 	
+	/**
+	 * Crea y asocia a la empresa todos los datos para poder contactarla.
+	 * @param direccion
+	 * @param celular
+	 * @param telefono
+	 * @param email
+	 * @return
+	 */
 	@Named("Nuevo")
 	@MemberOrder(name="contacto",sequence="1")
 	public Empresa crearContacto(
@@ -141,10 +190,18 @@ public class Empresa {
 	 */
 	private FormaPago formaPago;
 	
+	/**
+	 * Retorna la forma de pago que puede utilizar la empresa.
+	 * @return
+	 */
     public FormaPago getFormaPago() {
 		return formaPago;
 	}
 
+    /**
+     * Setea la forma de pago que puede utilizar la empresa.
+     * @param formaPago
+     */
 	public void setFormaPago(FormaPago formaPago) {
 		this.formaPago = formaPago;
 	}
@@ -154,18 +211,27 @@ public class Empresa {
 	 */
 	private boolean estado;
 	
-	/*
-	 * No se publica el estado del objeto
+	/**
+	 * Retorna el estado de la empresa.
+	 * 
 	 */
 	@Hidden
 	public boolean isEstado() {
 		return estado;
 	}
 
+	/**
+	 * Setea el estado de la empresa.
+	 * @param estado
+	 */
 	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
    
+	/**
+	 * Permite borrar la empresa creada.
+	 * @return
+	 */
     @Named("Borrar")
     @Bulk
     @MemberOrder(name="accionesEmpresa", sequence = "1")
@@ -209,10 +275,19 @@ public class Empresa {
     private List<Huesped> huespedes = new ArrayList<Huesped>();
     
     //Eagerly para desplegar la lista
+    /**
+     * Retorna un listado de huéspedes.
+     * @return
+     */
     @Named("Listado de huéspedes")
     @Render(Type.EAGERLY)
     public List<Huesped> getHuespedes() { return huespedes; } 
     
+    /**
+     * Agrega un huésped que puede ser relacionado con la empresa.
+     * @param huesped
+     * @return
+     */
     @Named("Agregar Huesped")
     @PublishedAction
     @MemberOrder(name="huespedes",sequence="1")
@@ -221,6 +296,11 @@ public class Empresa {
     	return this;
     }
     
+    /**
+     * Borra un huésped.
+     * @param huesped
+     * @return
+     */
     @Named("Borrar Huesped")
     @MemberOrder(name="huespedes",sequence="2")
     public Empresa remove(final Huesped huesped) {
