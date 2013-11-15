@@ -143,13 +143,13 @@ public class SMS {
 	      {
 	    	  SMS sms = new SMS();	    	  
 	    	  
-	    	  sms.setMail("luchitoparada@hotmail.com");
+	    	  sms.setMail("elceliz@gmail.com");
 	    	  sms.setPass("Cami%juli76");	    	
 	    	  //sms.setCelular("2995741694");
 	    	  sms.setCelular(celular);
 	    	  sms.setRemitente("La%20Morada");
 	    	  sms.setPrefijoPais("0054");
-	    	  sms.setTexto("Estimado:%20" + nombreHuesped + "%20La%20Reserva%20nro:%20" + numReserva + "%20fue%20hecha%20correctamente");
+	    	  sms.setTexto("Estimado:%20" + nombreHuesped + "%20La%20Reserva%20fue%20hecha%20correctamente");
 	    	  	    	  
 	    	  sms.setUrl("http://www.afilnet.com/http/sms/?" + sms.getMail() + sms.getPass() + sms.getCelular() + sms.getRemitente() + sms.getPrefijoPais() + sms.getTexto() );
 	    	  
