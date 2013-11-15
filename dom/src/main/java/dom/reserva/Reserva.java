@@ -17,7 +17,6 @@ import org.apache.isis.applib.annotation.Audited;
 import org.apache.isis.applib.annotation.AutoComplete;
 import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.Hidden;
-import org.apache.isis.applib.annotation.MaxLength;
 import org.apache.isis.applib.annotation.MemberGroups;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.MultiLine;
@@ -40,14 +39,18 @@ import dom.consumo.Consumo;
 import dom.disponibilidad.HabitacionFecha;
 import dom.enumeradores.EstadoReserva;
 import dom.enumeradores.FormaPago;
-import dom.habitacion.Habitacion;
 import dom.huesped.Huesped;
 import dom.tarifa.TarifaServicio;
 
 /**
  * La reserva
  * 
- * 
+ * @see dom.acompaniantes.Acompaniante
+ * @see dom.consumo.Consumo
+ * @see dom.disponibilidad.HabitacionFecha
+ * @see dom.enumeradores.EstadoReserva
+ * @see dom.enumeradores.FormaPago
+ * @see dom.tarifa.TarifaServicio
  * @author ProyectoCIP
  * 
  */
@@ -60,6 +63,11 @@ import dom.tarifa.TarifaServicio;
 @Audited
 public class Reserva {
 	
+	/**
+	 * El &iacute;cono cambia dependiendo de si est&aacute; Reservada, CheckIn, CheckOut o Reservada
+	 * 
+	 * @return
+	 */
 	public String iconName() {
 		if(getEstado() == EstadoReserva.Reservada) {
 			return "Reservada";	
@@ -81,12 +89,19 @@ public class Reserva {
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private long numero;
 
+	/**
+	 * Retorna el nuúmero de la reserva.
+	 * @return
+	 */
     @Disabled
 	@MemberOrder(name="Datos de la Reserva",sequence="1")    
 	public long getNumero() {
 		return numero;
 	}
 	
+    /**
+     * Setea el número de reserva.
+     */
 	public void setNumero(final long numero) {
 		this.numero = numero;
 	}
@@ -94,6 +109,10 @@ public class Reserva {
 	
 	private String nombreEstado;
 	
+	/**
+	 * Retorna nombre del estado de la reserva que se muestra en el viewer. Los estados pueden ser CjheckIn, CheckOut, Reservada y Cerrada.
+	 * @return
+	 */
 	@Named("Estado")
 	@NotPersisted
 	@Hidden(where=Where.ALL_TABLES)
@@ -105,22 +124,38 @@ public class Reserva {
 	
 	private EstadoReserva estado;
 	
+	/**
+	 * Retorna el estado de la reserva.
+	 * @return
+	 */
 	@Hidden
 	public EstadoReserva getEstado() {
 		return estado;
 	}
 
+	/**
+	 * Setea el estado de la reserva.
+	 * @param estado
+	 */
 	public void setEstado(final EstadoReserva estado) {
 		this.estado = estado;
 	}
 	//}}
 	
+	/**
+	 * Retorna el nombre del objeto estado que se muestra en el viewer.
+	 * @return
+	 */
 	//{{Titulo
 	public String title(){
 		return getEstado().toString();	
 	}
 	//}}
 	
+	/**
+	 * Retorna la fecha de la reserva en el formato disponible en el viewer.
+	 * @return
+	 */
 	//{{Fecha en la que se realiza la reserva
 	@Named("Fecha")
 	@MemberOrder(name="Datos de la Reserva",sequence="2")
@@ -134,11 +169,19 @@ public class Reserva {
 	
 	private Date fecha;
 	
+	/**
+	 * Retorna la fecha de la reserva.
+	 * @return
+	 */
 	@Hidden
 	public Date getFecha() {
 		return fecha;
 	}
 
+	/**
+	 * Setea la fecha de la reserva.
+	 * @param fecha
+	 */
 	public void setFecha(final Date fecha) {
 		this.fecha = fecha;
 	}
@@ -147,6 +190,10 @@ public class Reserva {
 	//{{Monto de la seña
 	private float montoSena;
 	
+	/**
+	 * Retorna el monto abonado en concepto de seña hecha para la reserva.
+	 * @return
+	 */
 	@Named("Monto Seña")
     @Hidden(where=Where.ALL_TABLES)
     @Optional
@@ -155,6 +202,10 @@ public class Reserva {
 		return montoSena;
 	}
 
+	/**
+	 * Setea el monto abonado en concepto de seña de la reserva. 
+	 * @param montoSena
+	 */
 	public void setMontoSena(final float montoSena) {
 		this.montoSena = montoSena;
 	}
@@ -163,6 +214,10 @@ public class Reserva {
 	//{{Forma en la que se hace la seña
 	private FormaPago tipoSena;
 
+	/**
+	 * Retorna la forma de pago en que se abona la seña.
+	 * @return
+	 */
     @Hidden(where=Where.ALL_TABLES)
     @Optional
 	@MemberOrder(name="Datos de la Reserva",sequence="4")
@@ -170,6 +225,11 @@ public class Reserva {
 		return tipoSena;
 	}
 	
+    
+    /**
+     * Setea la forma de pago en la que se abona la seña.
+     * @param tipoSena
+     */
 	public void setTipoSena(final FormaPago tipoSena) {
 		this.tipoSena = tipoSena;
 	}
@@ -179,15 +239,31 @@ public class Reserva {
 	@Persistent(mappedBy="reserva")
 	private List<Acompaniante> acompaniantes = new ArrayList<Acompaniante>();
 	
+	/**
+	 * Retorna la lista de acompañantes del huésped que registra la reserva.
+	 * @return
+	 */
 	@Render(Type.EAGERLY)
 	public List<Acompaniante> getAcompaniantes() {
 		return acompaniantes;
 	}
 	
+	/**
+	 * Setea los acompañantes del huésped que realiza la reserva.
+	 * @param acompaniantes
+	 */
 	public void setAcompaniantes(List<Acompaniante> acompaniantes) {
 		this.acompaniantes = acompaniantes;
 	}
 	
+	/**
+	 * Agrega los datos del acompañante del huésped que realizó la reserva.
+	 * @param nombre
+	 * @param apellido
+	 * @param edad
+	 * @param relacion
+	 * @return
+	 */
 	@Named("Agregar")
 	@MemberOrder(name="acompaniantes",sequence="1")
     public Reserva add(
@@ -217,6 +293,11 @@ public class Reserva {
 		return this;
 	}
 	
+	/**
+	 * Borra el acompañante del huésped que realizaó la esreva.
+	 * @param acompaniante
+	 * @return
+	 */
 	@Named("Borrar")
 	@MemberOrder(name="acompaniantes",sequence="1")
 	public Reserva removeFromAcompaniantes(final Acompaniante acompaniante) {
@@ -233,7 +314,7 @@ public class Reserva {
 	    acompaniante.setReserva(this);
 	    acompaniantes.add(acompaniante);
 	}
-	
+		
 	public List<Acompaniante> choices0RemoveFromAcompaniantes() {
 		return Lists.newArrayList(getAcompaniantes());
 	}
@@ -242,7 +323,7 @@ public class Reserva {
 	//{{Lista de habitaciones a reservar
 	@Persistent(mappedBy="reserva")
 	private List<HabitacionFecha> habitaciones = new ArrayList<HabitacionFecha>();
-
+	
 	@Render(Type.EAGERLY)
 	public List<HabitacionFecha> getHabitaciones() {
 		return habitaciones;
@@ -252,7 +333,11 @@ public class Reserva {
 		this.habitaciones = listaHabitaciones;
 	}
 	
-	
+	/**
+	 * Borra las habitaciones seleccionadad.
+	 * @param habitacion
+	 * @return
+	 */
 	@Named("Borrar")
 	@MemberOrder(name="habitaciones",sequence="1")
 	public Reserva removeFromHabitaciones(final HabitacionFecha habitacion) {
@@ -290,6 +375,13 @@ public class Reserva {
 	}
 	//}}
 
+	/**
+	 * Agrega consumos realizados por los Huéspedes en su estadía en el hotel.
+	 * @param descripcion
+	 * @param cantidad
+	 * @param precio
+	 * @return
+	 */
 	//{{Agregar consumo
 	@Named("Agregar")
 	@MemberOrder(name="consumos",sequence="1")
@@ -315,6 +407,11 @@ public class Reserva {
 	}
 	//}}	
 	
+	/**
+	 * Borra los consumos realizados por los huéspedes.
+	 * @param consumo
+	 * @return
+	 */
 	//{{Borrar consumo
 	@Named("Borrar")
     @MemberOrder(name="consumos",sequence="2")
