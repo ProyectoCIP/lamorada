@@ -12,7 +12,7 @@ import org.joda.time.LocalDate;
 import com.google.common.base.Objects;
 
 /**
- * Menú de la bandeja de entrada
+ * Men&uacute; de la bandeja de entrada
  * @author ProyectoCIP
  *
  */

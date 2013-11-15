@@ -1,7 +1,7 @@
 package dom.enumeradores;
 
 /**
- * Enumerador con los años desde 2013 hasta 2017
+ * Enumerador con los a&ntilde;os desde 2013 hasta 2017
  * @author ProyectoCIP
  *
  */

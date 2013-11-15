@@ -2,7 +2,7 @@ package dom.enumeradores;
 
 /**
  * Enumerador con los posibles estado de la reserva: Reservada, CheckIn, CheckOut y Cerrada.
- * @author luis
+ * @author ProyectoCIP
  *
  */
 public enum EstadoReserva {	

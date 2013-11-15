@@ -46,9 +46,9 @@ public class HabitacionFecha {
 	
 	/**
 	 * 
-	 * El ícono cambia dependiendo de si está Disponible, Bloqueada o Reservada
+	 * El &iacute;cono cambia dependiendo de si est&aacute; Disponible, Bloqueada o Reservada
 	 * 
-	 * @return Retorna el nombre del ícono que va a ser usado en el viewer
+	 * @return Retorna el nombre del &iacute;cono que va a ser usado en el viewer
 	 */
 	public String iconName() {
 		if (getEstado() == EstadoHabitacion.BLOQUEADA) { 
@@ -76,7 +76,7 @@ public class HabitacionFecha {
 
 	/**
 	 * 
-	 * @return Es el título que toma el objeto en el viewer
+	 * @return Es el t&iacute;tulo que toma el objeto en el viewer
 	 */
 	public String title() {
 		return getNombreHabitacion();
@@ -111,7 +111,7 @@ public class HabitacionFecha {
 	
 	/**
 	 * 
-	 * @return Retorna el nombre de la habitación
+	 * @return Retorna el nombre de la habitaci&oacute;n
 	 */
 	@Hidden
 	public String getNombreHabitacion() {
@@ -127,7 +127,7 @@ public class HabitacionFecha {
 	
 	/**
 	 * 
-	 * @return Retorna el número Interno de la habitación que se registro en la central telefónica
+	 * @return Retorna el número Interno de la habitaci&oacute;n que se registro en la central telef&oacute;nica
 	 */
 	public int getInterno(){
 		return interno;
@@ -139,7 +139,7 @@ public class HabitacionFecha {
 	
 	/**
 	 * 
-	 * @return Retorna la habitación para volver al formulario objeto que dibuja el viewer
+	 * @return Retorna la habitaci&oacute;n para volver al formulario objeto que dibuja el viewer
 	 * @throws Exception
 	 */
 	@MemberOrder(name="interno",sequence="1")
@@ -154,7 +154,7 @@ public class HabitacionFecha {
 	
 	/**
 	 * 
-	 * @return Retorna el tipo de habitación (Doble, Triple, Cuadruple)
+	 * @return Retorna el tipo de habitaci&oacute;n (Doble, Triple, Cuadruple)
 	 */
 	@Hidden(where=Where.OBJECT_FORMS)
 	public TipoHabitacion getTipoHabitacion() {
@@ -169,7 +169,7 @@ public class HabitacionFecha {
 	
 	/**
 	 * 
-	 * @return Retorna la cantidad de personas que ocupan la habitación
+	 * @return Retorna la cantidad de personas que ocupan la habitaci&oacute;n
 	 */
 	@Named("Personas")
 	public int getPax() {
@@ -185,8 +185,8 @@ public class HabitacionFecha {
 	 * Se ingresa el número de personas, busca en el repositorio
 	 * la tarifa correspondiente a ese número y lo edita.
 	 * 
-	 * @param personas La nueva cantidad de personas que van a ocupar la habitación
-	 * @return Retorna la habitación modificada con el nuevo número de pax
+	 * @param personas La nueva cantidad de personas que van a ocupar la habitaci&oacute;n
+	 * @return Retorna la habitaci&oacute;n modificada con el nuevo número de pax
 	 */
 	@Named("Editar")
 	@MemberOrder(name="pax",sequence="1")
@@ -201,8 +201,8 @@ public class HabitacionFecha {
 	
 	/**
 	 * 
-	 * @param personas La nueva cantidad de personas que van a ocupar la habitación
-	 * @return Si se cumple la condición retorna la cadena que se muestra en el viewer
+	 * @param personas La nueva cantidad de personas que van a ocupar la habitaci&oacute;n
+	 * @return Si se cumple la condici&oacute;n retorna la cadena que se muestra en el viewer
 	 */
 	public String validatePersonas(final int personas){
 		return mayorPaxPermitido(personas) ? null : "El número de personas es mayor al permitido";
@@ -210,8 +210,8 @@ public class HabitacionFecha {
 	
 	/**
 	 * 
-	 * @param personas La nueva cantidad de personas que van a ocupar la habitación
-	 * @return Si el número de personas excede el máximo permitido en esa habitación retorna false
+	 * @param personas La nueva cantidad de personas que van a ocupar la habitaci&oacute;n
+	 * @return Si el número de personas excede el m&aacute;ximo permitido en esa habitaci&oacute;n retorna false
 	 */
 	private boolean mayorPaxPermitido(final int personas) {
 		if((getTipoHabitacion() == TipoHabitacion.Doble) && (personas > 2)) { return false;
@@ -231,7 +231,7 @@ public class HabitacionFecha {
 	
 	/**
 	 * 
-	 * @return La tarifa que se cobra por reservar esta habitación
+	 * @return La tarifa que se cobra por reservar esta habitaci&oacute;n
 	 */
 	public BigDecimal getTarifa() {
 		return tarifa;
@@ -245,7 +245,7 @@ public class HabitacionFecha {
 	
 	/**
 	 * 
-	 * @return Retorna el objeto reserva en el que esta habitación esta registrada
+	 * @return Retorna el objeto reserva en el que esta habitaci&oacute;n esta registrada
 	 */
 	@Named("Estado")
 	@Disabled

@@ -10,7 +10,7 @@ import javax.mail.internet.MimeMessage;
 import org.joda.time.LocalDate;
 
 /**
- * Envía un mail al posible huésped informando fechas, disponibilidad, etc.
+ * Env&iacute;a un mail al posible hu&eacute;sped informando fechas, disponibilidad, etc.
  * @author ProyectoCIP
  *
  */
@@ -75,7 +75,7 @@ public class Envio {
 	}
 	
 	/**
-	 * Envía el mail al posible huésped.
+	 * Env&iacute;a el mail al posible hu&eacute;sped.
 	 * @param nombre
 	 * @param apellido
 	 * @param telefono

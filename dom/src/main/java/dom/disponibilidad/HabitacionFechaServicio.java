@@ -34,7 +34,7 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 	
 	/**
 	 * 
-	 * @return Retorna el nombre del ícono que va a ser usado en el viewer
+	 * @return Retorna el nombre del &iacute;cono que va a ser usado en el viewer
 	 */
 	public String iconName() {
 		return "disponibilidad";
@@ -44,7 +44,7 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 	 * 
 	 * Puede buscar disponibilidad en una fecha o en un rango de fechas
 	 * 
-	 * @param desde La fecha desde (si es un solo día se usa esta)
+	 * @param desde La fecha desde (si es un solo d&iacute;a se usa esta)
 	 * @param hasta La fecha hasta
 	 * @return Retorna una lista (mapa de disponibilidad) de objetos Disponibilidad
 	 */
@@ -177,8 +177,8 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 	/**
 	 * 
 	 * @param fecha La fecha que se quiere revisar
-	 * @param nombre La habitación que se quiere revisar
-	 * @return Retorna un objeto HabitacionFecha si es que existe una reserva de esta habitación en esta fecha
+	 * @param nombre La habitaci&oacute;n que se quiere revisar
+	 * @return Retorna un objeto HabitacionFecha si es que existe una reserva de esta habitaci&oacute;n en esta fecha
 	 */
 	@Programmatic
 	public HabitacionFecha existeReserva(final LocalDate fecha,final String nombre) {
@@ -197,7 +197,7 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 	 * 
 	 * @param desde La fecha desde
 	 * @param hasta La fecha hasta
-	 * @return Retorna la cantidad de días que existen la fecha desde y la fecha hasta
+	 * @return Retorna la cantidad de d&iacute;as que existen la fecha desde y la fecha hasta
 	 */
 	private int getDiferenciaDesdeHasta(final LocalDate desde,final LocalDate hasta) {
 	   	//calcula la diferencia entre la fecha desde y hasta
@@ -217,8 +217,8 @@ public class HabitacionFechaServicio extends AbstractFactoryAndRepository {
 	
 	/**
 	 * 
-	 * @param nombre Patron de búsqueda
-	 * @return Retorna los objetos que coinciden con el patrón
+	 * @param nombre Patron de b&uacute;squeda
+	 * @return Retorna los objetos que coinciden con el patr&oacute;n
 	 */
 	@Hidden
 	public List<HabitacionFecha> habitacionesReservadas(final String nombre) {

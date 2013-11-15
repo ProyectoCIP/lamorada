@@ -13,12 +13,12 @@ import dom.habitacion.Habitacion;
 
 /**
  * 
- * La formula para calcular el porcentaje de ocupación en los hoteles está determinada
+ * La f&oacute;rmula para calcular el porcentaje de ocupaci&oacute;n en los hoteles está determinada
  * por una regla de tres simples: 
  * 
  * [(La cantidad de personas que estan persistidas*100)/(La cantidad de dias del mes*La cantidad de personas que ocupan el hotel por dia)]
  * 
- * Los objetos ocupación muestran el porcentaje de ocupación de los doce meses
+ * Los objetos ocupaci&oacute;n muestran el porcentaje de ocupaci&oacute;n de los doce meses
  * en un año que selecciona el usuario.
  * 
  * @see dom.enumeradores.TipoHabitacion
@@ -40,7 +40,7 @@ public class Ocupacion {
 
 	/**
 	 * 
-	 * @return Retorna el a&ntilde;o del que se quiere saber los porcentajes de ocupación
+	 * @return Retorna el a&ntilde;o del que se quiere saber los porcentajes de ocupaci&oacute;n
 	 */
 	@Hidden
 	public String getAño() {
@@ -48,7 +48,7 @@ public class Ocupacion {
 	}
 
 	/**
-	 * Setea el año del que se quiere saber los porcentajes de ocupación
+	 * Setea el año del que se quiere saber los porcentajes de ocupaci&oacute;n
 	 * @param año 
 	 */
 	public void setAño(final String año) {
@@ -98,7 +98,7 @@ public class Ocupacion {
 	
 	/**
 	 * Se ve en el viewer sobre la columna "Plazas"
-	 * @return Retorna la cantidad personas que pueden ocupar el hotel dependiendo de la cantidad de personas que se pueden alojar como máximo en cada habitación
+	 * @return Retorna la cantidad personas que pueden ocupar el hotel dependiendo de la cantidad de personas que se pueden alojar como máximo en cada habitaci&oacute;n
 	 */
 	@Named("Plazas")
 	public String getPlazasTotales() {
@@ -106,7 +106,7 @@ public class Ocupacion {
 	}
 	
 	/**
-	 * Setea la cantidad total de personas que pueden ocupar el hotel dependiendo de la cantidad de personas que se pueden alojar como máximo en cada habitación
+	 * Setea la cantidad total de personas que pueden ocupar el hotel dependiendo de la cantidad de personas que se pueden alojar como máximo en cada habitaci&oacute;n
 	 * @param plazasTotales 
 	 */
 	public void setPlazasTotales(final String plazasTotales) {
@@ -137,7 +137,7 @@ public class Ocupacion {
 	
 	/**
 	 * 
-	 * @return Retorna el porcentaje de ocupación que tiene este mes
+	 * @return Retorna el porcentaje de ocupaci&oacute;n que tiene este mes
 	 */
 	public String getPorcentaje() {
 		
@@ -145,7 +145,7 @@ public class Ocupacion {
 	}
 
 	/**
-	 * Setea el porcentaje de ocupación que tiene este mes
+	 * Setea el porcentaje de ocupaci&oacute;n que tiene este mes
 	 * @param porcentaje
 	 */
 	public void setPorcentaje(final String porcentaje) {
@@ -172,8 +172,8 @@ public class Ocupacion {
 	
 	/**
 	 * 
-	 * @param tipo El tipo de habitación (Doble, Triple, Cuadruple)
-	 * @return Retorna el número de personas dependiendo del tipo
+	 * @param tipo El tipo de habitaci&oacute;n (Doble, Triple, Cuadruple)
+	 * @return Retorna el n&uacute;mero de personas dependiendo del tipo
 	 */
 	private int paxPlazas(final TipoHabitacion tipo) {
 		

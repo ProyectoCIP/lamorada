@@ -36,7 +36,7 @@ import dom.reserva.Reserva;
 public class Habitacion {
 	
 	/**
-	 * Retorna el nombre del icono para la habitación.
+	 * Retorna el nombre del &iacute;cono para la habitaci&oacute;n.
 	 * @return
 	 */
 	public String iconName() {
@@ -48,7 +48,7 @@ public class Habitacion {
 	private String nombre;
 	
 	/**
-	 * Retorna el nombre de la habitación creada.
+	 * Retorna el nombre de la habitaci&oacute;n creada.
 	 * @return
 	 */
 	@Title
@@ -59,7 +59,7 @@ public class Habitacion {
 	}
 	
 	/**
-	 * Setea el nombre de la habitación que se va a crear.
+	 * Setea el nombre de la habitaci&oacute;n que se va a crear.
 	 * @param nombre
 	 */
 	public void setNombre(final String nombre) {
@@ -71,7 +71,7 @@ public class Habitacion {
 	private int interno;
 	
 	/**
-	 * Retorna el número de teléfono interno de la habitación.
+	 * Retorna el n&uacute;mero de tel&eacute;fono interno de la habitaci&oacute;n.
 	 * @return
 	 */
 	public int getInterno(){
@@ -79,7 +79,7 @@ public class Habitacion {
 	}
 	
 	/**
-	 * Setea el número de teléfono interno de la habitación.
+	 * Setea el n&uacute;mero de tel&eacute;fono interno de la habitaci&oacute;n.
 	 * @param interno
 	 */
 	public void setInterno(final int interno) {
@@ -88,7 +88,7 @@ public class Habitacion {
 	}
 	
 	/**
-	 * Actualiza el número de teléfono interno de la habitación seleccionada.
+	 * Actualiza el n&uacute;mero de tel&eacute;fono interno de la habitaci&oacute;n seleccionada.
 	 * @param nuevoInterno
 	 */
 	private void actualizarInternos(final int nuevoInterno) {
@@ -111,7 +111,7 @@ public class Habitacion {
 	private TipoHabitacion tipoHabitacion;
 		
 	/**
-	 * Retorna el tipo de habitación, si es single, doble, triple, etc.
+	 * Retorna el tipo de habitaci&oacute;n, si es single, doble, triple, etc.
 	 * @return
 	 */
 	@MemberOrder(sequence = "2")
@@ -120,7 +120,7 @@ public class Habitacion {
 	}
 	
 	/**
-	 * Setea el tipo de habitación o cantidad de personas que se pueden alojar.
+	 * Setea el tipo de habitaci&oacute;n o cantidad de personas que se pueden alojar.
 	 * @param tipoHabitacion
 	 */
 	public void setTipoHabitacion(final TipoHabitacion tipoHabitacion) {
@@ -131,7 +131,7 @@ public class Habitacion {
 	private boolean estado;
 	
 	/**
-	 * Retorna el estado de la habitación.
+	 * Retorna el estado de la habitaci&oacute;n.
 	 * @return
 	 */
 	public boolean isEstado() {
@@ -139,7 +139,7 @@ public class Habitacion {
 	}
 	
 	/**
-	 * Setea el estado de la habitación.
+	 * Setea el estado de la habitaci&oacute;n.
 	 * @param estado
 	 */
 	public void setEstado(final boolean estado) {
@@ -148,7 +148,7 @@ public class Habitacion {
 	//}}
 	
 	/**
-	 * Méto que crea un listado de las habtaciones en el sistema las cuelas pueden ser seleccionadas para ser editadas o borradas.
+	 * M&eacute;todo que crea un listado de las habtaciones en el sistema las cuelas pueden ser seleccionadas para ser editadas o borradas.
 	 * @return
 	 */
 	@Named("Borrar")

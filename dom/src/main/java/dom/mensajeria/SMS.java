@@ -17,7 +17,7 @@ public class SMS {
 	private String url;	
 	
 	/**
-	 * Retorna la URL completa por donde se envía el SMS.
+	 * Retorna la URL completa por donde se env&iacute;a el SMS.
 	 * @return la url con los datos para enviar el SMS
 	 */
 	public String getUrl() {
@@ -65,7 +65,7 @@ public class SMS {
 	}
 	
 	/**
-	 * Retorna el celular de destino. Ej.: 29957556677 (Celular de Neuquén)
+	 * Retorna el celular de destino. Ej.: 29957556677 (Celular de Neuqu&eacute;n)
 	 * @return el celular del destinatario.
 	 */
 	public String getCelular() {
@@ -73,7 +73,7 @@ public class SMS {
 	}
 	
 	/**
-	 * Setea el celular de destino. Ej.: 29957556677 (Celular de Neuquén)
+	 * Setea el celular de destino. Ej.: 29957556677 (Celular de Neuqu&eacute;n)
 	 * @param celular - el celular del destinatario.
 	 */
 	public void setCelular(final String celular) {
@@ -97,15 +97,15 @@ public class SMS {
 	}
 	
 	/**
-	 * Retorna el prefijo del país donde se enviará el SMS. Ej.:  0054 (Argentina)
-	 * @return el prefijo del país donde se enviará el SMS
+	 * Retorna el prefijo del pa&iacute;s donde se enviará el SMS. Ej.:  0054 (Argentina)
+	 * @return el prefijo del pa&iacute;s donde se enviará el SMS
 	 */
 	public String getPrefijoPais() {
 		return prefijoPais;
 	}
 	
 	/**
-	 * Setea el prefijo del país donde se enviará el SMS. Ej.:  0054 (Argentina)
+	 * Setea el prefijo del pa&iacute;s donde se enviará el SMS. Ej.:  0054 (Argentina)
 	 * @param prefijoPais
 	 */
 	public void setPrefijoPais(final String prefijoPais) {
@@ -131,7 +131,7 @@ public class SMS {
 	//Método para probar el envío de SMS a celulares. Hay que sacarlo cuando se implemente en la reserva.
 	
 	/**
-	 * Método que arma la URL completa con todos los datos de la cuenta del proveedor del servicio, los datos del destinatario y el remitente. Abre una conexión HTTP y envía 
+	 * M&eacute;todo que arma la URL completa con todos los datos de la cuenta del proveedor del servicio, los datos del destinatario y el remitente. Abre una conexión HTTP y env&iacute;a 
 	 * el SMS al destinatario.
 	 * @param nombreHuesped - el nombre y apellido del huesped que recibirá el SMS
 	 * @param celular - el celular del huesped.

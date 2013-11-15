@@ -36,7 +36,7 @@ import dom.habitacion.Habitacion;
 public class Huesped {
 	
 	/**
-	 * Muestra el ícon del huesped
+	 * Muestra el ícono del hu&eacute;sped
 	 * @return el nombre del ícon que se va a usar en el viewer.
 	 */
 	public String iconName() {
@@ -116,7 +116,7 @@ public class Huesped {
 	private String dni;
 	
 	/**
-	 * Retorna el número de DNI del huesped.
+	 * Retorna el n&uacute;mero de DNI del huesped.
 	 * @return el DNI del huesped
 	 */
 	@MemberOrder(sequence = "4")
@@ -140,7 +140,7 @@ public class Huesped {
 	private Contacto contacto;
 	
 	/**
-	 * Retorna los datos de contacto del huesped, como la dirección, mail, teléfono y celular.
+	 * Retorna los datos de contacto del huesped, como la direcci&oacute;n, mail, tel&eacute;fono y celular.
 	 * @return
 	 */
 	public Contacto getContacto() {
@@ -148,7 +148,7 @@ public class Huesped {
 	}
 	
 	/**
-	 * Método que setea los datos de contacto del huesped, como la dirección, mail, teléfono y celular.
+	 * M&eacute;todo que setea los datos de contacto del huesped, como la direcci&oacute;n, mail, tel&eacute;fono y celular.
 	 * @param contacto
 	 */
 	public void setContacto(final Contacto contacto) {
@@ -156,7 +156,7 @@ public class Huesped {
 	}
 	
 	/**
-	 * Metodo que crea los datos de contacto del huesped. Recibe como parámetros la dirección, el mail, teléfono y celular.
+	 * Metodo que crea los datos de contacto del huesped. Recibe como par&aacute;metros la direcci&oacute;n, el mail, tel&eacute;fono y celular.
 	 * @param direccion
 	 * @param telefono
 	 * @param celular
@@ -216,8 +216,8 @@ public class Huesped {
 	//}}
 	
 	/**
-	 * Muestra todos los huéspedes creados en el sistema.
-	 * @return los huéspedes
+	 * Muestra todos los hu&eacute;spedes creados en el sistema.
+	 * @return los hu&eacute;spedes
 	 */
 	@Named("Borrar")
 	@Bulk

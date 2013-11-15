@@ -1,7 +1,7 @@
 package dom.enumeradores;
 
 /**
- * Enumerador con las posibles forma de pago: Crédito, Débito, Efectivo, Transferencia.
+ * Enumerador con las posibles forma de pago: Cr&eacute;dito, D&eacute;bito, Efectivo, Transferencia.
  * @author ProyectoCIP
  *
  */

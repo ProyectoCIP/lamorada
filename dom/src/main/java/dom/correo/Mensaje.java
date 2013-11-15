@@ -96,7 +96,7 @@ public class Mensaje implements Comparable<Mensaje> {
 	
 	/**
 	 * 
-	 * @return Retorna el télefono del remitente
+	 * @return Retorna el t&eacute;lefono del remitente
 	 */
 	@MemberOrder(sequence="4")
 	@Optional
@@ -105,7 +105,7 @@ public class Mensaje implements Comparable<Mensaje> {
 	}
 	
 	/**
-	 * Setea el télefono del remitente
+	 * Setea el t&eacute;lefono del remitente
 	 * @param telefono
 	 */
 	public void setTelefono(final String telefono) {
@@ -114,7 +114,7 @@ public class Mensaje implements Comparable<Mensaje> {
 
 	/**
 	 * 
-	 * Es la segunda parte del título que toma el objeto en el viewer
+	 * Es la segunda parte del t&iacute;tulo que toma el objeto en el viewer
 	 * 
 	 * @return El nombre del remitente
 	 */	

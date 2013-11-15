@@ -41,7 +41,7 @@ public class Contacto {
 	
 	/**
 	 * 
-	 * @return Retorno el nombre del ícono que va a ser usado en el viewer
+	 * @return Retorno el nombre del &iacute;cono que va a ser usado en el viewer
 	 */
 	public String iconName() {
 		return "direccion";
@@ -49,7 +49,7 @@ public class Contacto {
 	
 	/**
 	 * 
-	 * @return Es el título que toma el objeto en el viewer
+	 * @return Es el t&iacute;tulo que toma el objeto en el viewer
 	 */
 	public String title() {
 		return getDomicilio();

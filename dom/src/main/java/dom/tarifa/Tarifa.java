@@ -35,7 +35,7 @@ import dom.habitacion.Habitacion;
 public class Tarifa {
 	
 	/**
-	 * Muestra el nombre del icono de la tarifa.
+	 * Muestra el nombre del &iacute;cono de la tarifa.
 	 * @return
 	 */
 	public String iconName() {
@@ -53,7 +53,7 @@ public class Tarifa {
 	private int pax;
 	
 	/**
-	 * Retorna la cantidad de huéspedes ingresados.
+	 * Retorna la cantidad de hu&eacute;spedes ingresados.
 	 * @return
 	 */
 	@Hidden(where=Where.ALL_TABLES)
@@ -70,7 +70,7 @@ public class Tarifa {
 	}
 	
 	/**
-	 * Valida que no se ingresen mas de cuatro huéspedes.
+	 * Valida que no se ingresen m&aacute;s de cuatro hu&eacute;spedes.
 	 * @param pax
 	 * @return
 	 */
@@ -81,7 +81,7 @@ public class Tarifa {
 	private BigDecimal precio;
 
 	/**
-	 * Retorna el precio que corresponde a la cantidad de huéspedes ingresados.
+	 * Retorna el precio que corresponde a la cantidad de hu&eacute;spedes ingresados.
 	 * @return
 	 */
 	public BigDecimal getPrecio() {
@@ -89,7 +89,7 @@ public class Tarifa {
 	}
 
 	/**
-	 * Setea el precio de acuerdo a la cantidad de Huéspedes ingresados.
+	 * Setea el precio de acuerdo a la cantidad de Hu&eacute;spedes ingresados.
 	 * @param precio
 	 */
 	public void setPrecio(final BigDecimal precio) {

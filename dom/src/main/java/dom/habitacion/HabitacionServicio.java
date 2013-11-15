@@ -24,7 +24,7 @@ import dom.habitacion.Habitacion;
 public class HabitacionServicio extends AbstractFactoryAndRepository{
 
 	/**
-	 * Retorna el nombre del icono de la habitación.
+	 * Retorna el nombre del &iacute;cono de la habitaci&oacute;n.
 	 * @return
 	 */
 	// {{iconName
@@ -34,7 +34,7 @@ public class HabitacionServicio extends AbstractFactoryAndRepository{
     // }}
     	
     /**
-     * Método que sirve para crear habitaciones en el sistema.
+     * M&eacute;todo que sirve para crear habitaciones en el sistema.
      * @param nombre
      * @param tipoHabitacion
      * @param interno
@@ -67,7 +67,7 @@ public class HabitacionServicio extends AbstractFactoryAndRepository{
 	}
 	
 	/**
-	 * Método que lista todas las habitaciones creadas en el sistema con sus respectivos datos.
+	 * M&eacute;todo que lista todas las habitaciones creadas en el sistema con sus respectivos datos.
 	 * @return
 	 */
 	@Named("Listar")
@@ -80,7 +80,7 @@ public class HabitacionServicio extends AbstractFactoryAndRepository{
     }
 	/**
 	 * 
-     * Método para llenar el DropDownList de habitacion, con la posibilidad de que te autocompleta las coincidencias al ir tipeando
+     * M&eacute;todo para llenar el DropDownList de habitacion, con la posibilidad de que te autocompleta las coincidencias al ir tipeando
      */
     @Hidden
     public List<Habitacion> completaHabitaciones(final String nombre) {

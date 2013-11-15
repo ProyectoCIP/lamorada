@@ -27,7 +27,7 @@ public class TarifaServicio extends AbstractFactoryAndRepository {
 	private Tarifa tarifa;
 	
 	/**
-	 * El método puede crear tarifas de acuerdo a la cantidad de huéspedes, valida que no se ingresen mas de 4 huéspedes.
+	 * El m&eacute;todo puede crear tarifas de acuerdo a la cantidad de hu&eacute;spedes, valida que no se ingresen mas de 4 hu&eacute;spedes.
 	 * @param cantidad
 	 * @param precio
 	 * @return
@@ -60,7 +60,7 @@ public class TarifaServicio extends AbstractFactoryAndRepository {
 	}
 	
 	/**
-	 * El método valida que no se ingresen mas de cuatro huéspedes, ya que es la capacidad máxima de las habitaciones.
+	 * El m&eacute;todo valida que no se ingresen mas de cuatro hu&eacute;spedes, ya que es la capacidad m&aacute;xima de las habitaciones.
 	 * @param cantidad
 	 * @param precio
 	 * @return
@@ -70,7 +70,7 @@ public class TarifaServicio extends AbstractFactoryAndRepository {
 	}
 	
 	/**
-	 * Muestra un listado con las tarifas y sus correspondiente cantidad de huéspedes.
+	 * Muestra un listado con las tarifas y sus correspondiente cantidad de hu&eacute;spedes.
 	 * @return
 	 */
 	@MemberOrder(sequence="2")
@@ -81,7 +81,7 @@ public class TarifaServicio extends AbstractFactoryAndRepository {
 	}
 	
 	/**
-	 * Este método valida que no se repita la tarifa ingresada previamente.
+	 * Este m&eacute;todo valida que no se repita la tarifa ingresada previamente.
 	 * @param pax
 	 * @return
 	 */

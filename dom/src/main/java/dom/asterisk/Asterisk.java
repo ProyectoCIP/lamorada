@@ -17,7 +17,7 @@ import org.asteriskjava.manager.event.PeerlistCompleteEvent;
 import org.asteriskjava.manager.response.ManagerResponse;
 
 /**
- * Esta clase permite conectar con la central PBX Asterisk y poder realizar llamdas a través de internet.-
+ * Esta clase permite conectar con la central PBX Asterisk y poder realizar llamdas a trav&eacute;s de internet.-
  * @author ProyectoCIP
  *
  */
@@ -37,7 +37,7 @@ public class Asterisk extends AbstractManagerEventListener
     }
 
     /**
-     * Método que registra los eventos de las llamadas, se loguea en una cuenta creada en Asterisk, hace un listado de los usuarios conectados
+     * M&eacute;todo que registra los eventos de las llamadas, se loguea en una cuenta creada en Asterisk, hace un listado de los usuarios conectados
      * espera 60 segundos para registrar eventos y se desloguea.-
      * @throws Exception
      */
@@ -52,7 +52,7 @@ public class Asterisk extends AbstractManagerEventListener
     }    
     
     /**
-     * Método que detecta tipos de eventos PeerStatusEvent y se activa cuando un usuario cambia su estado
+     * M&eacute;todo que detecta tipos de eventos PeerStatusEvent y se activa cuando un usuario cambia su estado
      * de Conectado/Desconectado.-
      */
     protected void handleEvent(PeerStatusEvent event){
@@ -65,7 +65,7 @@ public class Asterisk extends AbstractManagerEventListener
     }
 
     /**
-     * Método que detecta e informa en que estado está la llamada de un usuario determinado.-
+     * M&eacute;todo que detecta e informa en que estado est&aacute; la llamada de un usuario determinado.-
      */
     protected void handleEvent(ExtensionStatusEvent event){
         String usuario=event.getExten()+": ";
@@ -94,7 +94,7 @@ public class Asterisk extends AbstractManagerEventListener
     }
 
     /**
-     * Método que detecta eventos como el tipo de canal, el usuario y su estado.-
+     * M&eacute;todo que detecta eventos como el tipo de canal, el usuario y su estado.-
      */
     protected void handleEvent(PeerEntryEvent event){
         String tipoCanal=event.getChannelType();
@@ -104,7 +104,7 @@ public class Asterisk extends AbstractManagerEventListener
     }
 
     /**
-     * Métod que informa la cantidad de usuarios.
+     * M&eacute;todo que informa la cantidad de usuarios.
      */
     protected void handleEvent(PeerlistCompleteEvent event){
         Integer numUsuarios=event.getListItems();
@@ -112,7 +112,7 @@ public class Asterisk extends AbstractManagerEventListener
     }
 
     /**
-     * Método que permite inicializar la lista de usuarios y los eventos de cada uno.-
+     * M&eacute;todo que permite inicializar la lista de usuarios y los eventos de cada uno.-
      * @throws Exception
      */
     public void listarUsuarios() throws Exception{        
@@ -121,7 +121,7 @@ public class Asterisk extends AbstractManagerEventListener
     }
 
     /**
-     * Método que recibe por parámetro el número de teléfono de destino y realiza la llamada. Setea datos como el contexto, canal, extensión, etc.
+     * M&eacute;todo que recibe por par&aacute;metro el n&uacute;mero de tel&eacute;fono de destino y realiza la llamada. Setea datos como el contexto, canal, extensión, etc.
      * Una vez que se realiza la llamda se espera 30 segundos para que el destinatario conteste y luego se desloguea.
      * @param destino
      * @throws IOException

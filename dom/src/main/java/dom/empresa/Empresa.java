@@ -33,7 +33,7 @@ import dom.disponibilidad.HabitacionFecha;
 import dom.enumeradores.FormaPago;
 
 /**
- * Crea una nueva empresa la cual puede ser relacionada a uno o varios huéspedes.
+ * Crea una nueva empresa la cual puede ser relacionada a uno o varios hu&eacute;spedes.
  * @author ProyectoCIP
  * @see dom.huesped.Huesped
  * @see dom.contacto.Contacto
@@ -48,7 +48,7 @@ import dom.enumeradores.FormaPago;
 public class Empresa {
 		
 	/**
-	 * Retorna el nombre del ícono que va a ser usado en el viewer
+	 * Retorna el nombre del &iacute;cono que va a ser usado en el viewer
 	 * @return
 	 */	
 	public String iconName() {
@@ -61,7 +61,7 @@ public class Empresa {
 	private String razonSocial;
 
 	/**
-	 * Retorna el nombre o Razón Social de la empresa creada.
+	 * Retorna el nombre o Raz&oacute;n Social de la empresa creada.
 	 * @return
 	 */
 	@Title
@@ -72,7 +72,7 @@ public class Empresa {
 	}
 
 	/**
-	 * Setea el nombre o Razón Social de la empresa.
+	 * Setea el nombre o Raz&oacute;n Social de la empresa.
 	 * @param razonSocial
 	 */
 	public void setRazonSocial(String razonSocial) {
@@ -276,7 +276,7 @@ public class Empresa {
     
     //Eagerly para desplegar la lista
     /**
-     * Retorna un listado de huéspedes.
+     * Retorna un listado de hu&eacute;spedes.
      * @return
      */
     @Named("Listado de huéspedes")
@@ -284,7 +284,7 @@ public class Empresa {
     public List<Huesped> getHuespedes() { return huespedes; } 
     
     /**
-     * Agrega un huésped que puede ser relacionado con la empresa.
+     * Agrega un hu&eacute;sped que puede ser relacionado con la empresa.
      * @param huesped
      * @return
      */
@@ -297,7 +297,7 @@ public class Empresa {
     }
     
     /**
-     * Borra un huésped.
+     * Borra un hu&eacute;sped.
      * @param huesped
      * @return
      */

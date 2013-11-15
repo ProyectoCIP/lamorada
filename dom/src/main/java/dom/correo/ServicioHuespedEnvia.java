@@ -11,7 +11,7 @@ import org.joda.time.LocalDate;
 public class ServicioHuespedEnvia extends AbstractFactoryAndRepository {
 	
 	 /**
-     * Menú para hacer consultas de disponibilidad
+     * Men&uacute; para hacer consultas de disponibilidad
      * @return Retorna el nombre del icon ServicioBandejaDeEntrada que va a ser usado en el viewer.
      */
 	public String iconName() {
@@ -19,7 +19,7 @@ public class ServicioHuespedEnvia extends AbstractFactoryAndRepository {
 	}
 
 	/**
-	 * Método que envía el mensaje en forma de correo electrónico a la recepción del hotel
+	 * M&eacute;todo que env&iacute;a el mensaje en forma de correo electrónico a la recepción del hotel
 	 * @param nombre
 	 * @param apellido
 	 * @param telefono

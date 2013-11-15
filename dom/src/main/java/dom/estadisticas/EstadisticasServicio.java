@@ -28,7 +28,7 @@ public class EstadisticasServicio extends AbstractFactoryAndRepository {
 	
 	/**
 	 * 
-	 * @return Retorna el nombre del ícono que va a ser usado en el viewer
+	 * @return Retorna el nombre del &iacute;cono que va a ser usado en el viewer
 	 */
 	public String iconName() {
 		return "estadisticas";
@@ -125,7 +125,7 @@ public class EstadisticasServicio extends AbstractFactoryAndRepository {
 	 * 
 	 * @param año El año
 	 * @param mes El mes
-	 * @return Retorna la cantidad de días que tiene ese mes en ese año
+	 * @return Retorna la cantidad de d&iacute;as que tiene ese mes en ese año
 	 */
 	private int plazas(final int año,final int mes) {
 		
