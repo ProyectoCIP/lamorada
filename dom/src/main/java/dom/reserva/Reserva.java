@@ -43,7 +43,8 @@ import dom.huesped.Huesped;
 import dom.tarifa.TarifaServicio;
 
 /**
- * La reserva
+ * La reserva es la clase principal del sistema, representa los diferentes estados
+ * por los que puede pasar una habitación una vez que es ocupada.
  * 
  * @see dom.acompaniantes.Acompaniante
  * @see dom.consumo.Consumo
@@ -305,7 +306,11 @@ public class Reserva {
 		container.removeIfNotAlready(acompaniante);
 		return this;
 	}	
-	
+
+	/**
+	 * Método funcional del framework que relaciona ambos objetos
+	 * @param Acompa&ntilde;ante El acompa&ntilde;ante que se agrega a esta reserva
+	 */
 	@Hidden
 	public void addToAcompaniantes(final Acompaniante acompaniante) {
 	    if(acompaniante == null || acompaniantes.contains(acompaniante)) {
@@ -324,6 +329,10 @@ public class Reserva {
 	@Persistent(mappedBy="reserva")
 	private List<HabitacionFecha> habitaciones = new ArrayList<HabitacionFecha>();
 	
+	/**
+	 * 
+	 * @return Retorna la lista de habitaciones reservadas en esta reserva
+	 */
 	@Render(Type.EAGERLY)
 	public List<HabitacionFecha> getHabitaciones() {
 		return habitaciones;
@@ -455,13 +464,21 @@ public class Reserva {
 	//{{Comentarios - No se muestran cuando se lista la reserva
 	private String comentario;
 	
+	/**
+	 * 
+	 * @return Retorna un comentario de la reserva
+	 */
 	@MultiLine(numberOfLines=3)
 	@MemberOrder(name="Datos de la Reserva",sequence="5")
 	@Hidden(where=Where.ALL_TABLES)
 	public String getComentario() {
 		return comentario;
 	}
-
+	
+	/**
+	 * Setea un comentario de la reserva
+	 * @param comentario
+	 */
 	public void setComentario(final String comentario) {
 		this.comentario = comentario;
 	}
@@ -470,11 +487,19 @@ public class Reserva {
 	//{{Huesped
 	private Huesped huesped;
 
+	/**
+	 * 
+	 * @return Retorna el huesped que hizo la reserva
+	 */
 	@MemberOrder(name="Datos de la Reserva",sequence="6")
 	public Huesped getHuesped() {
 		return huesped;
 	}
 
+	/**
+	 * Setea el huesped de la reserva
+	 * @param huesped
+	 */
 	public void setHuesped(final Huesped huesped) {
 		this.huesped = huesped;
 	}	
@@ -484,16 +509,28 @@ public class Reserva {
 	//{{Si el huesped viene con empresa esta la opcion de cobrar la tarifa por convenio
 	private boolean tarifaEmpresa;
 
+	/**
+	 * 
+	 * @return Retorna si se puede cobrar la tarifa por convenio con la empresa
+	 */
 	@Disabled
 	@MemberOrder(name="Datos de la Reserva", sequence="7")
 	public boolean isTarifaEmpresa() {
 		return tarifaEmpresa;
 	}
 
+	/**
+	 * Setea si se puede cobrar la tarifa por convenio con la empresa
+	 * @param tarifaEmpresa
+	 */
 	public void setTarifaEmpresa(final boolean tarifaEmpresa) {
 		this.tarifaEmpresa = tarifaEmpresa;
 	}
 	
+	/**
+	 * 
+	 * @return Retorna la reserva con el estado aplicado
+	 */
 	@Named("On/Off")
 	@MemberOrder(name="tarifaEmpresa",sequence="1")
 	public Reserva tarifaEmpresa() {
@@ -502,6 +539,9 @@ public class Reserva {
 		return this;
 	}
 	
+	/**
+	 * Actualiza el precio de todas las habitaciones que estan esta reserva
+	 */
 	private void actualizarTarifas() {
 		for(HabitacionFecha h : getHabitaciones()) {
 			if(isTarifaEmpresa()) {			
@@ -518,6 +558,9 @@ public class Reserva {
 	}
 	//}}
 	
+	/**
+	 * Borra la reserva
+	 */
 	//{{Accion
 	@Named("Borrar")
 	public void borrarReserva() {
@@ -555,40 +598,47 @@ public class Reserva {
 	//}}
  
     //{{ Muestra el total a pagar (tiene en cuenta consumos, descuentos...)
-    @SuppressWarnings("unused")
-	private BigDecimal total;
+    private BigDecimal total;
     
+    /**
+     * 
+     * @return Retorna el total a cobrar (incluye los servicios y los descuentos)
+     */
     @Disabled
     @NotPersisted
     @MemberOrder(name="Datos del Cierre",sequence="4")
     public BigDecimal getTotal() {
     	
-    	BigDecimal total = new BigDecimal(0);
-    	
+    	total = new BigDecimal(0);
+ 
     	/*
     	 * El precio de las habitaciones
     	 */
     	for(HabitacionFecha h : getHabitaciones()) {
-    		total.add(h.getTarifa());
+    		total = total.add(h.getTarifa());
     	}
-    	
+
     	/*
     	 * El precio de las consumiciones
     	 */
     	for(Consumo c : getConsumos()) {
-    		total.add(c.getPrecioTotal());
+    		total = total.add(c.getPrecioTotal());
     	}
-    	
+
     	/*
     	 * Descuentos
     	 */    	
     	if(getDescuento() != null) {
-        	total.subtract(getDescuento());
+        	total = total.subtract(getDescuento());
     	}
     	
     	return total;
     }
     
+    /**
+     * Setea el total a cobrar
+     * @param total 
+     */
     public void setTotal(final BigDecimal total) {
     	this.total = total;
     }
@@ -597,6 +647,10 @@ public class Reserva {
     //{{ La forma en que se paga la estadía
     private FormaPago formaDeCierre;
 
+    /**
+     * 
+     * @return Retorna la forma de pago
+     */
     @Hidden(where=Where.ALL_TABLES)
     @MemberOrder(name="Datos del Cierre",sequence="1")
     @Named("Paga con")
@@ -604,6 +658,10 @@ public class Reserva {
 		return formaDeCierre;
 	}
 
+    /**
+     * Setea la forma de pago
+     * @param formaDeCierre
+     */
 	public void setFormaDeCierre(final FormaPago formaDeCierre) {
 		this.formaDeCierre = formaDeCierre;
 	}
@@ -616,6 +674,10 @@ public class Reserva {
 	// {{ Descuento	
     private BigDecimal descuento;
     
+    /**
+     * 
+     * @return Retorna el valor del descuento
+     */
     @Hidden(where=Where.ALL_TABLES)
     @MemberOrder(name="Datos del Cierre",sequence="2")  
     @Optional
@@ -623,6 +685,10 @@ public class Reserva {
 		return descuento;
 	}
 
+    /**
+     * Setea el valor del descuento
+     * @param descuento
+     */
 	public void setDescuento(final BigDecimal descuento) {
 		this.descuento = descuento;
 	}
@@ -635,6 +701,10 @@ public class Reserva {
     
 	private String numeroFactura;
 	
+	/**
+	 * 
+	 * @return Retorna el n&uacute;mero de factura
+	 */
     @Hidden(where=Where.ALL_TABLES)
     @MemberOrder(name="Datos del Cierre",sequence="3")
     @Optional
@@ -642,6 +712,10 @@ public class Reserva {
 		return numeroFactura;
 	}
 
+    /**
+     * Setea el n&uacute;mero de factura
+     * @param numeroFactura
+     */
 	public void setNumeroFactura(final String numeroFactura) {
 		this.numeroFactura = numeroFactura;
 	}
@@ -650,6 +724,10 @@ public class Reserva {
 		return isCerrada() ? null : "La reserva debe estar cerrada para editar el número de factura";
 	}
 
+	/**
+	 * 
+	 * @return Retorna la fecha de la factura con formato para el usuario
+	 */
 	@Named("Fecha Fáctura")
     @MemberOrder(name="Datos del Cierre",sequence="4")
 	public String getFechaFacturaString() {
@@ -662,12 +740,20 @@ public class Reserva {
 	
 	private Date fechaFactura;
 
+	/**
+	 * 
+	 * @return Retorna la fecha de la factura
+	 */
     @Hidden    
     @Optional
 	public Date getFechaFactura() {
 		return fechaFactura;
 	}
 
+    /**
+     * Setea la fecha de la factura
+     * @param fechaFactura
+     */
 	public void setFechaFactura(final Date fechaFactura) {
 		this.fechaFactura = fechaFactura;
 	}
@@ -676,6 +762,10 @@ public class Reserva {
 		return isCerrada() ? null : "La reserva debe estar cerrada para editar la fecha de la factura";
 	}
 	
+	/**
+	 * 
+	 * @return Retorna el Estado CheckIN
+	 */
 	@MemberOrder(name="nombreEstado",sequence="1")
 	public Reserva checkIn() {
 		setEstado(EstadoReserva.CheckIN);
@@ -696,6 +786,10 @@ public class Reserva {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return Retorna el Estado CheckOUT
+	 */
 	@MemberOrder(name="nombreEstado",sequence="2")
 	public Reserva checkOut() {
 		setEstado(EstadoReserva.CheckOUT);
@@ -716,6 +810,14 @@ public class Reserva {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param fP
+	 * @param descuento
+	 * @param numeroFactura
+	 * @param fechaFactura
+	 * @return Retorna la reserva con los nuevos datos del cierre
+	 */
 	@MemberOrder(name="nombreEstado",sequence="3")
 	public Reserva cerrar(
 			@Named("Forma de Pago") FormaPago fP,
@@ -774,25 +876,23 @@ public class Reserva {
 	}
 	
 	//{{Usuario actual
-		private String usuario;
+	private String usuario;
 
-	    @Hidden
-	    public String getUsuario() {
-	        return usuario;
-	    }
+	@Hidden
+	public String getUsuario() {
+		return usuario;
+	}
 
-	    public void setUsuario(final String usuario) {
-	        this.usuario = usuario;
-	    }//}}
+	public void setUsuario(final String usuario) {
+	    this.usuario = usuario;
+	}//}}
 		
-		public static Filter<Reserva> creadoPor(final String usuarioActual) {
-	        return new Filter<Reserva>() {
-	            @Override
-	            public boolean accept(final Reserva reserva) {
-	                return Objects.equal(reserva.getUsuario(), usuarioActual);
-	            }
-	        };
-	    }
-	
-	
+	public static Filter<Reserva> creadoPor(final String usuarioActual) {
+	    return new Filter<Reserva>() {
+	        @Override
+	        public boolean accept(final Reserva reserva) {
+	            return Objects.equal(reserva.getUsuario(), usuarioActual);
+	        }
+	    };
+	}
 }

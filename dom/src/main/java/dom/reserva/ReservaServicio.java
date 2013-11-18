@@ -1,5 +1,18 @@
 package dom.reserva;
 
+/**
+ * 
+ * @see dom.acompaniantes.Acompaniante;
+ * @see dom.consumo.Consumo;
+ * @see dom.disponibilidad.Disponibilidad;
+ * @see dom.disponibilidad.HabitacionFecha;
+ * @see dom.enumeradores.EstadoHabitacion;
+ * @see dom.huesped.Huesped;
+ * @see dom.tarifa.TarifaServicio;
+ * @see dom.mensajeria.*; 
+ * 
+ * @author ProyectoCIP
+ */
 import java.util.List;
 
 import org.apache.isis.applib.AbstractFactoryAndRepository;
@@ -18,7 +31,6 @@ import dom.consumo.Consumo;
 import dom.disponibilidad.Disponibilidad;
 import dom.disponibilidad.HabitacionFecha;
 import dom.enumeradores.EstadoHabitacion;
-import dom.enumeradores.EstadoReserva;
 import dom.huesped.Huesped;
 import dom.tarifa.TarifaServicio;
 import dom.mensajeria.*;
@@ -26,6 +38,12 @@ import dom.mensajeria.*;
 @Named("Reservas")
 public class ReservaServicio extends AbstractFactoryAndRepository {
 	
+	/**
+	 * 
+	 * @param huesped
+	 * @param comentario
+	 * @return Retorna la reserva con los datos suministrados que se muestra en el viewer
+	 */
 	@Named("Reservar")
 	@MemberOrder(sequence="1")
 	public Reserva reservar(
@@ -40,6 +58,15 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 		return crear(disponibilidad,huesped,comentario);
 	}
 
+	/**
+	 * 
+	 * Realiza todas las operaciones
+	 * 
+	 * @param disponibilidad
+	 * @param huesped
+	 * @param comentario
+	 * @return Retorna la reserva
+	 */
 	@Programmatic
 	public Reserva crear(
 			final List<Disponibilidad> disponibilidad,
@@ -104,6 +131,10 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 			return reserva;
 	}
 
+	/**
+	 * 
+	 * @return Retorna la lista de objetos que van a ser habitaciones reservadas
+	 */
     private List<Disponibilidad> listaParaReservar() {
     	return allMatches(Disponibilidad.class,new Filter<Disponibilidad>(){
 			@Override
@@ -114,12 +145,21 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
     	});
     }
 
+    /**
+     * 
+     * @return Retorna todas las reservas persistidas
+     */
     @Named("Todas")
     @MemberOrder(sequence="5")
 	public List<Reserva> listaReservas() {
 		return allMatches(QueryDefault.create(Reserva.class, "reservas"));
 	}
     
+    /**
+     * 
+     * @param huesped
+     * @return Retorna las reservas que han sido reservadas por este huesped
+     */
     @Named("Por Cliente")
     @MemberOrder(sequence="2")
 	public List<Reserva> listaPorClientes(final Huesped huesped) {
@@ -132,6 +172,11 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
     	});	
     }
     
+    /**
+     * 
+     * @param numero
+     * @return Retorna la reserva que tiene ese numero
+     */
     @Named("Por Número")
     @MemberOrder(sequence="3")
     public Reserva porNumero(@Named("Número") final long numero) {
@@ -144,6 +189,11 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
     	});
     }
     
+    /**
+     * 
+     * @param numero
+     * @return Retorna la reserva que tiene ese numero de factura
+     */
     @Named("Por Número Factura")
     @MemberOrder(sequence="4") 
     public Reserva porNumeroFactura(@Named("Número") final int numero) {
@@ -160,6 +210,11 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
     	});
     }    
     
+    /**
+     * 
+     * @param nombre
+     * @return Retorna los objetos consumicion que coinciden con el patron
+     */
 	@Hidden
 	public List<Consumo> completaConsumicion(final String nombre) {
 		return allMatches(Consumo.class, new Filter<Consumo>() {
@@ -171,6 +226,11 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 		});
 	}
 	
+	/**
+     * 
+     * @param nombre
+     * @return Retorna los objetos acompa&ntilde;antes que coinciden con el patron
+     */
 	@Hidden
 	public List<Acompaniante> completaAcompaniantes(final String apellido) {
 		return allMatches(Acompaniante.class, new Filter<Acompaniante>() {

@@ -112,8 +112,6 @@ public class Disponibilidad {
 		if(getEstado() == EstadoHabitacion.DISPONIBLE&&getReserva() == null) {
 			this.estadoHabitacion = EstadoHabitacion.BLOQUEADA;
 			
-			container.informUser(""+getReserva());
-			
 			HabitacionFecha hF = hFS.existeReserva(new LocalDate(getFecha()), getNombreHabitacion());
 			
 			if(hF == null) {
