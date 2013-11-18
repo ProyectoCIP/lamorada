@@ -14,10 +14,8 @@ import org.apache.isis.applib.filter.Filter;
 
 import com.google.common.base.Objects;
 
-import dom.disponibilidad.HabitacionFecha;
 import dom.empresa.Empresa;
 import dom.huesped.Huesped;
-import dom.huesped.HuespedServicio;
 
 /**
  * 
@@ -192,6 +190,7 @@ public class Contacto {
     	setEmpresa(empresa);
 	}
 	
+	@SuppressWarnings("unused")
 	private DomainObjectContainer container;
 	
 	public void injectDomainObjectContainer(final DomainObjectContainer container) {

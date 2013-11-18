@@ -334,7 +334,7 @@ public class Reserva {
 	}
 	
 	/**
-	 * Borra las habitaciones seleccionadad.
+	 * Borra las habitaciones seleccionadas.
 	 * @param habitacion
 	 * @return
 	 */
@@ -345,6 +345,11 @@ public class Reserva {
 		container.removeIfNotAlready(habitacion);
 		return this;
 	}
+	
+	/**
+	 * Método funcional del framework que relaciona ambos objetos
+	 * @param habitacion La habitación que se agrega a esta reserva
+	 */
 	@Hidden
 	public void addToHabitaciones(final HabitacionFecha habitacion) {
 	    if(habitacion == null || habitaciones.contains(habitacion)) {
@@ -364,12 +369,20 @@ public class Reserva {
 	@Persistent(mappedBy="reserva")
 	private List<Consumo> consumos = new ArrayList<Consumo>();
 	
+	/**
+	 * 
+	 * @return Retorna la lista de consumos/extras de esta reserva
+	 */
 	@Named("Consumiciónes/Extras")
 	@Render(Type.EAGERLY)
 	public List<Consumo> getConsumos() {
 		return consumos;
 	}
 	
+	/**
+	 * Setea la lista de consumos/extras de esta reserva
+	 * @param consumos
+	 */
 	public void setConsumos(final List<Consumo> consumos) {
 		this.consumos = consumos;
 	}
@@ -421,6 +434,10 @@ public class Reserva {
     	return this;
     }
 
+	/**
+	 * Método funcional del framework que relaciona ambos objetos
+	 * @param consumo El consumo/extra que se agrega a esta reserva
+	 */
 	@Hidden
 	public void addToConsumos(final Consumo consumo) {
 	    if(consumo == null || consumos.contains(consumo)) {
@@ -529,6 +546,7 @@ public class Reserva {
 	}
 	
 	//{{inyeccion ReservaServicio
+	@SuppressWarnings("unused")
 	private ReservaServicio reservaServicio;
 	
 	public void injectReservaServicio(final ReservaServicio reservaServicio) {
@@ -537,7 +555,8 @@ public class Reserva {
 	//}}
  
     //{{ Muestra el total a pagar (tiene en cuenta consumos, descuentos...)
-    private BigDecimal total;
+    @SuppressWarnings("unused")
+	private BigDecimal total;
     
     @Disabled
     @NotPersisted

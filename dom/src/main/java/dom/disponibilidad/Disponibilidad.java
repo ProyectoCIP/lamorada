@@ -109,8 +109,10 @@ public class Disponibilidad {
 	@Bulk
 	@MemberOrder(name="estadoHabitacion",sequence="3")
 	public Disponibilidad bloquear() {
-		if(getEstado() == EstadoHabitacion.DISPONIBLE) {
+		if(getEstado() == EstadoHabitacion.DISPONIBLE&&getReserva() == null) {
 			this.estadoHabitacion = EstadoHabitacion.BLOQUEADA;
+			
+			container.informUser(""+getReserva());
 			
 			HabitacionFecha hF = hFS.existeReserva(new LocalDate(getFecha()), getNombreHabitacion());
 			
@@ -125,9 +127,9 @@ public class Disponibilidad {
 				hF.setTarifa(new BigDecimal(0));
 				container.persistIfNotAlready(hF);
 			}
-			else {
-				hF.setEstado(EstadoHabitacion.BLOQUEADA);
-			}
+			//else {
+				//hF.setEstado(EstadoHabitacion.BLOQUEADA);
+			//}
 				 
 		}
 		
@@ -189,6 +191,7 @@ public class Disponibilidad {
 	 * @return Retorna si o no el objeto est&aacute; seleccionado para su posterior reserva
 	 */
 	@Named("Seleccionada")
+	@Hidden(where=Where.OBJECT_FORMS)
 	public boolean isParaReservar() {
 		return paraReservar;
 	}
