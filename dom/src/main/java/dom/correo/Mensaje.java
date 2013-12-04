@@ -26,7 +26,7 @@ import dom.disponibilidad.HabitacionFechaServicio;
 
 /**
  * 
- * Es el objeto que se muestra en el viewer con toda la información del correo electrónico
+ * Es el objeto que se muestra en el viewer con toda la informaci&oacute;n del correo electr&oacute;nico
  * 
  * @see dom.disponibilidad.Disponibilidad
  * @see dom.disponibilidad.HabitacionFechaServicio
@@ -57,7 +57,7 @@ public class Mensaje implements Comparable<Mensaje> {
 
 	/**
 	 * 
-	 * Es la primer parte del título que toma el objeto en el viewer
+	 * Es la primer parte del t&iacute;tulo que toma el objeto en el viewer
 	 * 
 	 * @return El nombre del remitente
 	 */
@@ -199,6 +199,7 @@ public class Mensaje implements Comparable<Mensaje> {
 	
 	/**
 	 * La posibilidad de responder a la consulta/correo directamente desde el mismo
+	 * 
 	 * @param mensaje El mensaje que escribe el recepcionista al usuario
 	 * @return Retorna el mensaje original del remitente
 	 */
@@ -237,7 +238,7 @@ public class Mensaje implements Comparable<Mensaje> {
 
 	/**
 	 * 
-	 * @return Retorna la fecha del día en que llegó la consulta/correo
+	 * @return Retorna la fecha del d&iacute;a en que lleg&oacute; la consulta/correo
 	 */
 	@Named("Fecha del Mensaje")
 	@MemberOrder(sequence="5")
@@ -246,7 +247,7 @@ public class Mensaje implements Comparable<Mensaje> {
 	}
 
 	/**
-	 * Setea la fecha del día en que llegó la consulta/correo
+	 * Setea la fecha del d&iacute;a en que lleg&oacute; la consulta/correo
 	 * @param fechaActual
 	 */
 	public void setFechaActual(final LocalDate fechaActual) {

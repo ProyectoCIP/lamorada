@@ -131,14 +131,15 @@ public class Asterisk extends AbstractManagerEventListener
      */
     public void call(final String destino) throws IOException, AuthenticationFailedException, TimeoutException, InterruptedException {
         OriginateAction originateAction;
-        ManagerResponse originateResponse;
+        @SuppressWarnings("unused")
+		ManagerResponse originateResponse;
         managerConnection.login();
         
         originateAction = new OriginateAction();
         originateAction.setContext("internal");
         originateAction.setChannel("SIP/"+destino); 
         originateAction.setCallerId("Recepción");
-        originateAction.setExten("80");
+        originateAction.setExten("81");
         originateAction.setPriority(Integer.valueOf(1)); 
         originateAction.setAsync(Boolean.TRUE);       
         

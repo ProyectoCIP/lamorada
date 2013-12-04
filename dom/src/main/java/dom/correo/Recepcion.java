@@ -135,7 +135,6 @@ public class Recepcion {
 			       actual.setDesde(partes[4]);
 			       actual.setHasta(partes[5]);
 			       actual.setMensaje(partes[6]);
-			       actual.setUsuario(container.getUser().getName());
 			       
 			       getListaMensajes().add(actual);		       
 			       
@@ -190,7 +189,8 @@ public class Recepcion {
 	}
 	*/
 
-    private DomainObjectContainer container;
+    @SuppressWarnings("unused")
+	private DomainObjectContainer container;
     
     public void injectDomainObjectContainer(DomainObjectContainer container) {
     	this.container = container;

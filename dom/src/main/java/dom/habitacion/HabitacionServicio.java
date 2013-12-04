@@ -1,6 +1,5 @@
 package dom.habitacion;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.apache.isis.applib.AbstractFactoryAndRepository;
@@ -11,12 +10,9 @@ import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.RegEx;
 import org.apache.isis.applib.annotation.ActionSemantics.Of;
 import org.apache.isis.applib.filter.Filter;
-import org.asteriskjava.manager.AuthenticationFailedException;
-import org.asteriskjava.manager.TimeoutException;
 
 import com.google.common.base.Objects;
 
-import dom.asterisk.Asterisk;
 import dom.enumeradores.TipoHabitacion;
 import dom.habitacion.Habitacion;
 

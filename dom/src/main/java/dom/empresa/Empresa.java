@@ -29,7 +29,6 @@ import com.google.common.collect.Lists;
 
 import dom.huesped.Huesped;
 import dom.contacto.Contacto;
-import dom.disponibilidad.HabitacionFecha;
 import dom.enumeradores.FormaPago;
 
 /**

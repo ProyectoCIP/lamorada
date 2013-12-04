@@ -14,8 +14,6 @@ import org.apache.isis.applib.filter.Filter;
 
 import com.google.common.base.Objects;
 
-import dom.habitacion.Habitacion;
-
 /**
  * 
  * La tarifa que se cobra por cantidad de personas 
@@ -96,6 +94,7 @@ public class Tarifa {
 		this.precio = precio;
 	}
 	
+	@SuppressWarnings("unused")
 	private DomainObjectContainer container;
 	
 	public void setContainer(final DomainObjectContainer container) {
@@ -103,6 +102,7 @@ public class Tarifa {
 	}   
 	
 	//{{inyeccion TarifaServicio
+	@SuppressWarnings("unused")
 	private TarifaServicio tarifaServicio;
 	
 	public void injectReservaServicio(final TarifaServicio tarifaServicio) {

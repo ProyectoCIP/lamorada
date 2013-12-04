@@ -17,7 +17,6 @@ import org.apache.isis.applib.filter.Filter;
 
 import com.google.common.base.Objects;
 
-import dom.disponibilidad.HabitacionFecha;
 import dom.reserva.Reserva;
 import dom.reserva.ReservaServicio;
 

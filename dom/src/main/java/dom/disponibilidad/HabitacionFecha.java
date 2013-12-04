@@ -27,6 +27,12 @@ import dom.enumeradores.TipoHabitacion;
 /**
  * 
  * Es el objeto que relaciona la Habitación con la fecha en la que se reserva/bloquea
+ *
+ * @see dom.reserva.Reserva;
+ * @see dom.tarifa.TarifaServicio;
+ * @see dom.asterisk.Asterisk;
+ * @see dom.enumeradores.EstadoHabitacion;
+ * @see dom.enumeradores.TipoHabitacion;
  * 
  * @author ProyectoCIP
  *

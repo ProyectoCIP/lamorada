@@ -19,7 +19,6 @@ import org.apache.isis.applib.filter.Filter;
 
 import com.google.common.base.Objects;
 
-import dom.disponibilidad.HabitacionFecha;
 import dom.reserva.Reserva;
 import dom.reserva.ReservaServicio;
 
@@ -116,7 +115,8 @@ public class Consumo {
 	}
 	
 	 // {{ injected: DomainObjectContainer
-    private DomainObjectContainer container;
+    @SuppressWarnings("unused")
+	private DomainObjectContainer container;
 
     public void injectDomainObjectContainer(final DomainObjectContainer container) {
         this.container = container;

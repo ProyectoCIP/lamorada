@@ -20,11 +20,8 @@ import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.filter.Filter;
 
 import com.google.common.base.Objects;
-
-import dom.consumo.Consumo;
 import dom.contacto.Contacto;
 import dom.empresa.Empresa;
-import dom.habitacion.Habitacion;
 
 @javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY)

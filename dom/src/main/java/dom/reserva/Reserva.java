@@ -44,7 +44,7 @@ import dom.tarifa.TarifaServicio;
 
 /**
  * La reserva es la clase principal del sistema, representa los diferentes estados
- * por los que puede pasar una habitación una vez que es ocupada.
+ * por los que puede pasar una habitaci&oacute;n una vez que es ocupada.
  * 
  * @see dom.acompaniantes.Acompaniante
  * @see dom.consumo.Consumo
@@ -65,7 +65,7 @@ import dom.tarifa.TarifaServicio;
 public class Reserva {
 	
 	/**
-	 * El &iacute;cono cambia dependiendo de si est&aacute; Reservada, CheckIn, CheckOut o Reservada
+	 * El &iacute;cono cambia dependiendo de si est&eacute; Reservada, CheckIn, CheckOut o Reservada
 	 * 
 	 * @return
 	 */
@@ -91,7 +91,7 @@ public class Reserva {
 	private long numero;
 
 	/**
-	 * Retorna el nuúmero de la reserva.
+	 * Retorna el n&uacute;mero de la reserva.
 	 * @return
 	 */
     @Disabled
@@ -101,7 +101,7 @@ public class Reserva {
 	}
 	
     /**
-     * Setea el número de reserva.
+     * Setea el n&uacute;mero de reserva.
      */
 	public void setNumero(final long numero) {
 		this.numero = numero;
@@ -192,7 +192,7 @@ public class Reserva {
 	private float montoSena;
 	
 	/**
-	 * Retorna el monto abonado en concepto de seña hecha para la reserva.
+	 * Retorna el monto abonado en concepto de se&ntilde;a hecha para la reserva.
 	 * @return
 	 */
 	@Named("Monto Seña")
@@ -204,7 +204,7 @@ public class Reserva {
 	}
 
 	/**
-	 * Setea el monto abonado en concepto de seña de la reserva. 
+	 * Setea el monto abonado en concepto de se&ntilde;a de la reserva. 
 	 * @param montoSena
 	 */
 	public void setMontoSena(final float montoSena) {
@@ -216,7 +216,7 @@ public class Reserva {
 	private FormaPago tipoSena;
 
 	/**
-	 * Retorna la forma de pago en que se abona la seña.
+	 * Retorna la forma de pago en que se abona la se&ntilde;a.
 	 * @return
 	 */
     @Hidden(where=Where.ALL_TABLES)
@@ -228,7 +228,7 @@ public class Reserva {
 	
     
     /**
-     * Setea la forma de pago en la que se abona la seña.
+     * Setea la forma de pago en la que se abona la se&ntilde;a.
      * @param tipoSena
      */
 	public void setTipoSena(final FormaPago tipoSena) {
@@ -241,7 +241,7 @@ public class Reserva {
 	private List<Acompaniante> acompaniantes = new ArrayList<Acompaniante>();
 	
 	/**
-	 * Retorna la lista de acompañantes del huésped que registra la reserva.
+	 * Retorna la lista de acompa&ntilde;antes del hu&eacute;sped que registra la reserva.
 	 * @return
 	 */
 	@Render(Type.EAGERLY)
@@ -250,7 +250,7 @@ public class Reserva {
 	}
 	
 	/**
-	 * Setea los acompañantes del huésped que realiza la reserva.
+	 * Setea los acompa&ntilde;antes del hu&eacute;sped que realiza la reserva.
 	 * @param acompaniantes
 	 */
 	public void setAcompaniantes(List<Acompaniante> acompaniantes) {
@@ -258,7 +258,7 @@ public class Reserva {
 	}
 	
 	/**
-	 * Agrega los datos del acompañante del huésped que realizó la reserva.
+	 * Agrega los datos del acompa&ntilde;ante del hu&eacute;sped que realiz&oacute; la reserva.
 	 * @param nombre
 	 * @param apellido
 	 * @param edad
@@ -295,7 +295,7 @@ public class Reserva {
 	}
 	
 	/**
-	 * Borra el acompañante del huésped que realizaó la esreva.
+	 * Borra el acompa&ntilde;ante del hu&eacute;sped que realiza la esreva.
 	 * @param acompaniante
 	 * @return
 	 */
@@ -308,7 +308,7 @@ public class Reserva {
 	}	
 
 	/**
-	 * Método funcional del framework que relaciona ambos objetos
+	 * M&eacute;todo funcional del framework que relaciona ambos objetos
 	 * @param Acompa&ntilde;ante El acompa&ntilde;ante que se agrega a esta reserva
 	 */
 	@Hidden
@@ -356,8 +356,8 @@ public class Reserva {
 	}
 	
 	/**
-	 * Método funcional del framework que relaciona ambos objetos
-	 * @param habitacion La habitación que se agrega a esta reserva
+	 * M&eacute;todo funcional del framework que relaciona ambos objetos
+	 * @param habitacion La habitaci&oacute;n que se agrega a esta reserva
 	 */
 	@Hidden
 	public void addToHabitaciones(final HabitacionFecha habitacion) {
@@ -398,7 +398,7 @@ public class Reserva {
 	//}}
 
 	/**
-	 * Agrega consumos realizados por los Huéspedes en su estadía en el hotel.
+	 * Agrega consumos realizados por los Hu&eacute;spedes en su estad&iacute;a en el hotel.
 	 * @param descripcion
 	 * @param cantidad
 	 * @param precio
@@ -430,7 +430,7 @@ public class Reserva {
 	//}}	
 	
 	/**
-	 * Borra los consumos realizados por los huéspedes.
+	 * Borra los consumos realizados por los hu&eacute;spedes.
 	 * @param consumo
 	 * @return
 	 */
@@ -444,7 +444,7 @@ public class Reserva {
     }
 
 	/**
-	 * Método funcional del framework que relaciona ambos objetos
+	 * M&eacute;todo funcional del framework que relaciona ambos objetos
 	 * @param consumo El consumo/extra que se agrega a esta reserva
 	 */
 	@Hidden

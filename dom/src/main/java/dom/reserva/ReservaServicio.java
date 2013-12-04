@@ -109,10 +109,10 @@ public class ReservaServicio extends AbstractFactoryAndRepository {
 				
 				persistIfNotAlready(reserva);
 								
-				/*if(huesped.getContacto().getCelular() != null) {
+				if(huesped.getContacto().getCelular() != null) {
 					SMS sms = new SMS();
 					sms.enviarSMS(huesped.getNombre()+"%20"+huesped.getApellido(),huesped.getContacto().getCelular(),Long.toString(reserva.getNumero()));
-				}*/
+				}
 				//Este método queda comentado porque se gasta el crédito.-
 				
 				/*

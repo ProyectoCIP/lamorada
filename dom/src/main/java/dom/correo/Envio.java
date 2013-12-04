@@ -20,7 +20,7 @@ public class Envio {
 	private Properties propiedades = new Properties();
 	
 	/**
-	 * Setea la sesion que se crea para poder enviar el mail.
+	 * Setea la sesi&oacute;n que se crea para poder enviar el mail.
 	 * @param propiedades
 	 */
 	public void setSession(Properties propiedades) {
